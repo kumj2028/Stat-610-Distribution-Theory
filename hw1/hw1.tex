@@ -38,6 +38,7 @@
 \newcommand{\Ker}{{\rm Ker}}
 \newcommand{\Mor}{{\rm Mor}}
 \newcommand{\Rad}{{\rm Rad}}
+\newcommand{\Prob}{{\rm P}}
 
 \renewcommand\labelitemi{-} %this changes itemize bullet points to dashes (-)
 
@@ -186,8 +187,169 @@ Stat 610 Distribution Theory} %if necessary, replace with your course title
     events may be obtained by complements, unions and intersections,
     starting only with ${a}$?
   \end{enumerate}
+  \begin{enumerate}
+    \item The $\sigma$-algebra of all subsets is
+    \[
+      \{\emptyset, \{a\}, \{b\}, \{c\}, \{a,b\}, \{a,c\}, \{b,c\}, \{a,b,c\}\}.
+    \]
+    \item 
+    Starting with $\{a\}$, we may obtain $\{b,c\}$ by taking its complement.
+    Then, we may obtain $\{a, b, c\}$ by taking the union of $\{a\}$ and
+    $\{b,c\}$. Finally, we may obtain $\emptyset$ by taking the complement
+    of $\{a, b, c\}$. Thus the smallest relevant $\sigma$-algebra is
+    \[
+    \{\emptyset, \{a\}, \{b,c\}, \{a,b,c\}\}.
+    \]
+  \end{enumerate}
 \end{problem}
 
+\begin{problem}{3}
+  For each of the following, be sure to explicitly provide the sample space
+  and the event indicated.
+  \begin{enumerate}
+    \item I hand out 4 pieces of candy at random, each to a child. There
+    are three children and some will get more than others. Find the
+    probability that each child gets at least one piece of candy. Find the
+    probability that one child gets it all.
+    \item The local Chevy dealer has 5 trucks to give away: two Silverados
+    ($S_1$ and $S_2$), three Tahoes ($T_1$, $T_2$, and $T_3$). Suppose
+    they randomly select a truck, give it to a lucky customer, and then
+    randomly select another for a second lucky customer. Find the probability
+    that $x$ Silverados are selected, where $x=0, 1, 2$.
+  \end{enumerate}
+  \begin{enumerate}
+    \item The sample space is
+    \[
+      \mathcal{S} = \{(c_1, c_2, c_3, c_4) : c_i \in \{1, 2, 3\}\}.
+    \]
+    The event that each child gets at least one piece of candy is
+    \[
+      \begin{aligned}
+      A = \{& (1,1,2,3), (1,1,3,2), (1,2,1,3), (1,2,2,3),\\ 
+            & (1,2,3,1), (1,2,3,2), (1,2,3,3), (1,3,1,2),\\ 
+            & (1,3,2,1), (1,3,2,2), (1,3,2,3), (1,3,3,2),\\
+            & (2,1,1,3), (2,1,2,3), (2,1,3,1), (2,1,3,2),\\
+            & (2,1,3,3), (2,2,1,3), (2,2,3,1), (2,3,1,1),\\
+            & (2,3,1,2), (2,3,1,3), (2,3,2,1), (2,3,3,1),\\
+            & (3,1,1,2), (3,1,2,1), (3,1,2,2), (3,1,2,3),\\
+            & (3,1,3,2), (3,2,1,1), (3,2,1,2), (3,2,1,3),\\
+            & (3,2,2,1), (3,2,3,1), (3,3,1,2), (3,3,2,1)\}.
+      \end{aligned}
+    \]
+    The event that one child gets it all is
+    \[
+      B = \{(1,1,1,1), (2,2,2,2), (3,3,3,3)\}.
+    \]
+    Since each outcome in the sample space is equally likely, we have
+    \[
+      P(A) = \frac{36}{3^4} = \frac{4}{9}, \quad P(B) = \frac{3}{3^4} =
+      \frac{1}{27}.
+    \]    
+    \item The sample space is
+    \[
+      \mathcal{S} = \{(x,y) : x, y \in \{S_1, S_2, T_1, T_2, T_3\}, x \neq y\}.
+    \]
+    The event that $x=0$ Silverados are selected is
+    \[
+      A = \{(T_1, T_2), (T_1, T_3), (T_2, T_1), (T_2, T_3), (T_3, T_1),
+      (T_3, T_2)\}.
+    \]
+    The event that $x=1$ Silverados are selected is
+    \[
+      \begin{aligned}
+      B = \{& (S_1, T_1), (S_1, T_2), (S_1, T_3),\\ 
+            & (S_2, T_1), (S_2, T_2), (S_2, T_3),\\ 
+            & (T_1, S_1), (T_1, S_2), (T_2, S_1),\\ 
+            & (T_2, S_2), (T_3, S_1), (T_3, S_2)\}.
+      \end{aligned}
+    \]
+    The event that $x=2$ Silverados are selected is
+    \[
+      C = \{(S_1, S_2), (S_2, S_1)\}.
+    \]
+    Since each outcome in the sample space is equally likely, we have
+    \[
+      P(A) = \frac{6}{20} = \frac{3}{10}, \quad P(B) = \frac{12}{20} =
+      \frac{3}{5}, \quad P(C) = \frac{2}{20} = \frac{1}{10}.
+    \]
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{4} 
+  \textit{Statistical Inference} by Casella and Berger, 2nd Edition, Chapter 1, 
+  Exercise 10. Use the case $n = 2$ (Thm. 1.1.4.d in the book) and 
+  \underline{mathematical induction} to solvee this.
+  \begin{itemize}
+    \item [10] Formulate and prove a version of DeMorgan's Laws that 
+    applies to a finite collection of sets $A_1, A_2, \ldots, A_n$.
+    \\\\
+    For a finite collection of sets $A_1, A_2, \ldots, A_n$,
+    we conjecture that the formulation is
+    \[
+      \left(\bigcap_{i=1}^n A_i\right)^c = \bigcup_{i=1}^nA_i^c.
+    \]
+    The other law is simply setting $B_i = A_i^c$ for each $i$,
+    and taking the complement of both sides, giving us
+    \[
+      \bigcap_{i=1}^n B_i^c = \left(\bigcup_{i=1}^nB_i\right)^c.
+    \]
+    Since taking complements on both sides of an equation preserves equality,
+    we will only attempt to prove the first formulation by 
+    mathematical induction.\\
+    Base case: when $n=2$, we have
+    \[
+      \left(\bigcap_{i=1}^2 A_i\right)^c = \bigcup_{i=1}^2A_i^c.
+    \]
+    Proof of base case: An element $x$ is in the left hand side if and only if
+    $x$ is not in the intersection of $A_1$ and $A_2$. This means
+    $x$ is not in $A_1$ or $x$ is not in $A_2$. This is equivalent to
+    saying $x$ is in the complement of $A_1$ or $x$ is in the complement of
+    $A_2$, which is equivalent to saying $x$ is in the union of the
+    complements of $A_1$ and $A_2$.\\\\
+    Inductive hypothesis: Assume that for some $k \ge 2$,
+    \[
+      \left(\bigcap_{i=1}^k A_i\right)^c = \bigcup_{i=1}^kA_i^c.
+    \]
+    Inductive step: We want to show that
+    \[
+      \left(\bigcap_{i=1}^{k+1} A_i\right)^c = \bigcup_{i=1}^{k+1}A_i^c.
+    \]
+    Proof of inductive step: First we can rewrite the left hand side as
+    \[
+      \left(\bigcap_{i=1}^{k+1} A_i\right)^c = \left(A_{k+1} \cap
+      \bigcap_{i=1}^k A_i\right)^c.
+    \]
+    By the case $n=2$ of DeMorgan's Laws, we have
+    \[
+      \left(A_{k+1} \cap \bigcap_{i=1}^k A_i\right)^c = A_{k+1}^c \cup
+      \left(\bigcap_{i=1}^k A_i\right)^c.
+    \]
+    By the inductive hypothesis, we have
+    \[
+      A_{k+1}^c \cup \left(\bigcap_{i=1}^k A_i\right)^c = A_{k+1}^c \cup
+      \bigcup_{i=1}^kA_i^c.
+    \]
+    Finally, we have
+    \[
+      A_{k+1}^c \cup \bigcup_{i=1}^kA_i^c = \bigcup_{i=1}^{k+1}A_i^c.
+    \]
+  \end{itemize}
+\end{problem}
+
+\begin{problem}{5} The lifetime $X$ of a cell phone battery, inspected
+  under stress, satisfies\\ 
+  $\Prob(X>t) = e^{-t/10}$ for all $t>0$.
+  \begin{enumerate}
+    \item Show that, if $0 \le a < b$ then 
+    $\Prob(a < X \le b) = \frac{1}{10}\int_a^b e^{-t/10}dt$.
+    \item Is there a similar internal representation for 
+    $\Prob(a < X \le b) = \int_a^b g(t)dt$ valid even if $a<0<b$
+    Hint: use an indicator function -- 
+    it should not depend on either $a$ or $b$?
+    \item Let $a \to b$ to find $\Prob(X=b)$.
+  \end{enumerate}
+  
+\end{problem}
 % --------------------------------------------------------------
 %     You don't have to mess with anything below this line.
 % --------------------------------------------------------------
