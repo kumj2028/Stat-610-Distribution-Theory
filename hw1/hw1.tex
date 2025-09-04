@@ -1,0 +1,194 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to writeLaTeX --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you give
+% someone the link to this page, they can edit at the same
+% time. See the help menu above for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+
+\setlist[enumerate,1]{label={(\alph*)}} %this changes enumerate to (a),(b),...
+
+\usepackage{graphicx} %package to manage images
+
+\newcommand{\A}{{\mathcal{A}}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\CC}{{\mathcal{C}}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\Z}{{\mathbb Z}}
+
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\End}{{\rm End}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Ima}{{\rm Im}}
+\newcommand{\Ker}{{\rm Ker}}
+\newcommand{\Mor}{{\rm Mor}}
+\newcommand{\Rad}{{\rm Rad}}
+
+\renewcommand\labelitemi{-} %this changes itemize bullet points to dashes (-)
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Homework 1}%replace X with the appropriate number
+\author{Mengxiang Jiang\\ %replace with your name
+Stat 610 Distribution Theory} %if necessary, replace with your course title
+ 
+\maketitle
+ 
+\begin{problem}{1} %You can use theorem, exercise, problem, or question here.
+  \textit{Statistical Inference} by Casella and Berger, 2nd Edition, Chapter 1, 
+  Exercise 4, 5, and 6.
+  \begin{itemize}
+    \item[4] For events $A$ and $B$, find formulas for the probabilities of the 
+    following events in terms of the quantities $P(A)$, $P(B)$, and $P(A \cap B)$.
+      \begin{itemize}
+        \item[(a)] either $A$ or $B$ or both
+        \item[(b)] either $A$ or $B$ but not both
+        \item[(c)] at least one of $A$ or $B$
+        \item[(d)] at most one of $A$ or $B$
+      \end{itemize}
+      \begin{itemize}
+        \item[(a)] $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+        \item[(b)] $P(A \cup B) - P(A \cap B) = P(A) + P(B) - 2P(A \cap B)$
+        \item[(c)] $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+        \item[(d)] $1 - P(A \cap B)$
+      \end{itemize}
+    \item[5] Approximately one-third of all human twins are identical 
+    (one-egg) and two-thirds are fraternal (two-egg) twins. Identical twins 
+    are necessarily the same sex, with male and female being equally likely.
+    Among fraternal twins, approximately one-fourth are both female, one-fourth
+    are both male, and half are one male and one female. Finally, among all
+    U.S. births, approximately 1 in 90 is a twin birth. Define the following
+    events:
+      \begin{itemize}
+        \item $A$ = {the birth results in twin females}
+        \item $B$ = {the twins are identical twins}
+        \item $C$ = {a U.S. birth results in twins}
+      \end{itemize}
+      \begin{itemize}
+        \item[(a)] State, in words, the event $A \cap B \cap C$.
+        \item[(b)] Find $P(A \cap B \cap C)$.
+      \end{itemize}
+      \begin{itemize}
+        \item[(a)] The event that a U.S. birth results in identical
+        twin females.
+        \item[(b)] From the given information, we have
+        \begin{itemize}
+          \item $P(C) = \frac{1}{90}$
+          \item $P(B|C) = \frac{1}{3}$
+          \item $P(A|B,C) = \frac{1}{2}$
+        \end{itemize}
+        So, $P(A \cap B \cap C) = P(C)P(B|C)P(A|B,C) = \frac{1}{90} \times
+        \frac{1}{3} \times \frac{1}{2} = \frac{1}{540}$.
+      \end{itemize} 
+    \item[6] Two pennies, one with $P(\text{head}) = u$ and one with
+    $P(\text{head}) = w$, are to be tossed together independently. Define
+    \begin{itemize}
+      \item $p_0 = P(\text{0 heads occur})$,
+      \item $p_1 = P(\text{1 head occurs})$,
+      \item $p_2 = P(\text{2 heads occur})$.
+    \end{itemize}
+    Can $u$ and $w$ be chosen so that $p_0 = p_1 = p_2$? Prove your answer.
+    \\\\
+    We have
+    \begin{itemize}
+      \item $p_0 = (1-u)(1-w)$,
+      \item $p_1 = u(1-w) + w(1-u)$,
+      \item $p_2 = uw$.
+    \end{itemize}
+    So, $p_0 = p_2$ implies $(1-u)(1-w) = uw$, which simplifies to
+    $u + w = 1$. Also, $p_1 = p_2$ implies $u(1-w) + w(1-u) = uw$, which
+    simplifies to $ u + w = 3uw$. Combining these two equations, we have
+    $3uw = 1$, or $uw = \frac{1}{3}$. However, since $u + w = 1$, by AM-GM
+    inequality, we have $\frac{u+w}{2} = \frac{1}{2} \ge \sqrt{uw}$, which
+    when squared gives $\frac{1}{4} \ge uw$. This
+    contradicts $uw = \frac{1}{3}$. Therefore, there are no such $u$ and $w$,
+    assuming they are both in $[0,1]$.
+  \end{itemize}
+\end{problem}
+
+\begin{problem}{2}
+  Here is a sample space: $\mathcal{S} = \{a, b, c\}$.
+  \begin{enumerate}
+    \item Explicitly provide the $\sigma$-algebra of all subsets.
+    \item Suppose one may only observe whether the outcome is $a$ or not.
+    Explicitly provide the smallest relevant $\sigma$-algebra. Hint: what
+    events may be obtained by complements, unions and intersections,
+    starting only with ${a}$?
+  \end{enumerate}
+\end{problem}
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+\end{document}
