@@ -17,6 +17,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{enumitem}
+\usepackage{cancel}
 
 \setlist[enumerate,1]{label={(\alph*)}} %this changes enumerate to (a),(b),...
 
@@ -348,8 +349,153 @@ Stat 610 Distribution Theory} %if necessary, replace with your course title
     it should not depend on either $a$ or $b$?
     \item Let $a \to b$ to find $\Prob(X=b)$.
   \end{enumerate}
-  
+  \begin{enumerate}
+    \item We have
+    \[
+      \Prob(a < X \le b) = \Prob(X > a) - \Prob(X > b) = e^{-a/10} - e^{-b/10}.
+    \]
+    Also, we have
+    \[
+      \frac{1}{10}\int_a^b e^{-t/10}dt = \left[-e^{-t/10}\right]_a^b 
+      = e^{-a/10} - e^{-b/10}.
+    \]
+    Thus, $\Prob(a < X \le b) = \frac{1}{10}\int_a^b e^{-t/10}dt$.
+    \item We can define
+    \[
+      g(t) = \begin{cases}
+        \frac{1}{10}e^{-t/10}, & t > 0,\\
+        0, & t \le 0.
+      \end{cases}
+    \]
+    Then, for any $a < b$, we have
+    \[
+      \Prob(a < X \le b) = \int_a^b g(t)dt.
+    \]
+    \item Letting $a \to b$, we have
+    \[
+      \Prob(X = b) = \Prob(b < X \le b) = \int_b^b g(t)dt = 0.
+    \]
+  \end{enumerate}
 \end{problem}
+
+\begin{problem}{6}
+  Suppose a communications system is designed with $K$ circuits so that 
+  if one is in use another can be chosen. Assume $j$ circuits are in use 
+  and a circuit is chosen at random (without replacement) until a circuit 
+  not in use is selected.
+  \begin{enumerate}
+    \item What is the chance that at least two selections are required?
+    \item What is the chance that exactly two selections are required?
+    \item What is the chance that exactly $i$ selections are required, 
+    for $i = 1, 2, \dots$?
+  \end{enumerate}
+  \begin{enumerate}
+    \item If the first selection is a circuit that is in use, then at least 
+    two selections are required, so the probability is just $\frac{j}{K}$.
+    \item The first selection must be a circuit that is in use,
+    which happens with probability $\frac{j}{K}$, and the second selection
+    must be a circuit that is not in use, which happens with probability
+    $\frac{K-j}{K-1}$, given that the first selection is a circuit that is
+    in use. Thus, the probability that exactly two selections are required is
+    \[
+      \frac{j}{K} \times \frac{K-j}{K-1} = \frac{j(K-j)}{K(K-1)}.
+    \]
+    \item The chance that exactly $i$ selections are required is
+    \[
+      \frac{j}{K} \times \frac{j-1}{K-1} \times \cdots \times
+      \frac{j-(i-2)}{K-(i-2)} \times \frac{K-j}{K-(i-1)},
+    \]
+    since the first $i-1$ selections must be circuits that are in use,
+    and the $i$-th selection must be a circuit that is not in use.
+    (Note that this still handles the case $i \ge j+2$ correctly,
+    since that guarantees a 0 in the numerator of one of the fractions,
+    and we know selecting more than j in use circuits is not possible
+    without replacement.)
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{7} Quordle is a daily word game in which you have 
+  9 tries to guess four 5-letter words. Suppose the four words are 
+  selected at random (without replacement) from a dictionary of 2309 
+  5-letter words (which is what a similar game has).
+  \begin{enumerate}
+    \item How many possible 4 word combinations are there?
+    \item Find the number of ways that $k$ daily games have no words in common, 
+    and use that to find the probability that at least one word is repeated. 
+    This is similar to the birthday problem discussed in class, 
+    except the sampling method is different.
+    \item Find the probability that at least one word is repeated for 
+    $k = 2, 3,\dots, 20$, using \textbf{R}.
+    Note: \texttt{choose(n,i)} gives the binomial coefficient $\binom{n}{i}$
+    and \texttt{lchoose(n,i)} is the logarithm of that.
+    \item What is the smallest number of daily games for which the probability 
+    that at least one word is repeated is at least 0.50? 
+    (Later we will see that this is the median number of games to be played 
+    until a word is repeated.)
+  \end{enumerate}
+  \begin{enumerate}
+    \item The number of possible 4 word combinations is
+    \[
+      \binom{2309}{4} = \frac{2309!}{4!\times2305!} = 
+      \frac{2309\times2308\times2307\times2306}{4\times3\times2\times1}
+      = 1181286914501.
+    \]
+    \item The number of ways that $k$ daily games have no words in common is
+    \[
+    \begin{aligned}
+      &\binom{2309}{4} \times \binom{2305}{4} \times \cdots \times
+      \binom{2309-4(k-1)}{4}\\ 
+      &= \frac{2309!}{4!\times\cancel{2305!}} \times
+      \frac{\cancel{2305!}}{4!\times\cancel{2301!}} \times \cdots \times
+      \frac{\cancel{(2309-4(k-1))!}}{4!\times(2309-4k)!} \\
+      &= \frac{2309!}{(4!)^k\times(2309-4k)!}.
+    \end{aligned}
+    \]
+    \item Code adapted from \texttt{birthday.r}:
+    \begin{lstlisting}[language=R, caption=quordle.r]
+### quordle.r
+### compute probability that no 2 games have same words in k games
+### solution is 2309!/((4!)^k*(2309-4k)!*(2309 choose 4)^k)
+
+### computing the probabilities
+kgames = seq(1,20)  # vector of choices for k
+probs = exp(lfactorial(2309)-kgames*lfactorial(4)-
+lfactorial(2309-4*kgames)-kgames*lchoose(2309, 4))
+probs_c = 1-probs
+cbind(kgames,probs,probs_c) 
+    \end{lstlisting}
+    The output is
+    \begin{lstlisting}[caption=Output of quordle.r]
+      kgames     probs      probs_c
+ [1,]      1 1.0000000 1.470823e-12
+ [2,]      2 0.9930841 6.915904e-03
+ [3,]      3 0.9793836 2.061637e-02
+ [4,]      4 0.9591691 4.083088e-02
+ [5,]      5 0.9328414 6.715864e-02
+ [6,]      6 0.9009182 9.908179e-02
+ [7,]      7 0.8640176 1.359824e-01
+ [8,]      8 0.8228376 1.771624e-01
+ [9,]      9 0.7781344 2.218656e-01
+[10,]     10 0.7306994 2.693006e-01
+[11,]     11 0.6813356 3.186644e-01
+[12,]     12 0.6308357 3.691643e-01
+[13,]     13 0.5799610 4.200390e-01
+[14,]     14 0.5294236 4.705764e-01
+[15,]     15 0.4798707 5.201293e-01
+[16,]     16 0.4318731 5.681269e-01
+[17,]     17 0.3859167 6.140833e-01
+[18,]     18 0.3423978 6.576022e-01
+[19,]     19 0.3016219 6.983781e-01
+[20,]     20 0.2638053 7.361947e-01
+    \end{lstlisting}
+    The probability that at least one word is repeated is listed in the
+    \texttt{probs\_c} column.
+    \item As seen in the output above, the smallest number of daily games
+    for which the probability that at least one word is repeated is at least
+    0.50 is 15.
+  \end{enumerate}
+\end{problem}
+
 % --------------------------------------------------------------
 %     You don't have to mess with anything below this line.
 % --------------------------------------------------------------
