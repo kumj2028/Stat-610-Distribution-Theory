@@ -1,0 +1,182 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to writeLaTeX --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you give
+% someone the link to this page, they can edit at the same
+% time. See the help menu above for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+\usepackage{cancel}
+
+\setlist[enumerate,1]{label={(\alph*)}} %this changes enumerate to (a),(b),...
+
+\usepackage{graphicx} %package to manage images
+
+\newcommand{\A}{{\mathcal{A}}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\CC}{{\mathcal{C}}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\Z}{{\mathbb Z}}
+
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\End}{{\rm End}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Ima}{{\rm Im}}
+\newcommand{\Ker}{{\rm Ker}}
+\newcommand{\Mor}{{\rm Mor}}
+\newcommand{\Rad}{{\rm Rad}}
+\newcommand{\Prob}{{\rm P}}
+
+\renewcommand\labelitemi{-} %this changes itemize bullet points to dashes (-)
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Homework 2}%replace X with the appropriate number
+\author{Mengxiang Jiang\\ %replace with your name
+Stat 610 Distribution Theory} %if necessary, replace with your course title
+ 
+\maketitle
+ 
+\begin{problem}{1} %You can use theorem, exercise, problem, or question here.
+  \textit{Statistical Inference} by Casella and Berger, 2nd Edition, Chapter 1, 
+  Exercise 34.
+  \begin{itemize}
+    \item[34.] Two litters of a particular rodent species have been born,
+    one with two brown-haired and one gray-haired (litter 1), and the other
+    with three brown-haired and two gray-haired (litter 2). We select a
+    litter at random and then select an offspring at random from the selected
+    litter.
+    \begin{enumerate}
+      \item What is the probability that the animal chosen is brown-haired?
+      \item Given that a brown-haired offspring was selected, what is the
+      probability that the sampling was from litter 1?
+    \end{enumerate}
+    \begin{enumerate}
+      \item Let $A$ be the event that the animal chosen is brown-haired,
+      Let $B_i$ be the event that the sampling was from litter $i$, $i=1,2$.
+      Then we have 
+      \[
+        \Prob(A) = \Prob(A|B_1)\Prob(B_1) + \Prob(A|B_2)\Prob(B_2) 
+        = \frac{2}{3}\cdot\frac{1}{2} + \frac{3}{5}\cdot\frac{1}{2} 
+        = \frac{19}{30}.
+      \]
+      \item By Bayes' theorem, we have
+      \[
+        \Prob(B_1|A) = \frac{\Prob(A|B_1)\Prob(B_1)}{\Prob(A)} 
+        = \frac{\frac{2}{3}\cdot\frac{1}{2}}{\frac{19}{30}} 
+        = \frac{5}{19}.
+      \]
+    \end{enumerate}
+  \end{itemize}
+\end{problem}
+
+\begin{problem}{2}
+  \begin{enumerate}
+    \item Prove this alternative to Bayes' rule:
+    \[
+      \log\left(\frac{\Prob(A|B)}{\Prob(A^c|B)}\right)
+      = \log\left(\frac{\Prob(A)}{\Prob(A^c)}\right)
+      + \log\left(\frac{\Prob(B|A)}{\Prob(B|A^c)}\right).
+    \]
+    This expression is useful in genetics: conditional log odds of disease
+    $(A)$ given gene $(B)$ = unconditional log odds of disease + log ratio
+    of gene prevalence.
+    \item Suppose $B_1,\dots,B_n$ are disjoint. Show that
+    \[
+      \Prob\left(B_j|\bigcup_{i=1}^n B_i\right) = \frac{\Prob(B_j)}
+      {\sum_{i=1}^n \Prob(B_i)}. \quad \text{for each } j \in \{1,\dots,n\}.
+    \]
+  \end{enumerate}
+  \begin{enumerate}
+    \item By definition, we have
+    \[
+      \log\left(\frac{\Prob(A|B)}{\Prob(A^c|B)}\right)
+      = \log\left(\frac{\frac{\Prob(A\cap B)}{\Prob(B)}}
+      {\frac{\Prob(A^c\cap B)}{\Prob(B)}}\right)
+      = \log\left(\frac{\Prob(A\cap B)}{\Prob(A^c\cap B)}\right).
+    \]
+    By the definition of conditional probability again and
+    $\log(AB) = \log(A)+\log(B)$, we have
+    \[
+      \log\left(\frac{\Prob(A\cap B)}{\Prob(A^c\cap B)}\right)
+      = \log\left(\frac{\Prob(A)\Prob(B|A)}{\Prob(A^c)\Prob(B|A^c)}\right)
+      = \log\left(\frac{\Prob(A)}{\Prob(A^c)}\right)
+      + \log\left(\frac{\Prob(B|A)}{\Prob(B|A^c)}\right).
+    \]
+  \end{enumerate}
+\end{problem}
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+\end{document}
