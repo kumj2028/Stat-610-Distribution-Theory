@@ -1,0 +1,567 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to writeLaTeX --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you give
+% someone the link to this page, they can edit at the same
+% time. See the help menu above for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+\usepackage{cancel}
+
+\setlist[enumerate,1]{label={(\alph*)}} %this changes enumerate to (a),(b),...
+
+\usepackage{graphicx} %package to manage images
+
+\newcommand{\A}{{\mathcal{A}}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\CC}{{\mathcal{C}}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\Z}{{\mathbb Z}}
+
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\End}{{\rm End}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Ima}{{\rm Im}}
+\newcommand{\Ker}{{\rm Ker}}
+\newcommand{\Mor}{{\rm Mor}}
+\newcommand{\Rad}{{\rm Rad}}
+\newcommand{\Prob}{{\sf P}}
+\newcommand{\E}{{\sf E}}
+\newcommand{\Var}{{\sf Var}}
+
+\renewcommand\labelitemi{-} %this changes itemize bullet points to dashes (-)
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Homework 3}%replace X with the appropriate number
+\author{Mengxiang Jiang\\ %replace with your name
+Stat 610 Distribution Theory} %if necessary, replace with your course title
+ 
+\maketitle
+
+\begin{problem}{1}
+  Let $Y$ have the Poisson($\lambda$) distribution with pmf
+  \[
+    f_Y(y) = \frac{\lambda^ye^{-\lambda}}{y!}, \quad y = 0, 1, 2, \ldots
+  \]
+  Find $\E(Y)$ and $\E(Y(Y-1))$, and use these to get $\Var(Y)$.
+  (Recall the binomial example in class.)
+  \[
+    \begin{aligned}
+      \E(Y) &= \sum_{y=0}^{\infty} y \frac{\lambda^y e^{-\lambda}}{y!} \\
+      &= \lambda \sum_{y=1}^{\infty} \frac{\lambda^{y-1}e^{-\lambda}}{(y-1)!} \\
+      &= \lambda \sum_{k=0}^{\infty} \frac{\lambda^k e^{-\lambda}}{k!} 
+      \quad (k = y-1) \\
+      &= \lambda \quad (\text{since sum of pmf is just 1})
+    \end{aligned}
+  \]
+  \[
+    \begin{aligned}
+      \E(Y(Y-1)) &= \sum_{y=0}^{\infty} y(y-1) \frac{\lambda^y e^{-\lambda}}{y!} \\
+      &= \lambda^2 \sum_{y=2}^{\infty} \frac{\lambda^{y-2} e^{-\lambda}}{(y-2)!} \\
+      &= \lambda^2 \sum_{k=0}^{\infty} \frac{\lambda^k e^{-\lambda}}{k!}
+      \quad (k = y-2) \\
+      &= \lambda^2 \quad (\text{since sum of pmf is just 1})
+    \end{aligned}
+  \]
+  \[
+    \begin{aligned}
+      \Var(Y) &= \E(Y(Y-1)) - \E(Y)(\E(Y)-1) \\
+      &= \lambda^2 - \lambda(\lambda - 1) \\
+      &= \lambda
+    \end{aligned}
+  \]
+\end{problem}
+
+\pagebreak
+
+\begin{problem}{2}
+  Find $\E(X)$ for the random variable in Problem 8 of Assignment 2.
+  \\\\
+  From the assignment, we know that the pmf of $X$ is
+  \[
+    f_X(x) = \frac14 \left(\frac23\right)^x + \left(\frac13\right)^x
+    \quad x = 1, 2, \ldots
+  \]
+  \[
+    \begin{aligned}
+      \E(X) &= \sum_{x=1}^{\infty} x \left[ \frac14 \left(\frac23\right)^x
+      + \left(\frac13\right)^x \right] \\
+      &= \frac14 \sum_{x=1}^{\infty} x \left(\frac23\right)^x
+      + \sum_{x=1}^{\infty} x \left(\frac13\right)^x \\
+      &(\text{arithmetico-geometric series: } \sum_{x=1}^{\infty} xr^x = 
+      \frac{r}{(1-r)^2} \text{ for }|r| < 1)\\
+      &= \frac14 \cdot \frac{\frac23}{(1-\frac23)^2} 
+      + \frac{\frac13}{(1-\frac13)^2} \\
+      &= \frac14 \cdot 6 + \frac34\\
+      &= \frac{9}{4}
+    \end{aligned}
+  \]
+\end{problem}
+
+\begin{problem}{3} 
+  \textit{Statistical Inference} by Casella and Berger, 2nd Edition, Chapter 2, 
+  Exercise 4.
+  \begin{itemize}
+    \item[4.] Let $\lambda$ be a fixed positive constant, and define the function
+    $f(x)$ by $f(x) = \frac12 \lambda e^{-\lambda x}$ if $x \ge 0$ and
+    $f(x) = \frac12 \lambda e^{\lambda x}$ if $x < 0$.
+    \begin{enumerate}
+      \item Verify that $f(x)$ is a pdf.
+      \item If $X$ is a random variable with pdf given by $f(x)$, find
+      $\Prob(X < t)$ for all $t$. Evaluate all integrals.
+      \item Find $\Prob(|X| < t)$ for all $t$. Evaluate all integrals.
+      \item Find $\E(X)$, $\Var(X)$, and the standard deviation of $X$.
+    \end{enumerate}
+
+    \begin{enumerate}
+      \item To verify that $f(x)$ is a pdf, we need to show that
+      $f(x) \ge 0$ for all $x$ and $\int_{-\infty}^{\infty} f(x) dx = 1$.
+      Since $\lambda > 0$ and $e^x$ is positive for all $x \in \R$, 
+      $f(x) \ge 0$ for all $x$.
+      \[
+        \begin{aligned}
+        \int_{-\infty}^{\infty} f(x) dx &= \int_{-\infty}^{0} 
+        \frac12 \lambda e^{\lambda x} dx + \int_{0}^{\infty} 
+        \frac12 \lambda e^{-\lambda x} dx \\
+        &= \left. \frac12 e^{\lambda x} \right|_{-\infty}^{0} 
+        + \left. -\frac12 e^{-\lambda x} \right|_{0}^{\infty} \\
+        &= \frac12 + \frac12 = 1.
+        \end{aligned}
+      \]
+      \item 
+      If $t \le 0$, then
+      \[
+        \begin{aligned}
+          \Prob(X < t) &= \int_{-\infty}^{t} f(x) dx
+          = \int_{-\infty}^{t} \frac12 \lambda e^{\lambda x} dx \\
+          &= \left. \frac12 e^{\lambda x} \right|_{-\infty}^{t} \\
+          &= \frac12 e^{\lambda t}.
+        \end{aligned}
+      \]
+      If $t > 0$, then
+      \[
+        \begin{aligned}
+          \Prob(X < t) &= \int_{-\infty}^{t} f(x) dx
+          = \int_{-\infty}^{0} \frac12 \lambda e^{\lambda x} dx
+          + \int_{0}^{t} \frac12 \lambda e^{-\lambda x} dx \\
+          &= \left. \frac12 e^{\lambda x} \right|_{-\infty}^{0}
+          + \left. -\frac12 e^{-\lambda x} \right|_{0}^{t} \\
+          &= \frac12 -\frac12 e^{-\lambda t} + \frac12 = 1 - 
+          \frac12 e^{-\lambda t}.
+        \end{aligned}
+      \]
+      \item This only makes sense for $t > 0$.
+      \[
+        \begin{aligned}
+          \Prob(|X| < t) &= \Prob(-t < X < t) \\
+          &= \int_{-t}^{t} f(x) dx \\
+          &= \int_{-t}^{0} \frac12 \lambda e^{\lambda x} dx
+          + \int_{0}^{t} \frac12 \lambda e^{-\lambda x} dx \\
+          &= \left. \frac12 e^{\lambda x} \right|_{-t}^{0}
+          + \left. -\frac12 e^{-\lambda x} \right|_{0}^{t} \\
+          &= \frac12 -\frac12 e^{\lambda t} + \frac12 = 1 - 
+          \frac12 e^{\lambda t}.
+        \end{aligned}
+      \]
+      \item 
+      \[
+        \begin{aligned}
+          \E(X) &= \int_{-\infty}^{\infty} x f(x) dx \\
+          &= \int_{-\infty}^{0} x \frac12 \lambda e^{\lambda x} dx
+          + \int_{0}^{\infty} x \frac12 \lambda e^{-\lambda x} dx \\
+          &(\text{using integration by parts with } u = x, dv = f(x)dx) \\
+          &= \left. \frac12 x e^{\lambda x} \right|_{-\infty}^{0}
+          - \int_{-\infty}^{0} \frac12 e^{\lambda x} dx
+          + \left. -\frac12 x e^{-\lambda x} \right|_{0}^{\infty}
+          + \int_{0}^{\infty} \frac12 e^{-\lambda x} dx \\
+          &= 0 - \left. \frac12 e^{\lambda x} \right|_{-\infty}^{0}
+          + 0 + \left. -\frac12 e^{-\lambda x} \right|_{0}^{\infty} \\
+          &= -\frac12 + \frac12 = 0.
+        \end{aligned}
+      \]
+      \[
+        \begin{aligned}
+          \E(X^2) &= \int_{-\infty}^{\infty} x^2 f(x) dx \\
+          &= \int_{-\infty}^{0} x^2 \frac12 \lambda e^{\lambda x} dx
+          + \int_{0}^{\infty} x^2 \frac12 \lambda e^{-\lambda x} dx \\
+          &(\text{by symmetry}) \\
+          &= 2 \int_{0}^{\infty} x^2 \frac12 \lambda e^{-\lambda x} dx \\
+          &= \lambda \int_{0}^{\infty} x^2 e^{-\lambda x} dx \\
+          &(\text{using } \int_{0}^{\infty} y^me^{-y}dy = m! 
+          \text{ and } y = \lambda x) \\
+          &= \lambda \int_{0}^{\infty} \left(\frac{y}{\lambda}\right)^2
+          e^{-y} \frac{dy}{\lambda} \\
+          &= \frac{1}{\lambda^2} \int_{0}^{\infty} y^2 e^{-y} dy \\
+          &= \frac{2!}{\lambda^2} = \frac{2}{\lambda^2}.
+        \end{aligned}
+      \]
+      \[
+        \begin{aligned}
+          \Var(X) &= \E(X^2) - [\E(X)]^2 \\
+          &= \frac{2}{\lambda^2} - 0^2 = \frac{2}{\lambda^2}.
+        \end{aligned}
+      \]
+      \[
+        \sqrt{\Var(X)} = \sqrt{\frac{2}{\lambda^2}} 
+        = \frac{\sqrt{2}}{\lambda}.
+      \]
+    \end{enumerate}
+  \end{itemize}
+\end{problem}
+
+\begin{problem}{4}
+  Let $f(x) = 4xe^{-2x}$ for $x > 0$ and $f(x) = 0$ otherwise.
+  (Recall Problem 8 of Assignment 3.) Now find $\E(X)$ and $\Var(X)$. 
+  Hint: Theorem 2.16 in the notes.
+  \begin{theorem}{2.16}
+    $\int_{0}^{\infty} y^me^{-y}dy = m!$ for any nonnegative integer $m$.
+  \end{theorem}
+  \[
+    \begin{aligned}
+      \E(X) &= \int_{0}^{\infty} x f(x) dx \\
+      &= \int_{0}^{\infty} x 4x e^{-2x} dx \\
+      &= 4 \int_{0}^{\infty} x^2 e^{-2x} dx \\
+      &(\text{using } \int_{0}^{\infty} y^me^{-y}dy = m! 
+      \text{ and } y = 2x) \\
+      &= 4 \int_{0}^{\infty} \left(\frac{y}{2}\right)^2
+      e^{-y} \frac{dy}{2} \\
+      &= \frac{4}{8} \int_{0}^{\infty} y^2 e^{-y} dy \\
+      &= \frac12 \cdot 2! = 1.
+    \end{aligned}
+  \]
+  \[
+    \begin{aligned}
+      \E(X^2) &= \int_{0}^{\infty} x^2 f(x) dx \\
+      &= \int_{0}^{\infty} x^2 4x e^{-2x} dx \\
+      &= 4 \int_{0}^{\infty} x^3 e^{-2x} dx \\
+      &(\text{using } \int_{0}^{\infty} y^me^{-y}dy = m! 
+      \text{ and } y = 2x) \\
+      &= 4 \int_{0}^{\infty} \left(\frac{y}{2}\right)^3
+      e^{-y} \frac{dy}{2} \\
+      &= \frac{4}{16} \int_{0}^{\infty} y^3 e^{-y} dy \\
+      &= \frac14 \cdot 3! = \frac32.
+    \end{aligned}
+  \]
+  \[
+    \begin{aligned}
+      \Var(X) &= \E(X^2) - [\E(X)]^2 \\
+      &= \frac32 - 1^2 = \frac12.
+    \end{aligned}
+  \]
+\end{problem}
+
+\begin{problem}{5} Let $T$ have pdf $f_T(v) = 60v^3(1-v)^2$, $0 < v < 1$.
+  \begin{enumerate}
+    \item Verify that $f_T(v)$ is indeed a pdf.
+    \item Find the mean of $T$.
+    \item Find the pdf for $R=T/(1-T)$.
+    \item Use the \underline{pdf for $T$} to find $\E(R)$ 
+    (recalling what Theorem 2.17 in the notes says).
+    \item What does Jensen's inequality say about the relationship between
+    $\E(R)$ and $\E(T)/(1-\E(T))$? Confirm by evaluating both.
+  \end{enumerate}
+  \begin{theorem}{2.17}
+    Let $Y = h(X)$. The value of $\E(Y)$ (computed using $F_Y$) 
+    is the same as the value of $\E(h(X))$ (computed using $F_X$).
+  \end{theorem}
+  \begin{enumerate}
+    \item We need to show that
+    $f_T(v) \ge 0$ for all $v$ and $\int_{-\infty}^{\infty} f_T(v) dv = 1$.\\
+    Since $0 < v < 1$, $v^3 > 0$ and $(1-v)^2 > 0$, 
+    so $f_T(v) \ge 0$ for all $v$.
+    \[
+      \begin{aligned}
+        \int_{-\infty}^{\infty} f_T(v) dv &= \int_{0}^{1} 60v^3(1-v)^2 dv \\
+        &= 60 \int_{0}^{1} v^3 (1 - 2v + v^2) dv \\
+        &= 60 \int_{0}^{1} (v^3 - 2v^4 + v^5) dv \\
+        &= 60 \left[ \frac{v^4}{4} - \frac{2v^5}{5} + \frac{v^6}{6} 
+        \right]_{0}^{1} \\
+        &= 60 \left( \frac14 - \frac25 + \frac16 \right) 
+        = 60 \cdot \frac{15-24+10}{60} = 60 \cdot \frac{1}{60} = 1.
+      \end{aligned}
+    \]
+    \item
+    \[
+      \begin{aligned}
+        \E(T) &= 60 \int_{0}^{1} v^4 (1 - 2v + v^2) dv \\
+        &= 60 \int_{0}^{1} (v^4 - 2v^5 + v^6) dv \\
+        &= 60 \left[ \frac{v^5}{5} - \frac{2v^6}{6} + \frac{v^7}{7} 
+        \right]_{0}^{1} \\
+        &= 60 \left( \frac15 - \frac13 + \frac17 \right) 
+        = 60 \cdot \frac{1}{105} = \frac{4}{7}.
+      \end{aligned}
+    \]
+    \item Since $R = \frac{T}{1-T}$, we have $T = \frac{R}{1+R}$.
+    Using the mnemonic \[
+      f_Y(y) = f_X(x) \left| \frac{dx}{dy} \right|,
+    \]
+    we have
+    \[
+      \begin{aligned}
+        f_R(r) &= f_T\left(\frac{r}{1+r}\right) \left| \frac{d}{dr}
+        \left(\frac{r}{1+r}\right) \right| \\
+        &= f_T\left(\frac{r}{1+r}\right) \cdot \frac{1}{(1+r)^2} \\
+        &= 60 \left(\frac{r}{1+r}\right)^3 
+        \left(1 - \frac{r}{1+r}\right)^2 \cdot \frac{1}{(1+r)^2} \\
+        &= 60 \cdot \frac{r^3}{(1+r)^3} \cdot \frac{1}{(1+r)^2} 
+        \cdot \frac{1}{(1+r)^2} = 60 \cdot \frac{r^3}{(1+r)^7}, 
+        r > 0.
+      \end{aligned}
+    \]
+    \item
+    \[
+      \begin{aligned}
+        \E(R) &= \E(h(T)) \quad (h(T) = \frac{T}{1-T}) \\
+        &= \int_{0}^{1} \frac{t}{1-t} 60t^3(1-t)^2 dt \\
+        &= 60 \int_{0}^{1} t^4 (1-t) dt \\
+        &= 60 \int_{0}^{1} (t^4 - t^5) dt \\
+        &= 60 \left[ \frac{t^5}{5} - \frac{t^6}{6} \right]_{0}^{1} \\
+        &= 60 \left( \frac15 - \frac16 \right) = 60 \cdot \frac{1}{30} = 2.
+      \end{aligned}
+    \]
+    \item Since $R = \frac{T}{1-T}$ is a convex function for $0 < T < 1$,
+    by Jensen's inequality, we have
+    \[
+      \E(R) \ge \frac{\E(T)}{1-\E(T)}.
+    \]
+    We have already evaluated $\E(R) = 2$ and $\E(T) = \frac{4}{7}$, so
+    \[
+      \frac{\E(T)}{1-\E(T)} = \frac{\frac{4}{7}}{1-\frac{4}{7}} 
+      = \frac{\frac{4}{7}}{\frac{3}{7}} = \frac{4}{3} < 2 = \E(R).
+    \]
+  \end{enumerate}
+
+\end{problem}
+
+\begin{problem}{6} Prove Theorem 2.21 in the notes.
+  \begin{theorem}{2.21}
+    Suppose $X$ is a rv with $\E(X^2) < \infty$. The value $c$ that minimizes\\
+    $\E((X - c)^2)$ is $c = \mu_X$.
+  \end{theorem}
+  \[
+    \begin{aligned}
+      \E((X - c)^2) &= \E(X^2 - 2cX + c^2) \\
+      &= \E(X^2) - 2c\E(X) + c^2 \\
+      &= \E(X^2) - 2c\mu_X + c^2 \\
+      &= c^2 - 2c\mu_X + \E(X^2).
+    \end{aligned}
+  \]
+  Taking the derivative with respect to $c$, we have
+  \[
+    \frac{d}{dc} \E((X - c)^2) = 2c - 2\mu_X.
+  \]
+  Setting the derivative to 0, we have 
+  \[
+    2c - 2\mu_X = 0 \implies c = \mu_X.
+  \]
+  To confirm that this is a minimum, we take the second derivative 
+  with respect to $c$,
+  \[
+    \frac{d^2}{dc^2} \E((X - c)^2) = 2 > 0.
+  \]
+  Thus, $c = \mu_X$ is the value that minimizes $\E((X - c)^2)$.
+\end{problem}
+
+\begin{problem}{7} 
+  Let $W$ be a positive random variable with finite mean $\mu_W$.
+  \begin{enumerate}
+    \item Suppose $\alpha > 1$. Use Jensen's inequality to 
+    show that $\E(W^\alpha) > \mu_W^\alpha$. (Note: this is valid
+    even if the left-hand side is infinite.)
+    \item Suppose $\alpha < 0$ and show that $\E(W^\alpha) > \mu_W^\alpha$.
+    \item Now suppose $0 < \alpha < 1$. What is true in this case? 
+    Hint: if $g(x)$ is concave then $-g(x)$ is convex.
+  \end{enumerate}
+  \begin{enumerate}
+    \item Since $\alpha > 1$, $g(x) = x^\alpha$ is a convex function for $x > 0$.
+    By Jensen's inequality, we have
+    \[
+      \E(W^\alpha) = \E(g(W)) \ge g(\E(W)) = \mu_W^\alpha.
+    \]
+    \item With $\alpha < 0$, $g(x) = x^\alpha$ is also convex for $x > 0$ (since
+    $g''(x) = \alpha(\alpha-1)x^{\alpha-2} > 0$). By Jensen's inequality, we have
+    \[
+      \E(W^\alpha) = \E(g(W)) \ge g(\E(W)) = \mu_W^\alpha.
+    \]
+    \item Since $0 < \alpha < 1$, $g(x) = x^\alpha$ is a 
+    concave function for $x > 0$.
+    Thus, $-g(x) = -x^\alpha$ is a convex function for $x > 0$.
+    By Jensen's inequality, we have
+    \[
+      \E(-W^\alpha) = \E(-g(W)) \ge -g(\E(W)) = -\mu_W^\alpha,
+    \]
+    which implies that
+    \[
+      \E(W^\alpha) \le \mu_W^\alpha.
+    \]
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{8}
+  Let $f (y) = \frac{\lambda^y e^{-\lambda}}{y!}$ for $y = 0, 1, 2, \ldots$ 
+  be the Poisson($\lambda$) pmf, where $\lambda > 0$. (Recall Problem
+  1 above.) Now show that the mgf is $M (t) = e^{\lambda(e^t-1)}$, 
+  and use the mgf to get the mean and variance.
+  \[
+    \begin{aligned}
+      M(t) &= \E(e^{tY}) = \sum_{y=0}^{\infty} e^{ty} 
+      \frac{\lambda^y e^{-\lambda}}{y!} \\
+      &= e^{-\lambda} \sum_{y=0}^{\infty} \frac{(\lambda e^t)^y}{y!} \\
+      &= e^{-\lambda} e^{\lambda e^t} \quad (\text{by Taylor series of } e^x) \\
+      &= e^{\lambda(e^t - 1)}.
+    \end{aligned}
+  \]
+  \[
+    \begin{aligned}
+      M'(t) &= \lambda e^t e^{\lambda(e^t - 1)} \\
+      M''(t) &= \lambda e^t e^{\lambda(e^t - 1)} + \lambda^2 e^{2t} 
+      e^{\lambda(e^t - 1)}.
+    \end{aligned}
+  \]
+  \[
+    \begin{aligned}
+      \E(Y) &= M'(0) = \lambda e^0 e^{\lambda(e^0 - 1)} = \lambda. \\
+      \E(Y^2) &= M''(0) = \lambda e^0 e^{\lambda(e^0 - 1)} + 
+      \lambda^2 e^{0} e^{\lambda(e^0 - 1)} 
+      = \lambda + \lambda^2. \\
+      \Var(Y) &= \E(Y^2) - [\E(Y)]^2 = (\lambda + \lambda^2) - 
+      \lambda^2 = \lambda.
+    \end{aligned}
+  \]
+
+\end{problem}
+
+\begin{problem}{9}
+  Let $X_m$ have pdf 
+  \[
+    f_{X_m}(x) = \frac{x^{m-1} e^{-x/\beta}}{\beta^m (m-1)!}
+  \] 
+  for $m = 1, 2, \ldots$ and $x > 0, \beta > 0$.
+  \begin{enumerate}
+    \item Show that the mgf for $X_m$ is 
+    $M_{X_m}(t) = (1 - \beta t)^{-m}$ 
+    for $t < 1/\beta$. Hint: use a linear change of variables.
+    \item Use the mgf to derive the mean and variance.
+    \item Show that for any $m, n$, $M_{X_m}(t)M_{X_n}(t) = M_{X_{n+m}}(t)$. 
+    As we shall see, this has a probability interpretation in 
+    terms of sums of independent random variables.
+  \end{enumerate}
+  \begin{enumerate}
+    \item \[
+      \begin{aligned}
+        M_{X_m}(t) &= \E(e^{tX_m}) = \int_{0}^{\infty} e^{tx} 
+        \frac{x^{m-1} e^{-x/\beta}}{\beta^m (m-1)!} dx \\
+        &= \frac{1}{\beta^m (m-1)!} \int_{0}^{\infty} x^{m-1} 
+        e^{-(\frac{1}{\beta} - t)x} dx \\
+        &(\text{let } y = (\frac{1}{\beta} - t)x, dy = 
+        (\frac{1}{\beta} - t)dx) \\
+        &= \frac{1}{\beta^m (m-1)!} \int_{0}^{\infty} 
+        \left(\frac{y}{\frac{1}{\beta} - t}\right)^{m-1} 
+        e^{-y} \frac{dy}{\frac{1}{\beta} - t} \\
+        &= \frac{1}{\beta^m (m-1)! (\frac{1}{\beta} - t)^m}
+        \int_{0}^{\infty} y^{m-1} e^{-y} dy \\
+        &= \frac{(m-1)!}{\beta^m (m-1)! (\frac{1}{\beta} - t)^m}
+        \quad (\text{by Theorem 2.16})\\
+        &= (1 - \beta t)^{-m}.
+      \end{aligned}
+    \]
+    \item \[
+      \begin{aligned}
+        M'_{X_m}(t) &= m\beta (1 - \beta t)^{-m-1} \\
+        M''_{X_m}(t) &= m\beta^2 (m+1) (1 - \beta t)^{-m-2}.
+      \end{aligned}
+    \]
+    \[
+      \begin{aligned}
+        \E(X_m) &= M'_{X_m}(0) = m\beta (1 - 0)^{-m-1} = m\beta. \\
+        \E(X_m^2) &= M''_{X_m}(0) = m\beta^2 (m+1) (1 - 0)^{-m-2} 
+        = m(m+1)\beta^2. \\
+        \Var(X_m) &= \E(X_m^2) - [\E(X_m)]^2 
+        = m(m+1)\beta^2 - (m\beta)^2 = m\beta^2.
+      \end{aligned}
+    \]
+    \item \[
+      \begin{aligned}
+        M_{X_m}(t)M_{X_n}(t) &= (1 - \beta t)^{-m} (1 - \beta t)^{-n} \\
+        &= (1 - \beta t)^{-(m+n)} = M_{X_{m+n}}(t).
+      \end{aligned}
+    \]
+  \end{enumerate}
+\end{problem}
+
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+\end{document}
