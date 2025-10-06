@@ -1,0 +1,320 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to writeLaTeX --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you give
+% someone the link to this page, they can edit at the same
+% time. See the help menu above for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+\usepackage{cancel}
+
+\setlist[enumerate,1]{label={(\alph*)}} %this changes enumerate to (a),(b),...
+
+\usepackage{graphicx} %package to manage images
+
+\newcommand{\A}{{\mathcal{A}}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\CC}{{\mathcal{C}}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\Z}{{\mathbb Z}}
+
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\End}{{\rm End}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Ima}{{\rm Im}}
+\newcommand{\Ker}{{\rm Ker}}
+\newcommand{\Mor}{{\rm Mor}}
+\newcommand{\Rad}{{\rm Rad}}
+\newcommand{\Prob}{{\sf P}}
+\newcommand{\E}{{\sf E}}
+\newcommand{\Var}{{\sf Var}}
+
+\renewcommand\labelitemi{-} %this changes itemize bullet points to dashes (-)
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Exam 1 2023}%replace X with the appropriate number
+\author{Mengxiang Jiang\\ %replace with your name
+Stat 610 Distribution Theory} %if necessary, replace with your course title
+ 
+\maketitle
+ 
+\begin{problem}{1} %You can use theorem, exercise, problem, or question here.
+  The mean and variance of $X \sim \text{binomial}(n, p)$ are $np$ 
+  and $np(1 - p)$, respectively. What is $\E(X(X + 1))$? Try to simplify.
+  \\\\
+  \[
+    \begin{aligned}
+      \E(X(X + 1)) &= \E(X^2 + X) \\
+      &= \E(X^2) + \E(X) \\
+      &= \Var(X) + [\E(X)]^2 + \E(X) \\
+      &= np(1 - p) + (np)^2 + np \\
+      &= n^2p^2 + np.
+    \end{aligned}
+  \]
+\end{problem}
+
+\begin{problem}{2}
+  Let $Y \sim \text{uniform}(1, 3)$.
+  \begin{enumerate}
+    \item Find the pdf for $V = \sqrt{Y}$.
+    \item Find $\E(V)$ and $v_{0.50}$ (the $0.50$-quantile for $V$). 
+    Are they the same value?
+  \end{enumerate} 
+  \begin{enumerate}
+    \item \[
+      f_Y (y) =
+      \begin{cases}
+        \frac{1}{3 - 1} = \frac{1}{2} & \text{if } 1 < y < 3, \\
+        0 & \text{otherwise}.
+      \end{cases}
+    \]
+    Since $V = \sqrt{Y}$, we have $Y = V^2$ and $\frac{dY}{dV} = 2V$.
+    By the change of variables formula, we have
+    \[
+      f_V (v) = f_Y (v^2) \left| \frac{dY}{dV} \right|
+      = f_Y (v^2) \cdot 2v.
+    \]
+    Note that $1 < y < 3$ is equivalent to $1 < v^2 < 3$, or $1 < v < \sqrt{3}$.
+    Thus,
+    \[
+      f_V (v) =
+      \begin{cases}
+        \frac{1}{2} \cdot 2v = v & \text{if } 1 < v < \sqrt{3}, \\
+        0 & \text{otherwise}.
+      \end{cases}
+    \]
+    \item \[
+      \begin{aligned}
+        \E(V) &= \int_{-\infty}^{\infty} v f_V (v) dv \\
+        &= \int_1^{\sqrt{3}} v \cdot v dv \\
+        &= \int_1^{\sqrt{3}} v^2 dv \\
+        &= \left. \frac{v^3}{3} \right|_1^{\sqrt{3}} \\
+        &= \frac{(\sqrt{3})^3}{3} - \frac{1^3}{3} = \frac{3\sqrt{3}-1}{3}.
+      \end{aligned}
+    \]
+    To find $v_{0.50}$, we first find the cdf of $V$.
+    \[
+      F_V (v) =
+      \begin{cases}
+        0 & \text{if } v \le 1, \\
+        \int_1^v t dt = \left. \frac{t^2}{2} \right|_1^v = \frac{v^2}{2} - \frac{1}{2} 
+        = \frac{v^2 - 1}{2} & \text{if } 1 < v < \sqrt{3}, \\
+        1 & \text{if } v \ge \sqrt{3}.
+      \end{cases}
+    \]
+    The $0.50$-quantile must satisfy the equation
+    \[
+      F_V (v_{0.50}) = 0.50.
+    \]
+    Thus,
+    \[
+      \frac{v_{0.50}^2 - 1}{2} = 0.50 \implies v_{0.50}^2 - 1 = 1 \implies v_{0.50}^2 = 2
+      \implies v_{0.50} = \sqrt{2}.
+    \]
+    Note that $\E(V) = \frac{3\sqrt{3}-1}{3} \approx 1.40$ 
+    and $v_{0.50} = \sqrt{2} \approx 1.41$.
+    They are not the same value.
+  \end{enumerate}
+
+\end{problem}
+
+\begin{problem}{3}
+  80\% of connections to a certain server are of Type A 
+  and the other 20\% are of Type B. Let
+  $T$ be the lifetime of a connection.\\
+  For Type A, $T \sim \text{exponential}(1)$: 
+  $\Prob(T \le t| \text{Type A}) = 1 - e^{-t}$.\\
+  For Type B, $T \sim \text{gamma}(2, .5)$: 
+  $\Prob(T \le t| \text{Type B}) = 1 - (1 + 2t)e^{-2t}$.\\
+  \begin{enumerate}
+    \item Provide the cdf and pdf for a randomly chosen connection. 
+    That is, give the unconditional $\Prob(T \le t)$ and then determine the pdf.
+    \item The moment generating function for $T$ is 
+    $M_T (s) = \frac{0.8}{1-s} + \frac{0.2}{(1-0.5s)^{2}}$ for $s < 1$.
+    Use this to find $\E(T)$.
+  \end{enumerate}
+  \begin{enumerate}
+    \item By the law of total probability, we have
+    \[
+      \Prob(T \le t) = \Prob(T \le t | \text{Type A}) \Prob(\text{Type A})
+      + \Prob(T \le t | \text{Type B}) \Prob(\text{Type B}).
+    \]
+    \[
+      \begin{aligned}
+        \Prob(T \le t) &= (1 - e^{-t}) \cdot 0.8 + [1 - (1 + 2t)e^{-2t}] \cdot 0.2 \\
+        &= 0.8 - 0.8e^{-t} + 0.2 - 0.2(1 + 2t)e^{-2t} \\
+        &= 1 - 0.8e^{-t} - 0.2(1 + 2t)e^{-2t},
+      \end{aligned}
+    \]
+    Since this is a cdf, the pdf can be found by differentiating the cdf:
+    \[
+      \begin{aligned}
+        f_T (t) &= \frac{d}{dt} \Prob(T \le t) \\
+        &= \frac{d}{dt} \left[ 1 - 0.8e^{-t} - 0.2(1 + 2t)e^{-2t} \right] \\
+        &= 0 + 0.8e^{-t} - 0.2 \frac{d}{dt} \left[ (1 + 2t)e^{-2t} \right] \\
+        &= 0.8e^{-t} - 0.2 \left[ (1 + 2t)(-2e^{-2t}) + 2e^{-2t} \right] 
+        \quad (\text{by product rule})\\
+        &= 0.8e^{-t} - 0.2 \left[ -2(1 + 2t)e^{-2t} + 2e^{-2t} \right] \\
+        &= 0.8e^{-t} - 0.2 \left[ (-2 - 4t + 2)e^{-2t} \right] \\
+        &= 0.8e^{-t} - 0.2(-4te^{-2t}) = 0.8e^{-t} + 0.8te^{-2t}.
+      \end{aligned}
+    \]
+    \item Using the given mgf, we can find $\E(T)$ as follows.
+    \[
+      \begin{aligned}
+        \E(T) &= M_T' (0) \\
+        &= \frac{d}{ds} \left[ \frac{0.8}{1-s} + 
+        \frac{0.2}{(1-0.5s)^{2}} \right]_{s=0} \\
+        &= 0.8 \frac{d}{ds} (1-s)^{-1} + 
+        0.2 \frac{d}{ds} (1-0.5s)^{-2} \bigg|_{s=0} \\
+        &= 0.8 (-(1-s)^{-2})(-1) + 0.2 (-2)(1-0.5s)^{-3}(-0.5) \bigg|_{s=0} \\
+        &= 0.8 (1-s)^{-2} + 0.2 (1-0.5s)^{-3} \bigg|_{s=0} \\
+        &= 0.8 (1-0)^{-2} + 0.2 (1-0)^{-3} = 0.8 + 0.2 = 1.
+      \end{aligned}
+    \]
+    If we use the pdf found in part (a), we can also find $\E(T)$ as follows.
+    \[
+      \begin{aligned}
+        \E(T) &= \int_{-\infty}^{\infty} t f_T (t) dt \\
+        &= \int_0^{\infty} t (0.8e^{-t} + 0.8te^{-2t}) dt \\
+        &= 0.8 \int_0^{\infty} t e^{-t} dt + 0.8 \int_0^{\infty} t^2 e^{-2t} dt \\
+        &= 0.8 \cdot 1 + 0.8 \cdot \frac{1}{4} \int_0^{\infty} (2t)^2 e^{-2t} dt 
+        \quad (\text{using } \int_0^{\infty} y^m e^{-y} dy = m!) \\
+        &= 0.8 + 0.8 \cdot \frac{1}{4} \int_0^{\infty} y^2 e^{-y} dy
+        \quad (\text{using } y = 2t) \\
+        &= 0.8 + 0.8 \cdot \frac{1}{4} \cdot 2!
+        \quad (\text{using } \int_0^{\infty} y^m e^{-y} dy = m!) \\
+        &= 0.8 + 0.8 \cdot \frac{2}{8} = 0.8 + 0.2 = 1.
+      \end{aligned}
+    \]
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{4}
+  For a giveaway promotional event, a store randomly selects 40 
+  pairs of shoes from its stock of 1000 pairs. The stock consists of 
+  400 Hoka pairs, 350 New Balance pairs and 250 Saucony pairs. 
+  Give expressions for (a) the chance that $x$ Hoka pairs, 
+  $y$ New Balance pairs and $z$ Saucony pairs are selected and for 
+  (b) the chance at least $w$ Hoka or New Balance pairs
+  are selected. Be complete.
+
+  \begin{enumerate}
+    \item By the multivariate hypergeometric distribution, we have
+    \[
+      \Prob(X = x, Y = y, Z = z) = \frac{\binom{400}{x} \binom{350}{y} \binom{250}{z}}
+      {\binom{1000}{40}},
+    \]
+    where $X$, $Y$ and $Z$ are the number of Hoka, New Balance and Saucony pairs
+    selected, respectively, and $x$, $y$ and $z$ are nonnegative integers such that
+    $x + y + z = 40$, $x \le 400$, $y \le 350$ and $z \le 250$.
+    \item Let $A$ be the event that at least $w$ Hoka or New Balance pairs
+    are selected. Then $A = B \cup C$, where $B$ is the event that at least $w$ Hoka pairs
+    are selected and $C$ is the event that at least $w$ New Balance pairs are selected.
+    By the inclusion-exclusion principle, we have
+    \[
+      \Prob(A) = \Prob(B) + \Prob(C) - \Prob(B \cap C).
+    \]
+    We can calculate $\Prob(B)$, $\Prob(C)$ and $\Prob(B \cap C)$ as follows.
+    \[
+      \Prob(B) = \sum_{x=w}^{40} \sum_{y=0}^{40-x} 
+      \frac{\binom{400}{x} \binom{350}{y} \binom{250}{40-x-y}}{\binom{1000}{40}},
+    \]
+    \[
+      \Prob(C) = \sum_{y=w}^{40} \sum_{x=0}^{40-y} 
+      \frac{\binom{400}{x} \binom{350}{y} \binom{250}{40-x-y}}{\binom{1000}{40}},
+    \]
+    \[
+      \Prob(B \cap C) = \sum_{x=w}^{40} \sum_{y=w}^{40-x} 
+      \frac{\binom{400}{x} \binom{350}{y} \binom{250}{40-x-y}}{\binom{1000}{40}}.
+    \]
+    Thus,
+    \[
+      \begin{aligned}
+        \Prob(A) &= \Prob(B) + \Prob(C) - \Prob(B \cap C) \\
+        &= \sum_{x=w}^{40} \sum_{y=0}^{40-x} 
+        \frac{\binom{400}{x} \binom{350}{y} \binom{250}{40-x-y}}{\binom{1000}{40}} \\
+        &\quad + \sum_{y=w}^{40} \sum_{x=0}^{40-y} 
+        \frac{\binom{400}{x} \binom{350}{y} \binom{250}{40-x-y}}{\binom{1000}{40}} \\
+        &\quad - \sum_{x=w}^{40} \sum_{y=w}^{40-x} 
+        \frac{\binom{400}{x} \binom{350}{y} \binom{250}{40-x-y}}{\binom{1000}{40}}.
+      \end{aligned}
+    \]
+  \end{enumerate}
+\end{problem}
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+\end{document}
