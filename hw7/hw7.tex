@@ -1,0 +1,658 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to writeLaTeX --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you give
+% someone the link to this page, they can edit at the same
+% time. See the help menu above for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+\usepackage{cancel}
+
+\setlist[enumerate,1]{label={(\alph*)}} %this changes enumerate to (a),(b),...
+
+\usepackage{graphicx} %package to manage images
+
+\newcommand{\A}{{\mathcal{A}}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\CC}{{\mathcal{C}}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\Z}{{\mathbb Z}}
+
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\End}{{\rm End}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Ima}{{\rm Im}}
+\newcommand{\Ker}{{\rm Ker}}
+\newcommand{\Mor}{{\rm Mor}}
+\newcommand{\Rad}{{\rm Rad}}
+\newcommand{\Prob}{{\sf P}}
+\newcommand{\E}{{\sf E}}
+\newcommand{\Var}{{\sf Var}}
+
+\renewcommand\labelitemi{-} %this changes itemize bullet points to dashes (-)
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Homework 7}%replace X with the appropriate number
+\author{Mengxiang Jiang\\ %replace with your name
+Stat 610 Distribution Theory} %if necessary, replace with your course title
+ 
+\maketitle
+
+\begin{problem}{1}
+  A random sample of size $n$ is obtained without replacement from 
+  a finite population of size $N$ that has 3 separate categories $A,B,C$ 
+  with sizes $M_A, M_B , M_C ,$ respectively, such that
+  $M_A + M_B + M_C = N$.
+  \begin{enumerate}
+    \item Let $X_A, X_B , X_C$ be the numbers of individuals sampled 
+    from the three categories. Find the joint pmf for $(X_A, X_B , X_C)$. 
+    Keep in mind that $X_A + X_B + X_C = n$.
+    \item Now let $Y = X_A + X_B$. Find the joint pmf for $(X_A, Y)$.
+    \item What is the marginal pmf for $Y$? Hint: think about the 
+    sampling and what happens if you ignore the distinction between 
+    categories $A$ and $B$.
+    \item Find the conditional pmf for $X_A$, given $Y = y$. 
+    What distribution is this (name and parameters)?
+  \end{enumerate}
+
+  \begin{enumerate}
+    \item The joint pmf for $(X_A, X_B , X_C)$ is
+    \[
+      \Prob(X_A = x_a, X_B = x_b, X_C = x_c) = 
+      \frac{\binom{M_A}{x_a} \binom{M_B}{x_b} \binom{M_C}{x_c}}
+      {\binom{N}{n}}
+    \]
+    where $x_a + x_b + x_c = n$.
+    \item The joint pmf for $(X_A, Y)$ is
+    \[
+      \Prob(X_A = x_a, Y = y) =
+      \frac{\binom{M_A}{x_a} \binom{M_B}{y - x_a} \binom{M_C}{n - y}}
+      {\binom{N}{n}}
+    \]
+    where $x_a \leq y$ and $y \leq n$.
+    \item The marginal pmf for $Y$ is
+    \[
+      \Prob(Y = y) = 
+      \frac{\binom{M_A + M_B}{y} \binom{M_C}{n - y}}{\binom{N}{n}}
+    \]
+    where $y \leq n$.
+    \item The conditional pmf for $X_A$, given $Y = y$ is
+    \[
+      \Prob(X_A = x_a | Y = y) = 
+      \frac{\binom{M_A}{x_a} \binom{M_B}{y - x_a}}{\binom{M_A + M_B}{y}}
+    \]
+    where $x_a \leq y$. This is a hypergeometric distribution with
+    parameters $M_A + M_B, M_A, y$.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{2}
+  Let $(X, Y)$ have joint cdf $F (x, y) = \Prob(X \le x, Y \le y)$.
+  \begin{enumerate}
+    \item Show that, for $a < b$ and $c < d$,
+      \[
+        \Prob(a < X \le b, c < Y \le d) 
+        = F (b, d) - F (b, c) - F (a, d) + F (a, c).
+      \]
+    \item Simplify the expression in (a) for the independence case: 
+    $F (x, y) = F_X (x)F_Y (y)$.
+  \end{enumerate}
+  \begin{enumerate}
+    \item We have 4 events to consider:
+    \[
+      A = \{X \le b, Y \le d\}, B = \{X \le a, Y \le d\}, 
+      C = \{X \le b, Y \le c\}, D = \{X \le a, Y \le c\}.
+    \]
+    Note that
+    \[
+      \{a < X \le b, c < Y \le d\} = A \setminus (B \cup C) 
+      = A \cap B^c \cap C^c.
+    \]
+    Also note that $B^c \cap C^c = (B \cup C)^c$. 
+    By inclusion-exclusion, we have
+    \[
+      \Prob(B \cup C) = \Prob(B) + \Prob(C) - \Prob(B \cap C) 
+      = \Prob(B) + \Prob(C) - \Prob(D).
+    \]
+    Therefore,
+    \begin{align*}
+      &\Prob(a < X \le b, c < Y \le d) \\
+      =& \Prob(X \le b, Y \le d) - \Prob(X \le a, Y \le d) 
+      - \Prob(X \le b, Y \le c) + \Prob(X \le a, Y \le c) \\
+      =& F (b, d) - F (a, d) - F (b, c) + F (a, c).
+    \end{align*}
+    \item For the independence case, we have
+    \begin{align*}
+       & F (b, d) - F (a, d) - F (b, c) + F (a, c) \\
+      =& F_X (b)F_Y (d) - F_X (a)F_Y (d) 
+      - F_X (b)F_Y (c) + F_X (a)F_Y (c) \\
+      =& (F_X (b) - F_X (a))(F_Y (d) - F_Y (c)).
+    \end{align*}
+  \end{enumerate}
+\end{problem}
+
+\pagebreak
+
+\begin{problem}{3}
+  Suppose $T$ has negative binomial$(2, p)$ distribution and 
+  the conditional pmf for $S$, given $T = t$,
+  is $f_{S|T} (s|t) = \frac{1}{t+1}$, $s \in \{0, . . . , t\}$.
+  \begin{enumerate}
+    \item Find the joint pmf for $(S, T)$. Be sure to indicate 
+    the range with any restrictions.
+    \item Find the marginal pmf for $S$ and the conditional pmf 
+    for $T$, given $S = s$.
+    \item Show that $S$ and $R = T - S$ are independent and have 
+    the same distribution.
+  \end{enumerate}
+  \begin{enumerate}
+    \item The joint pmf for $(S, T)$ is
+    \[
+      f_{S,T} (s,t) = f_{S|T} (s|t) f_T (t) = 
+      \frac{1}{t+1} \binom{t+1}{1} p^2 (1-p)^{t-2}
+      = p^2(1-p)^t
+    \]
+    where $t \in \{0, 1, \ldots\}$ and $s \in \{0, 1, \ldots, t\}$.
+    \item The marginal pmf for $S$ is
+    \[
+      \begin{aligned}
+        f_S (s) &= \sum_{t=0}^{\infty} f_{S,T} (s,t) \\
+        &= \sum_{t=s}^{\infty} p^2 (1-p)^t\\
+        &= p^2\frac{(1-p)^s}{p} = p(1-p)^s
+      \end{aligned}
+    \]
+    The conditional pmf for $T$, given $S = s$ is
+    \[
+      f_{T|S} (t|s) = \frac{f_{S,T} (s,t)}{f_S (s)} 
+      = \frac{p^2(1-p)^t}{p(1-p)^s} = p(1-p)^{t-s}.
+    \]
+    \item The joint pmf for $(S, R)$ is
+    \begin{align*}
+      f_{S,R} (s,r) &= f_{S,T} (s, s+r) \\
+      &= p^2(1-p)^{s+r} \\
+      &= p(1-p)^s \cdot p(1-p)^r \\
+      &= f_S (s) \cdot f_R (r).
+    \end{align*}
+    Therefore, $S$ and $R$ are independent. Also, we have
+    \[
+      f_R (r) = p(1-p)^r,
+    \]
+    which is the same as the distribution of $S$.
+  \end{enumerate}
+\end{problem}
+
+\pagebreak
+
+\begin{problem}{4}
+  Suppose $S \sim \text{binomial}(m, p)$ and 
+  $T \sim \text{binomial}(n, p)$ (same second parameter $p$), with $S$ and
+  $T$ independent. Use the convolution formula to prove
+  $S + T \sim \text{binomial}(m + n, p)$. Hint: factor out the 
+  result and observe that a hypergeometric pmf remains.
+  \\\\
+  Let $X = S + T$. By the convolution formula, we have
+  \begin{align*}
+    f_X (x) &= \sum_s
+    f_S (s) f_T (x - s) \\
+    &= \sum_{s}
+    \binom{m}{s} p^s (1-p)^{m-s} 
+    \binom{n}{x-s} p^{x-s} (1-p)^{n-(x-s)} \\
+    &= p^x (1-p)^{m+n-x} 
+    \sum_{s}
+    \binom{m}{s} \binom{n}{x-s} \\
+    &= p^x (1-p)^{m+n-x} \binom{m+n}{x}
+  \end{align*}
+  where the last equality follows from Vandermonde's identity:
+  \[
+    \sum_{s}
+    \binom{m}{s} \binom{n}{x-s} = \binom{m+n}{x}.
+  \]
+  Therefore, $X \sim \text{binomial}(m + n, p)$.
+\end{problem}
+
+\begin{problem}{5}
+  \textit{Statistical Inference} by Casella and Berger, 2nd Edition, Chapter 4, 
+  Exercise 4.
+  \begin{itemize}
+    \item [4.] A pdf is defined by
+    \[
+      f(x,y) = \begin{cases}
+        C(x+2y) & \text{if } 0 < y < 1 \text{ and } 0 < x < 2 \\
+        0 & \text{otherwise.}
+      \end{cases}
+    \]
+    \begin{enumerate}
+      \item Find the value of $C$.
+      \item Find the marginal distribution of $X$.
+      \item Find the joint cdf of $X$ and $Y$, be sure to give
+      the joint cdf for all $(x,y)$ in the real plane, and then
+      check yourself by deriving the joint pdf for all $(x,y)$.
+      \item Find $\Prob(Y^2 < X < \sqrt{Y})$.
+      \item Find $\Prob(X + 2Y \le t)$ for $t \in [0,4]$ and deduce the
+      pdf for $T = X + 2Y$. You will need to consider a couple cases
+      of the double integral separately. Be sure to check that your
+      pdf is valid.
+    \end{enumerate}
+
+    \begin{enumerate}
+      \item To find $C$, we have
+      \begin{align*}
+        1 &= \int_0^1 \int_0^2 C(x + 2y) \, dx \, dy \\
+        &= C \int_0^1 \left[ \frac{x^2}{2} + 2yx \right]_{0}^{2} dy \\
+        &= C \int_0^1 (2 + 4y) dy \\
+        &= C \left[ 2y + 2y^2 \right]_{0}^{1} = 4C.
+      \end{align*}
+      Therefore, $C = \frac{1}{4}$.
+      \item The marginal distribution of $X$ is
+      \begin{align*}
+        f_X (x) &= \int_0^1 f(x,y) \, dy \\
+        &= \int_0^1 \frac{1}{4} (x + 2y) \, dy \\
+        &= \frac{1}{4} \left[ xy + y^2 \right]_{0}^{1} = 
+        \frac{x + 1}{4}
+      \end{align*}
+      where $0 < x < 2$.
+      \item The joint cdf of $X$ and $Y$ is
+      \[
+        F(x,y) = \begin{cases}
+          0 & \text{if } x \le 0 \text{ or } y \le 0 \\
+          \int_0^y \int_0^x \frac{1}{4} (u + 2v) \, du \, dv & 
+          \text{if } 0 < x < 2 \text{ and } 0 < y < 1 \\
+          \int_0^1 \int_0^x \frac{1}{4} (u + 2v) \, du \, dv & 
+          \text{if } 0 < x < 2 \text{ and } y \ge 1 \\
+          \int_0^y \int_0^2 \frac{1}{4} (u + 2v) \, du \, dv & 
+          \text{if } x \ge 2 \text{ and } 0 < y < 1 \\
+          1 & \text{if } x \ge 2 \text{ and } y \ge 1
+        \end{cases}
+      \]
+      Calculating the integrals, we have
+      \[
+        F(x,y) = \begin{cases}
+          0 & \text{if } x \le 0 \text{ or } y \le 0 \\
+          \frac{x^2y}{8} + \frac{xy^2}{4} & 
+          \text{if } 0 < x < 2 \text{ and } 0 < y < 1 \\
+          \frac{x^2}{8} + \frac{x}{4} & 
+          \text{if } 0 < x < 2 \text{ and } y \ge 1 \\
+          \frac{y}{2} + \frac{y^2}{2} & 
+          \text{if } x \ge 2 \text{ and } 0 < y < 1 \\
+          1 & \text{if } x \ge 2 \text{ and } y \ge 1
+        \end{cases}
+      \]
+      Taking the partial derivatives with respect to both $x$ and $y$, 
+      we have
+      \[
+        \frac{\partial^2}{\partial x \partial y} F(x,y) = \begin{cases}
+          \frac{1}{4} (x + 2y) & 
+          \text{if } 0 < x < 2 \text{ and } 0 < y < 1 \\
+          0 & \text{otherwise.}
+        \end{cases}
+      \]
+      This matches the original joint pdf.
+      \item We have
+      \begin{align*}
+        \Prob(Y^2 < X < \sqrt{Y}) &= 
+        \int_0^1 \int_{y^2}^{\sqrt{y}} \frac{1}{4} (x + 2y) \, dx \, dy \\
+        &= \int_0^1 \frac{1}{4} \left[ \frac{x^2}{2} + 2yx \right]_{y^2}^{\sqrt{y}} dy \\
+        &= \int_0^1 \frac{1}{4} \left( 
+        \frac{y}{2} + 2y^{3/2} - \frac{y^4}{2} - 2y^3 \right) dy \\
+        &= \frac{1}{4} \left[ 
+        \frac{y^2}{4} + \frac{4y^{5/2}}{5} - \frac{y^5}{10} - \frac{y^4}{2} 
+        \right]_{0}^{1} = \frac{7}{80}.
+      \end{align*}
+      \item For $t \in [0,4]$, we have
+      \begin{align*}
+        \Prob(X + 2Y \le t) &= \int_0^1 \int_0^{\min(2, t - 2y)} \frac{1}{4} (x + 2y) \, dx \, dy \\
+        &= \int_0^1 \frac{1}{4} \left[ \frac{x^2}{2} + 2yx \right]_{0}^{\min(2, t - 2y)} dy \\
+        &= \int_0^1 \frac{1}{4} \left( 
+        \frac{\min(2, t - 2y)^2}{2} + 2y\min(2, t - 2y) \right) dy.
+      \end{align*}
+      We need to consider two cases:
+      \begin{itemize}
+        \item Case 1: $0 \le t < 2$. In this case, we have
+        \begin{align*}
+          \Prob(X + 2Y \le t) &= \int_0^{t/2} 
+          \int_0^{t - 2y} \frac{1}{4} (x + 2y) \, dx \, dy \\
+          &= \frac{t^3}{24}.
+        \end{align*}
+        \item Case 2: $2 \le t \le 4$. In this case, we have
+        \begin{align*}
+          \Prob(X + 2Y \le t) &= 
+          \int_0^{(t-2)/2} \frac{1}{4} (2 + 4y) dy +
+          \int_{(t-2)/2}^{1} \frac{1}{4} \left( 
+          \frac{(t - 2y)^2}{2} + 2y(t - 2y) \right) dy \\
+          &= -\frac{t^3}{24} + \frac{t^2}{4}-\frac{1}{3}.
+        \end{align*}
+      \end{itemize}
+      Therefore, the cdf for $T = X + 2Y$ is
+      \[
+        F_T(t) = \begin{cases}
+          0 & \text{if } t < 0 \\
+          \frac{t^3}{24} & \text{if } 0 \le t < 2 \\
+          -\frac{t^3}{24} + \frac{t^2}{4}-\frac{1}{3} & \text{if } 2 \le t \le 4 \\
+          1 & \text{if } t > 4
+        \end{cases}
+      \]
+      Taking the derivative with respect to $t$, we have the pdf for $T$:
+      \[
+        f_T(t) = \begin{cases}
+          \frac{t^2}{8} & \text{if } 0 \le t < 2 \\
+          -\frac{t^2}{8} + \frac{t}{2} & \text{if } 2 \le t \le 4 \\
+          0 & \text{otherwise.}
+        \end{cases}
+      \]
+      To check that the pdf is valid, we have
+      \begin{align*}
+        \int_{-\infty}^{\infty} f_T(t) \, dt &= 
+        \int_0^2 \frac{t^2}{8} \, dt + 
+        \int_2^4 \left( -\frac{t^2}{8} + \frac{t}{2} \right) dt \\
+        &= \left[ \frac{t^3}{24} \right]_0^2 + 
+        \left[ -\frac{t^3}{24} + \frac{t^2}{4} \right]_2^4 \\
+        &= \frac{8}{24} + \left( -\frac{64}{24} + 4 - 
+        \left( -\frac{8}{24} + 1 \right) \right)
+        &= \frac{8-64+96+8-24}{24} = \frac{24}{24} = 1.
+      \end{align*}
+    \end{enumerate}
+  \end{itemize}
+\end{problem}
+
+\begin{problem}{6}
+  Suppose $(R, S)$ has joint pdf 
+  $f_{R,S}(r, s) = 8s^2 e^{-2s}$ for $0 \le r \le s$.
+  \begin{enumerate}
+    \item Find the marginal pdf for $S$ and the conditional pdf 
+    for $R$, given $S = s$. Try to identify the distributions by name, 
+    giving appropriate values to the parameters.
+    \item Find the marginal pdf for $R$ and the conditional pdf 
+    for $S$, given $R = r$.
+  \end{enumerate}
+  \begin{enumerate}
+    \item The marginal pdf for $S$ is
+    \[
+      f_S (s) = \int_0^s 8s^2 e^{-2s} \, dr = 8s^3 e^{-2s}
+    \]
+    where $s \geq 0$. This is a gamma distribution with parameters
+    $\alpha = 3$ and $\beta = 2$. The conditional pdf for $R$, given $S = s$ is
+    \[
+      f_{R|S} (r|s) = \frac{f_{R,S}(r,s)}{f_S (s)} 
+      = \frac{8s^2 e^{-2s}}{8s^3 e^{-2s}} = \frac{1}{s}
+    \]
+    where $0 \le r \le s$. This is a uniform distribution on the interval $[0, s]$.
+    \item The marginal pdf for $R$ is
+    \[
+      \begin{aligned}
+        f_R (r) &= \int_r^{\infty} 8s^2 e^{-2s} \, ds \\
+        &= \left[ -4s^2 e^{-2s} - 4s e^{-2s} - 2 e^{-2s} \right]_{r}^{\infty} \\
+        &= 4r^2 e^{-2r} + 4r e^{-2r} + 2 e^{-2r} \\
+        &= 2e^{-2r} (2r^2 + 2r + 1)
+      \end{aligned}
+    \]
+    where $r \geq 0$. The conditional pdf for $S$, given $R = r$ is
+    \[
+      f_{S|R} (s|r) = \frac{f_{R,S}(r,s)}{f_R (r)} 
+      = \frac{8s^2 e^{-2s}}{2e^{-2r} (2r^2 + 2r + 1)} 
+      = \frac{4s^2 e^{-2(s-r)}}{2r^2 + 2r + 1}
+    \]
+    where $s \geq r$.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{7}
+  \begin{enumerate}
+    \item Prove Corollary 4.19.ii in the notes, by applying Theorem 4.18.
+    \item Suppose $X, Y$ are independent exponential(1) random variables 
+    and $W = X + Y$, $Z = X - Y$. Find the joint pdf for $(W, Z)$. 
+    Be aware of the range for the random pair: $Z$ can be positive or 
+    negative but it also is restricted by $W$.
+    \item Find the marginal distributions for $W$ and $Z$. 
+    (Note: $W$ is a special case of Example 4.10 in the notes.)
+  \end{enumerate}
+  \begin{corollary}{4.19.ii} Suppose $(X, Y)$ has joint pdf $f_{X,Y}(x, y)$. 
+    Let $W = aX + bY$ and $Z = cX + dY$. If $ad \neq bc$ 
+    then (W, Z) has joint pdf
+    \[
+      f_{W,Z} (w, z) = \frac{1}{|ad - bc|} f_{X,Y} 
+      \left( \frac{dw - bz}{ad - bc}, \frac{az - cw}{ad - bc} \right).
+    \]
+  \end{corollary}
+  \begin{theorem}{4.18}
+    Suppose $(X, Y )$ has pdf $f_{X,Y}(x, y)$, and let $U = g(X, Y)$ and
+    $V = h(X, Y)$. Assume the transformation $(x, y) \to (g(x, y), h(x, y))$ 
+    is 1-1 and differentiable on a set $A$ such that $\Prob((X, Y ) \in A) = 1$.
+    Then $(U, V )$ has pdf satisfying
+    \[
+      f_{U,V} (u, v) = f_{X,Y} (x, y) \frac{dx \, dy}{du \, dv}
+    \]
+    expressed as a function of $(u, v)$.
+  \end{theorem}
+  \begin{enumerate}
+    \item By Theorem 4.18, we have
+    \[
+      f_{W,Z} (w, z) = f_{X,Y} (x, y) \frac{dx \, dy}{dw \, dz}.
+    \]
+    Note that
+    \[
+      \begin{bmatrix}
+        dw \\ dz
+      \end{bmatrix} =
+      \begin{bmatrix}
+        a & b \\ c & d
+      \end{bmatrix}
+      \begin{bmatrix}
+        dx \\ dy
+      \end{bmatrix}.
+    \]
+    Therefore,
+    \[
+      \frac{dw \, dz}{dx \, dy} = 
+      \begin{vmatrix}
+        a & b \\ c & d
+      \end{vmatrix} = ad - bc.
+    \]
+    Since $ad \neq bc$, we have
+    \[
+      \frac{dx \, dy}{dw \, dz} = \frac{1}{|ad - bc|}.
+    \]
+    Also, solving for $x$ and $y$, we have
+    \[
+      \begin{bmatrix}
+        x \\ y
+      \end{bmatrix} =
+      \frac{1}{ad - bc}
+      \begin{bmatrix}
+        d & -b \\ -c & a
+      \end{bmatrix}
+      \begin{bmatrix}
+        w \\ z
+      \end{bmatrix} =
+      \begin{bmatrix}
+        \frac{dw - bz}{ad - bc} \\ \frac{az - cw}{ad - bc}
+      \end{bmatrix}.
+    \]
+    Combining the above results, we have
+    \[
+      f_{W,Z} (w, z) = \frac{1}{|ad - bc|} f_{X,Y} 
+      \left( \frac{dw - bz}{ad - bc}, \frac{az - cw}{ad - bc} \right).
+    \]
+    \item The joint pdf for $(W, Z)$ is 
+    \[
+      f_{W,Z} (w, z) = \frac{1}{|ad - bc|} f_{X,Y} 
+      \left( \frac{dw - bz}{ad - bc}, \frac{az - cw}{ad - bc} \right).
+    \]
+    Here, $a = 1, b = 1, c = 1, d = -1$. Therefore,
+    \[
+      f_{W,Z} (w, z) = \frac{1}{2} f_{X,Y} 
+      \left( \frac{w + z}{2}, \frac{w - z}{2} \right).
+    \]
+    Since $X$ and $Y$ are independent exponential(1) random variables, we have
+    \[
+      f_{X,Y} (x, y) = e^{-x} e^{-y} = e^{-(x+y)}.
+    \]
+    Therefore,
+    \[
+      f_{W,Z} (w, z) = \frac{1}{2} e^{-\left( \frac{w + z}{2} + \frac{w - z}{2} \right)} 
+      = \frac{1}{2} e^{-w}
+    \]
+    where $w \geq 0$ and $-w \leq z \leq w$.
+    \item The marginal distribution for $W$ is
+    \[
+      f_W (w) = \int_{-w}^{w} f_{W,Z} (w, z) \, dz = \int_{-w}^{w} \frac{1}{2} e^{-w} \, dz = \frac{1}{2} e^{-w} (2w) = w e^{-w}.
+    \]
+    This is a gamma distribution with parameters $\alpha = 2$ and $\beta = 1$. The marginal distribution for $Z$ is
+    \[
+      f_Z (z) = \int_{0}^{\infty} f_{W,Z} (w, z) \, dw = \int_{|z|}^{\infty} \frac{1}{2} e^{-w} \, dw = \frac{1}{2} e^{-|z|}.
+    \]
+    This is a Laplace distribution with parameters $\mu = 0$ and $b = 1$.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{8}
+  \begin{enumerate}
+    \item Let $T$ and $U$ be independent with 
+    $T \sim \text{gamma}(\alpha, \gamma)$ and 
+    $U \sim \text{gamma}(\beta, \gamma)$ 
+    (with the same scale parameter $\gamma$). Let $X = T + U$ 
+    and $Y = T /(T + U)$. Determine the joint pdf
+    for $(X, Y)$. Identify the marginal distributions by name
+    and describe, in words, what the joint distribution of $(X, Y)$ is. 
+    Hint: review distributions defined in Section 3.3 of
+    the notes.
+    \item Using the result for the distribution of $X$ in part (a),
+    prove by mathematical induction (iteration) that if $T_1, \ldots, T_k$
+    are independent random variables such
+    that $T_i \sim \text{gamma}(\alpha_i, \gamma)$, 
+    then $T_1 + \cdots + T_k \sim 
+    \text{gamma}(\alpha_1 + \cdots + \alpha_k, \gamma)$.
+  \end{enumerate}
+  \begin{enumerate}
+    \item $T = XY$ and $U = X(1 - Y)$. The Jacobian determinant is
+    \[
+      J = 
+      \begin{vmatrix}
+        Y & X \\
+        1 - Y & -X
+      \end{vmatrix} = -X.
+    \]
+    Therefore, by the change of variables formula, we have
+    \begin{align*}
+      f_{X,Y} (x, y) &= f_{T,U} (xy, x(1 - y)) |J| \\
+      &= f_T (xy) f_U (x(1 - y)) x \\
+      &= \frac{1}{\gamma^{\alpha} \Gamma(\alpha)} (xy)^{\alpha - 1} e^{-\frac{xy}{\gamma}} 
+      \cdot \frac{1}{\gamma^{\beta} \Gamma(\beta)} (x(1 - y))^{\beta - 1} e^{-\frac{x(1 - y)}{\gamma}} 
+      \cdot x \\
+      &= \frac{x^{\alpha + \beta - 1} y^{\alpha - 1} (1 - y)^{\beta - 1}}{\gamma^{\alpha + \beta} \Gamma(\alpha) \Gamma(\beta)} 
+      e^{-\frac{x}{\gamma}}
+    \end{align*}
+    where $x > 0$ and $0 < y < 1$.
+    We can factor the joint pdf as
+    \[
+      f_{X,Y} (x, y) = 
+      \left( \frac{x^{\alpha + \beta - 1}}{\gamma^{\alpha + \beta} \Gamma(\alpha + \beta)} e^{-\frac{x}{\gamma}} \right)
+      \left( \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha) \Gamma(\beta)} y^{\alpha - 1} (1 - y)^{\beta - 1} \right).
+    \]
+    Notice the left factor is the marginal distribution for $X$
+    \[
+      f_X (x) = \frac{x^{\alpha + \beta - 1}}{\gamma^{\alpha + \beta} \Gamma(\alpha + \beta)} e^{-\frac{x}{\gamma}},
+    \]
+    which is a gamma distribution with parameters $\alpha + \beta$ and $\gamma$.\\
+    The right is the marginal distribution for $Y$
+    \[
+      f_Y (y) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha) \Gamma(\beta)} y^{\alpha - 1} (1 - y)^{\beta - 1},
+    \]
+    which is a beta distribution with parameters $\alpha$ and $\beta$.
+    \item Base case: for $k = 2$, the result holds by part (a).\\
+    Inductive hypothesis: assume the result holds for $k = n$, i.e.,
+    \[
+      T_1 + \cdots + T_n \sim 
+      \text{gamma}(\alpha_1 + \cdots + \alpha_n, \gamma).
+    \]
+    Inductive step: for $k = n + 1$, we have
+    \[
+      T_1+ \cdots + T_n + T_{n+1} = (T_1 + \cdots + T_n) + T_{n+1}.
+    \]
+    By the inductive hypothesis, $(T_1 + \cdots + T_n) \sim 
+    \text{gamma}(\alpha_1 + \cdots + \alpha_n, \gamma)$ and 
+    $T_{n+1} \sim \text{gamma}(\alpha_{n+1}, \gamma)$.
+    By part (a), we have 
+    \[
+      \text{gamma}(\alpha_1 + \cdots + \alpha_n, \gamma) 
+      + \text{gamma}(\alpha_{n+1}, \gamma) 
+      \sim 
+      \text{gamma}(\alpha_1 + \cdots + \alpha_n + \alpha_{n+1}, \gamma).
+    \]
+  \end{enumerate}
+\end{problem}
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+\end{document}
