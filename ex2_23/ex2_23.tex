@@ -1,0 +1,247 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to writeLaTeX --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you give
+% someone the link to this page, they can edit at the same
+% time. See the help menu above for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+\usepackage{cancel}
+
+\setlist[enumerate,1]{label={(\alph*)}} %this changes enumerate to (a),(b),...
+
+\usepackage{graphicx} %package to manage images
+
+\newcommand{\A}{{\mathcal{A}}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\CC}{{\mathcal{C}}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\Z}{{\mathbb Z}}
+
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\End}{{\rm End}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Ima}{{\rm Im}}
+\newcommand{\Ker}{{\rm Ker}}
+\newcommand{\Mor}{{\rm Mor}}
+\newcommand{\Rad}{{\rm Rad}}
+\newcommand{\Prob}{{\sf P}}
+\newcommand{\E}{{\sf E}}
+\newcommand{\Var}{{\sf Var}}
+\newcommand{\Cov}{{\sf Cov}}
+
+\renewcommand\labelitemi{-} %this changes itemize bullet points to dashes (-)
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Exam 2 2023}%replace X with the appropriate number
+\author{Mengxiang Jiang\\ %replace with your name
+Stat 610 Distribution Theory} %if necessary, replace with your course title
+ 
+\maketitle
+ 
+\begin{problem}{1} %You can use theorem, exercise, problem, or question here.
+  $X$ and $Y$ are independent random variables with moment generating functions
+  $M_X (t) = \frac{e^t}{1 - t^2}$ and $M_Y (t) = e^{e^t - t - 1}$, respectively.
+  Find $\Var(X + Y)$.
+  \\\\
+  \begin{align*}
+    \Var(X + Y) &= \Var(X) + \Var(Y) \\
+    &= \frac{d^2\ln(M_X (t))}{dt^2} \Big|_{t=0} + 
+    \frac{d^2\ln(M_Y (t))}{dt^2} \Big|_{t=0} \\
+    &= \frac{d^2}{dt^2} \left( t - \ln(1 - t^2) \right) \Big|_{t=0} + 
+    \frac{d^2}{dt^2} \left( e^t - t - 1 \right) \Big|_{t=0} \\
+    &= \frac{d}{dt} \left( 1 + \frac{2t}{1 - t^2} \right) \Big|_{t=0} + 
+    \frac{d}{dt} \left( e^t - 1 \right) \Big|_{t=0} \\
+    &= \left( 2(1-t^2)^{-2} + 2t(-2)(-2t)(1-t^2)^{-3} \right) \Big|_{t=0} + 
+    e^t \Big|_{t=0} \\
+    &= 2 + 1 = 3
+  \end{align*}
+\end{problem}
+
+\begin{problem}{2} 
+  $(S, T)$ has joint pdf $f_{S,T} (s, t) = \frac{(s+t)^2}{6} e^{-s-t}$ for $s > 0, t > 0$.
+  \begin{enumerate}
+    \item Let $W = S + T$ and $Z = \frac{S}{S+T}$. Find the joint pdf for 
+    $(W, Z)$ and identify.
+    \item Accept as given that $E(S) = E(T) = 2$. Find $\Cov(S, T)$.
+  \end{enumerate}
+  \begin{enumerate}
+    \item We have the transformation
+    \[  \begin{cases}
+      W = S + T \\
+      Z = \frac{S}{S + T}
+    \end{cases} \]
+    The inverse transformation is
+    \[  \begin{cases}
+      S = WZ \\
+      T = W(1-Z)
+    \end{cases} \]
+    The Jacobian determinant is
+    \[
+      J = \begin{vmatrix}
+        \frac{\partial S}{\partial W} & \frac{\partial S}{\partial Z} \\
+        \frac{\partial T}{\partial W} & \frac{\partial T}{\partial Z}
+      \end{vmatrix} =
+      \begin{vmatrix}
+        Z & W \\
+        1-Z & -W
+      \end{vmatrix} = -WZ - W(1-Z) = -W
+    \]
+    Thus, the joint pdf for $(W, Z)$ is
+    \begin{align*}
+      f_{W,Z} (w, z) &= f_{S,T} (wz, w(1-z)) \cdot |J| \\
+      &= \frac{(wz + w(1-z))^2}{6} e^{-wz - w(1-z)} \cdot w \\
+      &= \frac{w^2}{6} e^{-w} \cdot w = \frac{w^3}{6} e^{-w}
+    \end{align*}
+    for $w > 0$ and $0 < z < 1$. This shows that $W$ and $Z$ are independent, with
+    $W \sim \text{gamma}(4, 1)$ and $Z \sim \text{uniform}(0, 1)$.
+    \item We have
+    \begin{align*}
+      \Cov(S, T) &= \E(ST) - \E(S)\E(T) \\
+      &= \E(W^2 Z(1-Z)) - 4 \\
+      &= \E(W^2) \E(Z(1-Z)) - 4 \\
+      &= \left( \Var(W) + (\E(W))^2 \right) \left( \E(Z) - \E(Z^2) \right) - 4 \\
+      &= (4 + 16) \left( \frac{1}{2} - \frac{1}{3} \right) - 4 \\
+      &= 20 \cdot \frac{1}{6} - 4 = \frac{10}{3} - 4 = -\frac{2}{3}
+    \end{align*}
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{3}
+  Suppose X and Y are positive integer-valued random variables with joint pmf
+  \[
+    f_{X,Y} (x, y) =  C 1_{\{1,...,10\}}(x) 1_{\{1,...,x\}}(y)
+  \]
+  for some constant $C$.\\
+  What is the best predictor of $Y$ as a function of $X$? Explain.
+  \\\\
+  Normalize the pmf:
+  \begin{align*}
+    1 &= \sum_{x=1}^{10} \sum_{y=1}^{x} C \\
+    &= C \sum_{x=1}^{10} x = C \cdot \frac{10 \cdot 11}{2} = 55C \\
+    \Rightarrow C &= \frac{1}{55}
+  \end{align*}
+  Then the conditional pmf of $Y$ given $X$ is
+  \[
+    f_{Y|X} (y|x) = \frac{f_{X,Y} (x,y)}{f_X (x)} = 
+    \frac{\frac{1}{55}}{\sum_{y=1}^{x} \frac{1}{55}} = \frac{1}{x}
+  \]
+  for $y = 1, ..., x$. Thus,
+  \[
+    \E(Y|X=x) = \sum_{y=1}^{x} y \cdot \frac{1}{x} = \frac{x(x+1)}{2x} 
+    = \frac{x+1}{2}
+  \]
+  This is the best predictor of $Y$ as a function of $X$ 
+  since it minimizes the mean squared error by the orthogonality principle.
+\end{problem}
+
+\begin{problem}{4}
+  Show that the beta distributions form a two-parameter exponential family.
+  \\\\
+  The pdf of a beta distribution is
+  \[
+    f_X (x) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha) \Gamma(\beta)}
+    x^{\alpha - 1} (1 - x)^{\beta - 1}
+  \]
+  for $0 < x < 1$, $\alpha > 0$, and $\beta > 0$. We can rewrite it as
+  \begin{align*}
+    f_X (x) &= \exp \left( \ln \left( \frac{\Gamma(\alpha + \beta)}
+    {\Gamma(\alpha) \Gamma(\beta)}
+    x^{\alpha - 1} (1 - x)^{\beta - 1} \right) \right) \\
+    &= \exp \left( \ln \left( \frac{\Gamma(\alpha + \beta)}
+    {\Gamma(\alpha) \Gamma(\beta)} \right)
+    + (\alpha - 1) \ln(x) + (\beta - 1) \ln(1 - x) \right) \\
+    &= \exp \left( (\alpha - 1) \ln(x) + (\beta - 1) \ln(1 - x)
+    + \ln \left( \frac{\Gamma(\alpha + \beta)}
+    {\Gamma(\alpha) \Gamma(\beta)} \right) \right)
+  \end{align*}
+  This is in the form of a two-parameter exponential family with
+  \[
+    f(x) = c(\theta)h(x)e^{w_1(\theta) t_1(x) + w_2(\theta) t_2(x)}
+  \]
+  where
+  \[
+    c(\theta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha) \Gamma(\beta)}, \quad
+    h(x) = 1, \quad
+    w_1(\theta) = \alpha - 1, \quad
+    w_2(\theta) = \beta - 1, \quad
+    t_1(x) = \ln(x), \quad
+    t_2(x) = \ln(1 - x)
+  \]
+\end{problem}
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+\end{document}

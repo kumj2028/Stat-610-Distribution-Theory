@@ -1,0 +1,247 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to writeLaTeX --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you give
+% someone the link to this page, they can edit at the same
+% time. See the help menu above for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+\usepackage{cancel}
+
+\setlist[enumerate,1]{label={(\alph*)}} %this changes enumerate to (a),(b),...
+
+\usepackage{graphicx} %package to manage images
+
+\newcommand{\A}{{\mathcal{A}}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\CC}{{\mathcal{C}}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\Z}{{\mathbb Z}}
+
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\End}{{\rm End}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Ima}{{\rm Im}}
+\newcommand{\Ker}{{\rm Ker}}
+\newcommand{\Mor}{{\rm Mor}}
+\newcommand{\Rad}{{\rm Rad}}
+\newcommand{\Prob}{{\sf P}}
+\newcommand{\E}{{\sf E}}
+\newcommand{\Var}{{\sf Var}}
+\newcommand{\Cov}{{\sf Cov}}
+
+\renewcommand\labelitemi{-} %this changes itemize bullet points to dashes (-)
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Exam 2 2023}%replace X with the appropriate number
+\author{Mengxiang Jiang\\ %replace with your name
+Stat 610 Distribution Theory} %if necessary, replace with your course title
+ 
+\maketitle
+ 
+\begin{problem}{1} %You can use theorem, exercise, problem, or question here.
+  Suppose $T$ has pdf $f_T (t) = \frac{1}{t \log(2)}$ for $1 \leq t \leq 2$ 
+  and the conditional distribution of
+  $X$, given $T$, is exponential with scale parameter $T$. That is, 
+  $f_{X|T} (x|t) = \frac{1}{t} e^{-x/t}$ for $x > 0$.
+  \begin{enumerate}
+    \item Express the marginal pdf for $X$ as a simple integral and then 
+    attempt the integration. It will help to note that the anti-derivative of 
+    $\frac{a}{t^2} e^{-a/t}$ is $e^{-a/t}$.
+    \item Find $\E(X)$ by using iterated expectation.
+  \end{enumerate}
+  \begin{enumerate}
+    \item The marginal pdf for $X$ is
+    \begin{align*}
+      f_X (x) 
+      &= \int_{1}^{2} f_{X|T} (x|t) f_T (t) dt \\
+      &= \int_{1}^{2} \frac{1}{t} e^{-x/t} \cdot \frac{1}{t \log(2)} dt \\
+      &= \frac{1}{\log(2)} \int_{1}^{2} \frac{1}{t^2} e^{-x/t} dt \\
+      &= \frac{1}{\log(2)} \left[\frac{1}{x} e^{-x/t} \right]_{t=1}^{t=2} \\
+      &= \frac{1}{x \log(2)} \left(e^{-x/2} - e^{-x}\right), \quad x > 0.
+    \end{align*}
+    \item By iterated expectation, we have
+    \begin{align*}
+      \E(X) 
+      &= \E\left(\E(X|T)\right) \\
+      &= \E(T) \\
+      &= \int_{1}^{2} t \cdot \frac{1}{t \log(2)} dt \\
+      &= \frac{1}{\log(2)} \int_{1}^{2} 1 dt \\
+      &= \frac{1}{\log(2)}.
+    \end{align*}
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{2} 
+  Let $T \sim \text{gamma}(\alpha, 1)$ and $R \sim \text{uniform}(0, 1)$, 
+  independent. Let $(X, Y) = (RT, (1 - R)T)$.
+  \begin{enumerate}
+    \item Compute $\E(XY)$. Hint: it may help to think about this in 
+    terms of expectations for $(R, T)$.
+    \item Find the joint pdf for $(X, Y)$. (Note that $T = X + Y$ and 
+    $R = \frac{X}{X + Y}$.)
+  \end{enumerate}
+  \begin{enumerate}
+    \item 
+    \begin{align*}
+      \E(XY) 
+      &= \E\left((RT)((1-R)T)\right) \\
+      &= \E\left(T^2 R(1 - R)\right) \\
+      &= \E\left(T^2\right) \E(R(1 - R)) \\
+      &= (\text{Var}(T) + [\E(T)]^2) \left(\E(R) - \E(R^2)\right) \\
+      &= (\alpha + \alpha^2) \left(\frac{1}{2} - \frac{1}{3}\right) \\
+      &= (\alpha + \alpha^2) \cdot \frac{1}{6} \\
+      &= \frac{\alpha(\alpha + 1)}{6}.
+    \end{align*}
+    \item The inverse transformation is
+    \[
+      r = \frac{x}{x + y}, \quad t = x + y. 
+    \]
+    The Jacobian determinant is
+    \[
+      J =  \begin{vmatrix}
+        \frac{\partial r}{\partial x} & \frac{\partial r}{\partial y} \\
+        \frac{\partial t}{\partial x} & \frac{\partial t}{\partial y}
+      \end{vmatrix} 
+      = \begin{vmatrix}
+        \frac{y}{(x + y)^2} & -\frac{x}{(x + y)^2} \\
+        1 & 1
+      \end{vmatrix}
+      = \frac{1}{x + y}.
+    \]
+    The joint pdf for $(X, Y)$ is
+    \begin{align*}
+      f_{X, Y} (x, y) 
+      &= f_{R, T} \left(\frac{x}{x + y}, x + y\right) 
+      \left| J \right| \\
+      &= f_R \left(\frac{x}{x + y}\right) f_T (x + y) \cdot \frac{1}{x + y} \\
+      &= 1 \cdot \frac{1}{\Gamma(\alpha)} (x + y)^{\alpha - 1} e^{-(x + y)} 
+      \cdot \frac{1}{x + y} \\
+      &= \frac{1}{\Gamma(\alpha)} (x + y)^{\alpha - 2} e^{-(x + y)}, 
+      \quad x > 0, y > 0.
+    \end{align*}
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{3}
+  Recall that $\Cov(X, Y) = \E((X - \mu_X)(Y - \mu_Y))$. Prove, for any 
+  real-valued $a$, that
+  \[
+    \E((X - \mu_X)(Y - \mu_Y)) = \E((X - a)(Y - \mu_Y)).
+  \]
+  \textit{Do not assume or use properties about covariances; 
+  just use expectations.}
+  \\\\
+  \begin{align*}
+    \E((X - a)(Y - \mu_Y)) 
+    &= \E((X - \mu_X + \mu_X - a)(Y - \mu_Y)) \\
+    &= \E((X - \mu_X)(Y - \mu_Y)) + \E((\mu_X - a)(Y - \mu_Y)) \\
+    &= \E((X - \mu_X)(Y - \mu_Y)) + (\mu_X - a) \E(Y - \mu_Y) \\
+    &= \E((X - \mu_X)(Y - \mu_Y)) + (\mu_X - a) ( \mu_Y - \mu_Y) \\
+    &= \E((X - \mu_X)(Y - \mu_Y)) + 0 \\
+    &= \E((X - \mu_X)(Y - \mu_Y)).
+  \end{align*}
+\end{problem}
+
+\begin{problem}{4}
+  Suppose $\beta > 0$ and $W$ has probability mass function
+  \[
+    f_W (w) = c(\beta) w^2 e^{-(w/\beta)^2}
+  \]
+  for $w = 1, 2, 3, \ldots$,
+  and $c(\beta)$ is defined to be the constant so that $f_W (w)$ sums to 1. 
+  Does this model define an exponential family with parameter $\beta$? 
+  Why or why not?
+  \\\\
+  An exponential family can be written in the form
+  \[
+    f(w) = c(\beta) h(w) e^{g(\beta) t(w)},
+  \]
+  for functions $c, h, g, t$.
+  We can rewrite this pmf as
+  \begin{align*}
+    f_W (w) 
+    &= c(\beta) w^2 e^{-(w/\beta)^2} \\
+    &= c(\beta) w^2 e^{-w^2 / \beta^2} \\
+    &= c(\beta) h(w) e^{g(\beta) t(w)},
+    \quad \text{where } h(w) = w^2, \quad g(\beta) = -\frac{1}{\beta^2}, 
+    \quad t(w) = w^2.
+  \end{align*}
+  Thus, this model defines an exponential family with parameter $\beta$.
+\end{problem}
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+\end{document}
