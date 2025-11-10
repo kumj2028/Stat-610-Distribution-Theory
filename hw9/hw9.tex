@@ -1,0 +1,670 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to writeLaTeX --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you give
+% someone the link to this page, they can edit at the same
+% time. See the help menu above for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+\usepackage{cancel}
+
+\setlist[enumerate,1]{label={(\alph*)}} %this changes enumerate to (a),(b),...
+
+\usepackage{graphicx} %package to manage images
+
+\newcommand{\A}{{\mathcal{A}}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\CC}{{\mathcal{C}}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\Z}{{\mathbb Z}}
+
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\End}{{\rm End}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Ima}{{\rm Im}}
+\newcommand{\Ker}{{\rm Ker}}
+\newcommand{\Mor}{{\rm Mor}}
+\newcommand{\Rad}{{\rm Rad}}
+\newcommand{\Prob}{{\sf P}}
+\newcommand{\E}{{\sf E}}
+\newcommand{\Var}{{\sf Var}}
+\newcommand{\Cov}{{\sf Cov}}
+\newcommand{\Corr}{{\sf Corr}}
+
+\renewcommand\labelitemi{-} %this changes itemize bullet points to dashes (-)
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Homework 9}%replace X with the appropriate number
+\author{Mengxiang Jiang\\ %replace with your name
+Stat 610 Distribution Theory} %if necessary, replace with your course title
+ 
+\maketitle
+
+\begin{problem}{1}
+  The joint mgf of a random pair $(X, Y)$ is
+  \[
+    M(s, t) = \E(e^{sX + tY}),
+  \]
+  for all $(s, t)$ such that the expectation is finite, which we assume 
+  includes all $(s, t)$ near $(0, 0)$.
+  \begin{enumerate}
+    \item Explain why the marginal mgfs are $M_X(s) = M(s, 0)$ 
+    and $M_Y(t) = M(0, t)$.
+    \item Show that
+    \[
+      \E(XY) = \frac{\partial^2 M(s, t)}{\partial s \partial t} \bigg|_{s=t=0}
+    \]
+    and
+    \[
+      \Cov(X, Y) = \frac{\partial^2 \log(M(s, t))}{\partial s \partial t} 
+      \bigg|_{s=t=0}.
+    \]
+    (You may assume interchangeability of derivatives and expectation.)
+    \item Find the joint mgf for Example 4.5 in the notes and use it to 
+    compute $\E(X)$, $\E(Y)$, and $\E(XY)$. 
+    Compare to the solutions in the notes.
+  \end{enumerate}
+  
+  \begin{enumerate}
+    \item The marginal mgf of $X$ is defined as
+    \[
+      M_X(s) = \E(e^{sX}) = \E(e^{sX + 0 \cdot Y}) = M(s, 0).
+    \]
+    Similarly, the marginal mgf of $Y$ is
+    \[
+      M_Y(t) = \E(e^{tY}) = \E(e^{0 \cdot X + tY}) = M(0, t).
+    \]
+    \item We have
+    \begin{align*}
+      \frac{\partial^2 M(s, t)}{\partial s \partial t} 
+      &= \frac{\partial}{\partial s} \E(Y e^{sX + tY}) \\
+      &= \E(XY e^{sX + tY}).
+    \end{align*}
+    Evaluating at $s = t = 0$ gives
+    \[
+      \E(XYe^0) = E(XY).
+    \]
+    Next, we have
+    \begin{align*}
+      \frac{\partial^2 \log(M(s, t))}{\partial s \partial t} 
+      &= \frac{\partial}{\partial s} (\Var(Y) e^{sX + tY} / M(s, t)) \\
+      &= \frac{\E(XY e^{sX + tY}) M(s, t) - \E(X e^{sX + tY})
+      \E(Y e^{sX + tY})}{(M(s, t))^2} \\
+      &= \frac{\E(XY e^{sX + tY})}{M(s, t)} - \frac{\E(X e^{sX + tY})}{M(s, t)}
+      \cdot \frac{\E(Y e^{sX + tY})}{M(s, t)}.
+    \end{align*}
+    Evaluating at $s = t = 0$ gives
+    \[
+      \frac{E(XYe^0)}{1} - \frac{E(Xe^0)}{1} \cdot \frac{E(Ye^0)}{1} = \Cov(X, Y).
+    \]
+    \item Example 4.5 Suppose $(X, Y)$ has joint pdf
+    \[
+      f_{X,Y}(x, y) = \frac{1}{2} \left( \lambda^2 e^{-\lambda(x+y)} + 
+      \mu^2 e^{-\mu(x+y)} \right) 1_{(0,\infty)}(x) 1_{(0,\infty)}(y).
+    \]
+    The joint mgf is
+    \begin{align*}
+      M(s, t) &= \int_0^\infty \int_0^\infty e^{sx + ty} 
+      \frac{1}{2} \left( \lambda^2 e^{-\lambda(x+y)} + 
+      \mu^2 e^{-\mu(x+y)} \right) dx dy \\
+      &= \frac{1}{2} \left( \int_0^\infty \lambda^2 e^{-(\lambda - s)x} dx 
+      \int_0^\infty e^{-(\lambda - t)y} dy + 
+      \int_0^\infty \mu^2 e^{-(\mu - s)x} dx 
+      \int_0^\infty e^{-(\mu - t)y} dy \right) \\
+      &= \frac{1}{2} \left( \frac{\lambda^2}{(\lambda - s)(\lambda - t)} + 
+      \frac{\mu^2}{(\mu - s)(\mu - t)} \right), \quad s < \min(\lambda, \mu), 
+      t < \min(\lambda, \mu).
+    \end{align*}
+    Using the joint mgf, we have
+    \[
+      \E(X) = \E(Y) = \frac{\partial M(s, t)}{\partial s} \bigg|_{s=t=0} 
+      = \frac{1}{2} \left( \frac{\lambda^2}{\lambda^2} \cdot \frac{1}{\lambda} + 
+      \frac{\mu^2}{\mu^2} \cdot \frac{1}{\mu} \right) = \frac{1}{2} 
+      \left( \frac{1}{\lambda} + \frac{1}{\mu} \right).
+    \]
+    \[
+      \E(XY) = \frac{\partial^2 M(s, t)}{\partial s \partial t} \bigg|_{s=t=0} 
+      = \frac{1}{2} \left( \frac{\lambda^2}{\lambda^2} \cdot \frac{1}{\lambda^2} + 
+      \frac{\mu^2}{\mu^2} \cdot \frac{1}{\mu^2} \right) = \frac{1}{2} 
+      \left( \frac{1}{\lambda^2} + \frac{1}{\mu^2} \right).
+    \]
+  \end{enumerate}
+\end{problem}
+
+\pagebreak
+
+\begin{problem}{2}
+  Consider random pair $(V, W)$ with joint pdf
+  \[
+    f_{V,W} (v, w) = 4v^3 e^{-v(w+2)}, \quad v \geq 0, w \geq 0.
+  \]
+  \begin{enumerate}
+    \item Determine the conditional distribution for $W$, given $V$, 
+    and use it to find the best overall predictor $\E(W |V)$. 
+    (Take note of the marginal distribution of $V$ for use below.)
+    \item Also compute the mean squared prediction error 
+    $\E((\E(W |V) - W)^2)$.
+    \item Now find $\E(V)$, $\E(W)$, $\Var(V)$ and $\Cov(V, W)$ and 
+    use them to get the best linear predictor of $W$ from $V$. 
+    (Recall Theorem 4.35 in the notes.) It may help to take advantage 
+    of iterated expectation to find $\E(W)$ and $\E(V W)$.
+    \item Determine the mean squared prediction error for the linear 
+    predictor and compare that to the result for part (b).
+    \item In this case, the linear predictor has a serious drawback 
+    for large $V$. Explain. (You might want to graph the two functions 
+    for a range of values of $V$.)
+  \end{enumerate}
+  \begin{enumerate}
+    \item The marginal pdf of $V$ is
+    \begin{align*}
+      f_V(v) &= \int_0^\infty 4v^3 e^{-v(w+2)} dw \\
+      &= 4v^3 e^{-2v} \int_0^\infty e^{-vw} dw \\
+      &= 4v^3 e^{-2v} \cdot \frac{1}{v} = 4v^2 e^{-2v}, \quad v \geq 0.
+    \end{align*}
+    The conditional pdf of $W$ given $V$ is
+    \begin{align*}
+      f_{W|V}(w|v) &= \frac{f_{V,W}(v,w)}{f_V(v)} \\
+      &= \frac{4v^3 e^{-v(w+2)}}{4v^2 e^{-2v}} = v e^{-vw}, \quad w \geq 0.
+    \end{align*}
+    Since this is the pdf of an exponential distribution with parameter 
+    $\frac{1}{v}$, we have
+    \[
+      \E(W|V) = \frac{1}{v}.
+    \]
+    \item We have
+    \begin{align*}
+      \E((\E(W|V) - W)^2) &= \E\left( \left( \frac{1}{V} - W \right)^2 \right) \\
+      &= \E\left( \E\left( \left( \frac{1}{V} - W \right)^2 | V \right) \right) \\
+      &= \E\left( \Var(W|V) + (\E(W|V) - \E(W|V))^2 \right) \\
+      &= \E(\Var(W|V)).
+    \end{align*}
+    Since this is an exponential distribution with parameter $\frac{1}{v}$,
+    we have
+    \[
+      \Var(W|V) = \frac{1}{v^2}.
+    \]
+    Therefore,
+    \[
+      \E((\E(W|V) - W)^2) = \E\left( \frac{1}{V^2} \right).
+    \]
+    To compute $\E\left( \frac{1}{V^2} \right)$, we have
+    \begin{align*}
+      \E\left( \frac{1}{V^2} \right) &= \int_0^\infty \frac{1}{v^2} 
+      \cdot 4v^2 e^{-2v} dv \\
+      &= \int_0^\infty 4 e^{-2v} dv = 4 \cdot \frac{1}{2} = 2.
+    \end{align*}
+    \item Since $f_V(v)$ is the pdf of a Gamma distribution with
+    parameters $\alpha = 3$ and $\beta = \frac{1}{2}$, we have
+    \[
+      \E(V) = \alpha \beta = 3 \cdot \frac{1}{2} = \frac{3}{2},
+    \]
+    \[
+      \Var(V) = \alpha \beta^2 = 3 \cdot \left( \frac{1}{2} \right)^2 = 
+      \frac{3}{4}.
+    \]
+    Next, we compute $\E(W)$ using iterated expectation:
+    \begin{align*}
+      \E(W) &= \E(\E(W|V)) = \E\left( \frac{1}{V} \right) \\
+      &= \int_0^\infty \frac{1}{v} \cdot 4v^2 e^{-2v} dv \\
+      &= \int_0^\infty 4v e^{-2v} dv = 4 \cdot \frac{1}{4} = 1.
+    \end{align*}
+    Finally, we compute $\E(VW)$ using iterated expectation:
+    \begin{align*}
+      \E(VW) &= \E(\E(VW|V)) = \E\left( V \E(W|V) \right) = \E(V \cdot \frac{1}{V}) = \E(1) = 1.
+    \end{align*}
+    Therefore,
+    \[
+      \Cov(V, W) = \E(VW) - \E(V) \E(W) = 1 - \frac{3}{2} \cdot 1 = -\frac{1}{2}.
+    \]
+    The best linear predictor of $W$ from $V$ is
+    \[
+      \E^*(W|V) = \E(W) + \frac{\Cov(V, W)}{\Var(V)} (V - \E(V)) 
+      = 1 + \left( -\frac{1/2}{3/4} \right) (V - \frac{3}{2}) 
+      = 2 - \frac{2}{3} V.
+    \]
+    \item The mean squared prediction error for the linear predictor is
+    \begin{align*}
+      \E((\E^*(W|V) - W)^2) &= \Var(W) - \frac{(\Cov(V, W))^2}{\Var(V)} \\
+      &= \Var(W) - \frac{(-1/2)^2}{3/4} = \Var(W) - \frac{1}{3}.
+    \end{align*}
+    To compute $\Var(W)$, we first compute $\E(W^2)$ using iterated expectation:
+    \begin{align*}
+      \E(W^2) &= \E(\E(W^2|V)) = \E(\Var(W|V) + (\E(W|V))^2) \\
+      &= \E\left( \frac{1}{V^2} + \left( \frac{1}{V} \right)^2 \right) 
+      = 2 \E\left( \frac{1}{V^2} \right) = 2 \cdot 2 = 4.
+    \end{align*}
+    Therefore,
+    \[
+      \Var(W) = \E(W^2) - (\E(W))^2 = 4 - 1^2 = 3.
+    \]
+    Thus, the mean squared prediction error for the linear predictor is
+    \[
+      \E((\E^*(W|V) - W)^2) = 3 - \frac{1}{3} = \frac{8}{3} \approx 2.67.
+    \]
+    This is more than the result for part (b), which was $2$.
+    \item The linear predictor $\E^*(W|V) = 2 - \frac{2}{3} V$ becomes negative
+    for large values of $V$, which is not appropriate since $W$ is a non-negative
+    random variable.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{3}
+  Assume $U \sim \text{gamma}(2, \beta)$ and $T \sim \text{gamma}(3, \beta)$, 
+  independent.
+  \begin{enumerate}
+    \item Determine the mean and variance of $V = 3U + 2T$.
+    \item Determine $\Cov(V, W)$ where $W = 2U - 3T$. Use Theorem 4.34.i 
+    in the notes (twice).
+  \end{enumerate}
+  \begin{enumerate}
+    \item Since $U \sim \text{gamma}(2, \beta)$, we have
+    \[
+      \E(U) = 2\beta, \quad \Var(U) = 2\beta^2.
+    \]
+    Since $T \sim \text{gamma}(3, \beta)$, we have
+    \[
+      \E(T) = 3\beta, \quad \Var(T) = 3\beta^2.
+    \]
+    Therefore,
+    \[
+      \E(V) = \E(3U + 2T) = 3\E(U) + 2\E(T) = 3(2\beta) + 2(3\beta) = 12\beta,
+    \]
+    \[
+      \Var(V) = \Var(3U + 2T) = 9\Var(U) + 4\Var(T) = 9(2\beta^2) + 4(3\beta^2) 
+      = 30\beta^2.
+    \]
+    \item \begin{theorem}{4.34} Assume $X$, $Y$ and $W$ are jointly 
+      distributed and their variances exist.\\
+      i. $\Cov(X + W, Y ) = \Cov(X, Y ) + \Cov(W, Y )$.
+    \end{theorem}
+    Thus,
+    \begin{align*}
+      \Cov(V, W) &= \Cov(3U + 2T, 2U - 3T) \\
+      &= 3 \Cov(U, 2U - 3T) + 2 \Cov(T, 2U - 3T) \\
+      &= 6 \Cov(U, U) - 9 \Cov(U, T) + 4 \Cov(T, U) - 6 \Cov(T, T).
+    \end{align*}
+    Since $U$ and $T$ are independent, we have $\Cov(U, T) = \Cov(T, U) = 0$.
+    Therefore,
+    \[
+      \Cov(V, W) = 6\Var(U) - 6\Var(T) = 6(2\beta^2) - 6(3\beta^2) = -6\beta^2.
+    \]
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{4}
+  Suppose $(X_1, X_2) \sim \text{ bivariate normal}(0, 0, 1, 1, \rho)$. 
+  Let $Y_1 = X_1 + X_2 + 1$, $Y_2 = 2X_1 - X_2 - 3$.
+  We know that the joint distribution of $(Y_1, Y_2)$ is also bivariate 
+  normal. Find each of the five parameter values for that distribution.
+  \\\\
+  Since $(X_1, X_2) \sim \text{ bivariate normal}(0, 0, 1, 1, \rho)$, we have
+  \[
+    \E(X_1) = 0, \quad \E(X_2) = 0, \quad \Var(X_1) = 1, \quad \Var(X_2) = 1, 
+    \quad \Corr(X_1, X_2) = \rho.
+  \]
+  Therefore,
+  \[
+    \E(Y_1) = \E(X_1 + X_2 + 1) = \E(X_1) + \E(X_2) + 1 = 0 + 0 + 1 = 1,
+  \]
+  \[
+    \E(Y_2) = \E(2X_1 - X_2 - 3) = 2\E(X_1) - \E(X_2) - 3 = 
+    2 \cdot 0 - 0 - 3 = -3,
+  \]
+  \[
+    \Cov(X_1, X_2) = \Corr(X_1, X_2) \sqrt{\Var(X_1) \Var(X_2)} = 
+    \rho \sqrt{1 \cdot 1} = \rho,
+  \]
+  \[
+    \Var(Y_1) = \Var(X_1 + X_2 + 1) = \Var(X_1) + \Var(X_2) + 2\Cov(X_1, X_2) 
+    = 1 + 1 + 2\rho = 2 + 2\rho,
+  \]
+  \[
+    \Var(Y_2) = \Var(2X_1 - X_2 - 3) = 4\Var(X_1) + \Var(X_2) - 4\Cov(X_1, X_2) 
+    = 4 + 1 - 4\rho = 5 - 4\rho,
+  \]
+  \[
+    \Cov(Y_1, Y_2) = \Cov(X_1 + X_2 + 1, 2X_1 - X_2 - 3) = 
+    \Cov(X_1 + X_2, 2X_1 - X_2) = 1 + \rho,
+  \]
+  \[
+    \Corr(Y_1, Y_2) = \frac{\Cov(Y_1, Y_2)}{\sqrt{\Var(Y_1) \Var(Y_2)}} 
+    = \frac{1 + \rho}{\sqrt{(2 + 2\rho)(5 - 4\rho)}},
+  \]
+  Thus, $(Y_1, Y_2) \sim \text{ bivariate normal}(1, -3, 2 + 2\rho, 5 - 4\rho, 
+  \frac{1 + \rho}{\sqrt{(2 + 2\rho)(5 - 4\rho)}})$.
+\end{problem}
+
+\begin{problem}{5}
+  \textit{Statistical Inference} by Casella and Berger, 2nd Edition, Chapter 4, 
+  Exercise 32
+  \begin{itemize}
+    \item [32.]
+    \begin{enumerate}
+      \item For the hierarchical model
+      \[
+        Y|\Lambda \sim \text{ Poisson}(\Lambda), \quad \text{ and } 
+        \quad \Lambda \sim \text{Gamma}(\alpha, \beta),
+      \]
+      find the marginal distribution, mean, and variance of $Y$. Show that
+      the marginal distribution of $Y$ is a negative binomial distribution if
+      $\alpha$ is an integer. Also write down the joint ``density'' function 
+      (as described on Slide 283). Remark: the distribution you get for $Y$ 
+      is an extension of the negative binomial defined
+      in the notes and book, when the first parameter is not an integer. 
+      Nevertheless, it is still called ``negative binomial''.
+      \item Determine the conditional distribution of $\Lambda$ given $Y$.
+      [This would be of interest in a Bayesian setting, for example.]
+    \end{enumerate}
+    \begin{enumerate}
+      \item The marginal distribution of $Y$ is
+      \begin{align*}
+        f_Y(y) &= \int_0^\infty f_{Y|\Lambda}(y|\lambda) f_\Lambda(\lambda) d\lambda \\
+        &= \int_0^\infty \frac{e^{-\lambda} \lambda^y}{y!} 
+        \cdot \frac{1}{\beta^\alpha \Gamma(\alpha)} \lambda^{\alpha - 1} 
+        e^{-\frac{\lambda}{\beta}} d\lambda \\
+        &= \frac{1}{y! \beta^\alpha \Gamma(\alpha)} \int_0^\infty 
+        \lambda^{y + \alpha - 1} e^{-\lambda(1 + \frac{1}{\beta})} d\lambda \\
+        &= \frac{1}{y! \beta^\alpha \Gamma(\alpha)} \cdot \frac{\Gamma(y + \alpha)}{(1 + \frac{1}{\beta})^{y + \alpha}} \\
+        &= \frac{\Gamma(y + \alpha)}{y! \Gamma(\alpha)} \cdot 
+        \left( \frac{1}{1 + \beta} \right)^\alpha \cdot 
+        \left( \frac{\beta}{1 + \beta} \right)^y, \quad y = 0, 1, 2, \ldots
+      \end{align*}
+      The mean of $Y$ is
+      \[
+        \E(Y) = \E(\E(Y|\Lambda)) = \E(\Lambda) = \alpha \beta,
+      \]
+      and the variance of $Y$ is
+      \[
+        \Var(Y) = \E(\Var(Y|\Lambda)) + \Var(\E(Y|\Lambda)) = \E(\Lambda) + \Var(\Lambda) = \alpha \beta + \alpha \beta^2 = \alpha \beta (1 + \beta).
+      \]
+      If $\alpha$ is an integer, then the marginal distribution of $Y$ is a
+      negative binomial distribution with parameters $r = \alpha$ and
+      $p = \frac{1}{1 + \beta}$.
+      \item The joint ``density'' function of $(Y, \Lambda)$ is
+      \[
+        f_{Y, \Lambda}(y, \lambda) = f_{Y|\Lambda}(y|\lambda) f_\Lambda(\lambda) = \frac{e^{-\lambda} \lambda^y}{y!} \cdot \frac{1}{\beta^\alpha \Gamma(\alpha)} \lambda^{\alpha - 1} e^{-\frac{\lambda}{\beta}}, \quad y = 0, 1, 2, \ldots, \quad \lambda > 0.
+      \]
+      The conditional distribution of $\Lambda$ given $Y$ is
+      \begin{align*}
+        f_{\Lambda|Y}(\lambda|y) &= \frac{f_{Y, \Lambda}(y, \lambda)}{f_Y(y)} \\
+        &= \frac{\frac{e^{-\lambda} \lambda^y}{y!} \cdot \frac{1}{\beta^\alpha \Gamma(\alpha)} \lambda^{\alpha - 1} e^{-\frac{\lambda}{\beta}}}{\frac{\Gamma(y + \alpha)}{y! \Gamma(\alpha)} \cdot \left( \frac{1}{1 + \beta} \right)^\alpha \cdot \left( \frac{\beta}{1 + \beta} \right)^y} \\
+        &= \frac{(1 + \beta)^{y + \alpha}}{\beta^{y + \alpha} \Gamma(y + \alpha)} 
+        \lambda^{y + \alpha - 1} e^{-\lambda(1 + \frac{1}{\beta})}, \quad \lambda > 0.
+      \end{align*}
+      This is the pdf of a Gamma distribution with parameters
+      $y + \alpha$ and $\frac{\beta}{1 + \beta}$.
+    \end{enumerate}
+  \end{itemize}
+\end{problem}
+
+\begin{problem}{6}
+  (Copulas)
+  \begin{enumerate}
+    \item Use the Farlie-Morgenstern copula to obtain a joint cdf with 
+    marginal cdf's $F (x) = x^4$, $0 \leq x \leq 1$, and 
+    $G(y) = 1 - (1 - y)^2$, $0 \leq y \leq 1$. What is the pdf?
+    \item Let $\alpha \in [-1, 1]$ and
+    \[
+      f (u, v) = 1 + \alpha \cos(2\pi(u - v)), \quad 
+      \text{for } 0 \leq u \leq 1, \ 0 \leq v \leq 1,
+    \]
+    Show that $f (u, v)$ is a bivariate pdf. Show that it is the pdf 
+    for a copula by finding the marginal pdfs. 
+    (Use the fact that $\cos(x)$ is periodic with period $2\pi$.)
+  \end{enumerate}
+  \begin{enumerate}
+    \item The Farlie-Morgenstern copula is given by
+    \[
+      G(u, v) = uv (1 + \alpha (1 - u)(1 - v)), \quad 
+      \text{for } 0 < u < 1, \ 0 < v < 1.
+    \]
+    Therefore, the joint cdf with marginal cdf's $F (x) = x^4$ and 
+    $G(y) = 1 - (1 - y)^2$ is
+    \[
+      H(x, y) = G(F(x), G(y)) = x^4 \left(1 - (1 - y)^2\right) 
+      \left[1 + \alpha (1 - x^4)(1 - (1 - (1 - y)^2))\right].
+    \]
+    The pdf is
+    \begin{align*}
+      h(x, y) &= \frac{\partial^2 H(x, y)}{\partial x \partial y} \\
+      &= \frac{\partial}{\partial x} \left( 4x^3 (1 - (1 - y)^2) \left[1 + 
+      \alpha (1 - x^4)(1 - (1 - (1 - y)^2))\right] \right) \\
+      &= 4x^3 (2(1 - y)) \left[1 + \alpha (1 - x^4)(2y - y^2)\right] + 
+      x^4 (2(1 - y)) \left[-4\alpha x^3 (2y - y^2)\right] \\
+      &= 8x^3 (1 - y) \left[1 + \alpha (1 - x^4)(2y - y^2) - 
+      2\alpha x^4 (2y - y^2)\right] \\
+      &= 8x^3 (1 - y) \left[1 + \alpha (2y - y^2)(1 - 3x^4)\right].
+    \end{align*}
+    \item To show that $f(u, v)$ is a bivariate pdf, we need to verify that
+    \[
+      \int_0^1 \int_0^1 f(u, v) du dv = 1.
+    \]
+    We have
+    \begin{align*}
+      \int_0^1 \int_0^1 f(u, v) du dv &= \int_0^1 \int_0^1 
+      (1 + \alpha \cos(2\pi(u - v))) du dv \\
+      &= \int_0^1 \left[ u + \frac{\alpha}{2\pi} \sin(2\pi(u - v)) 
+      \bigg|_{u=0}^{u=1} \right] dv \\
+      &= \int_0^1 (1 + 0) dv = 1.
+    \end{align*}
+    Next, we find the marginal pdfs:
+    \[
+      f_U(u) = \int_0^1 f(u, v) dv, \quad f_V(v) = \int_0^1 f(u, v) du.
+    \]
+    We have
+    \begin{align*}
+      f_U(u) &= \int_0^1 (1 + \alpha \cos(2\pi(u - v))) dv \\
+      &= \left[ v + \frac{\alpha}{2\pi} \sin(2\pi(u - v)) 
+      \bigg|_{v=0}^{v=1} \right] \\
+      &= 1 + 0 = 1,
+    \end{align*}
+    Similarly,
+    \begin{align*}
+      f_V(v) &= \int_0^1 (1 + \alpha \cos(2\pi(u - v))) du \\
+      &= \left[ u + \frac{\alpha}{2\pi} \sin(2\pi(u - v)) 
+      \bigg|_{u=0}^{u=1} \right] \\
+      &= 1 + 0 = 1.
+    \end{align*}
+    Thus, the marginal pdfs are uniform on [0, 1], confirming 
+    that $f(u, v)$ is a copula pdf.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{7}
+  Let $X_1, \ldots, X_n$ be iid gamma$(\alpha, \beta)$ random variables, 
+  with common mgf \[
+    M_X(t) = (1 - \beta t)^{-\alpha}.
+  \]
+  \begin{enumerate}
+    \item Recall Theorem 5.6 in the notes and find the mgf for $X$. 
+    Identify it as the mgf for a gamma distribution. Confirm it has the 
+    right mean and variance (according to what we know generally about $X$).
+    \item Compute $E(1/X)$ and $\text{Var}(1/X)$. Hint: for a gamma rv $T$, 
+    $E(T^{-j})$ can be expressed in terms of a gamma integral as long as $j$ 
+    is not too large. Use the recursion formula for
+    $\Gamma(z)$ to simplify, when $j = 1$ or $j = 2$. 
+    [The mean and variance of $1/X$ would be of interest, for example, 
+    when $\alpha$ is known and you want to estimate the rate parameter $1/\beta$
+    with $\alpha/X$.]
+    \item Find the pdf for $Y = 1/X$. 
+    [This is known as an inverse gamma distribution.]
+    \item Let $\hat{\mu}'_2 = \frac{1}{n} \sum_{i=1}^n X_i^2$. 
+    Find $E(\hat{\mu}'_2)$ and $\text{Var}(\hat{\mu}'_2)$ (simplify).
+  \end{enumerate}
+  \begin{enumerate}
+    \item \begin{theorem}{5.6}
+      Suppose $X_1, X_2, \ldots, X_n$ are independent random variables with
+      mgfs $M_1, M_2, \ldots, M_n$, respectively.\\
+      Then $X_1 + \cdots + X_n$ has mgf $M(t) = \prod_{i=1}^n M_i(t)$.\\
+      In particular, if $X_1, X_2, \ldots, X_n$ are iid then 
+      $X_1 + \cdots + X_n$ has mgf $M(t) = (M_1(t))^n$ and 
+      $X$ has mgf $M_X(t) = (M_1(t/n))^n$.
+    \end{theorem}
+    Thus, the mgf for $X$ is
+    \[
+      M_X(t) = \left( M_1\left( \frac{t}{n} \right) \right)^n 
+      = \left( 1 - \beta \cdot \frac{t}{n} \right)^{-n\alpha} 
+      = \left( 1 - \frac{\beta}{n} t \right)^{-n\alpha}.
+    \]
+    This is the mgf of a gamma distribution with shape parameter $n\alpha$ 
+    and scale parameter $\frac{\beta}{n}$.
+    Therefore, the mean and variance of $X$ are
+    \[
+      \E(X) = n\alpha \cdot \frac{\beta}{n} = \alpha \beta, \quad
+      \Var(X) = n\alpha \cdot \left(\frac{\beta}{n}\right)^2 
+      = \frac{\alpha \beta^2}{n}.
+    \]
+    \item We have
+    \begin{align*}
+      \E\left( \frac{1}{X} \right) &= \int_0^\infty \frac{1}{x} 
+      \cdot \frac{1}{\Gamma(n\alpha) (\beta/n)^{n\alpha}} 
+      x^{n\alpha - 1} e^{-\frac{n}{\beta} x} dx \\
+      &= \frac{1}{\Gamma(n\alpha) (\beta/n)^{n\alpha}} 
+      \int_0^\infty x^{n\alpha - 2} e^{-\frac{n}{\beta} x} dx \\
+      &= \frac{1}{\Gamma(n\alpha) (\beta/n)^{n\alpha}} 
+      \cdot \frac{\Gamma(n\alpha - 1)}{(n/\beta)^{n\alpha - 1}} \\
+      &= \frac{n}{\beta (n\alpha - 1)}, \quad n\alpha > 1.
+    \end{align*}
+    Similarly,
+    \begin{align*}
+      \E\left( \frac{1}{X^2} \right) &= \int_0^\infty \frac{1}{x^2} 
+      \cdot \frac{1}{\Gamma(n\alpha) (\beta/n)^{n\alpha}} 
+      x^{n\alpha - 1} e^{-\frac{n}{\beta} x} dx \\
+      &= \frac{1}{\Gamma(n\alpha) (\beta/n)^{n\alpha}} 
+      \int_0^\infty x^{n\alpha - 3} e^{-\frac{n}{\beta} x} dx \\
+      &= \frac{1}{\Gamma(n\alpha) (\beta/n)^{n\alpha}} 
+      \cdot \frac{\Gamma(n\alpha - 2)}{(n/\beta)^{n\alpha - 2}} \\
+      &= \frac{n^2}{\beta^2 (n\alpha - 1)(n\alpha - 2)}, \quad n\alpha > 2.
+    \end{align*}
+    Therefore,
+    \[
+      \Var\left( \frac{1}{X} \right) = \E\left( \frac{1}{X^2} \right) 
+      - \left( \E\left( \frac{1}{X} \right) \right)^2 
+      = \frac{n^2}{\beta^2 (n\alpha - 1)(n\alpha - 2)} 
+      - \left( \frac{n}{\beta (n\alpha - 1)} \right)^2.
+    \]
+    \item The pdf for $Y = 1/X$ is
+    \begin{align*}
+      f_Y(y) &= f_X\left( \frac{1}{y} \right) \cdot \left| \frac{d}{dy} 
+      \left( \frac{1}{y} \right) \right| \\
+      &= \frac{1}{\Gamma(n\alpha) (\beta/n)^{n\alpha}} 
+      \left( \frac{1}{y} \right)^{n\alpha - 1} 
+      e^{-\frac{n}{\beta} \cdot \frac{1}{y}} \cdot \frac{1}{y^2} \\
+      &= \frac{(n/\beta)^{n\alpha}}{\Gamma(n\alpha)} 
+      y^{-n\alpha - 1} e^{-\frac{n}{\beta y}}, \quad y > 0.
+    \end{align*}
+    \item We have 
+    \begin{align*}
+      \E(\hat{\mu}'_2) &= \E\left( \frac{1}{n} \sum_{i=1}^n X_i^2 \right) 
+      = \frac{1}{n} \sum_{i=1}^n \E(X_i^2) = \E(X_1^2).
+    \end{align*}
+    Since $X_1 \sim \text{gamma}(\alpha, \beta)$, we have
+    \[
+      \E(X_1^2) = \Var(X_1) + (\E(X_1))^2 = \alpha \beta^2 + (\alpha \beta)^2 
+      = \alpha \beta^2 (1 + \alpha).
+    \]
+    Next, we compute $\Var(\hat{\mu}'_2)$:
+    \begin{align*}
+      \Var(\hat{\mu}'_2) &= \Var\left( \frac{1}{n} \sum_{i=1}^n X_i^2 \right) 
+      = \frac{1}{n^2} \sum_{i=1}^n \Var(X_i^2) = \frac{1}{n} \Var(X_1^2).
+    \end{align*}
+    To compute $\Var(X_1^2)$, we first compute $\E(X_1^4)$:
+    \begin{align*}
+      \E(X_1^4) &= \int_0^\infty x^4 \cdot \frac{1}{\Gamma(\alpha) \beta^\alpha} 
+      x^{\alpha - 1} e^{-\frac{x}{\beta}} dx \\
+      &= \frac{1}{\Gamma(\alpha) \beta^\alpha} 
+      \int_0^\infty x^{\alpha + 3} e^{-\frac{x}{\beta}} dx \\
+      &= \frac{1}{\Gamma(\alpha) \beta^\alpha} 
+      \cdot \Gamma(\alpha + 4) \beta^{\alpha + 4} \\
+      &= \frac{\Gamma(\alpha + 4)}{\Gamma(\alpha)} \beta^4.
+    \end{align*}
+    Therefore,
+    \[
+      \Var(X_1^2) = \E(X_1^4) - (\E(X_1^2))^2 
+      = \frac{\Gamma(\alpha + 4)}{\Gamma(\alpha)} \beta^4 
+      - (\alpha \beta^2 (1 + \alpha))^2.
+    \]
+    Thus,
+    \[
+      \Var(\hat{\mu}'_2) = \frac{1}{n} \Var(X_1^2) 
+      = \frac{1}{n} \left( \frac{\Gamma(\alpha + 4)}{\Gamma(\alpha)} \beta^4 
+      - (\alpha \beta^2 (1 + \alpha))^2 \right).
+    \]
+  \end{enumerate}
+\end{problem}
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+\end{document}
