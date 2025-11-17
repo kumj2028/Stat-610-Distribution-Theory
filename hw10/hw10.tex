@@ -1,0 +1,549 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to writeLaTeX --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you give
+% someone the link to this page, they can edit at the same
+% time. See the help menu above for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+\usepackage{cancel}
+
+\setlist[enumerate,1]{label={(\alph*)}} %this changes enumerate to (a),(b),...
+
+\usepackage{graphicx} %package to manage images
+
+\newcommand{\A}{{\mathcal{A}}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\CC}{{\mathcal{C}}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\Z}{{\mathbb Z}}
+
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\End}{{\rm End}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Ima}{{\rm Im}}
+\newcommand{\Ker}{{\rm Ker}}
+\newcommand{\Mor}{{\rm Mor}}
+\newcommand{\Rad}{{\rm Rad}}
+\newcommand{\Prob}{{\sf P}}
+\newcommand{\E}{{\sf E}}
+\newcommand{\Var}{{\sf Var}}
+\newcommand{\Cov}{{\sf Cov}}
+\newcommand{\Corr}{{\sf Corr}}
+
+\renewcommand\labelitemi{-} %this changes itemize bullet points to dashes (-)
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Homework 10}%replace X with the appropriate number
+\author{Mengxiang Jiang\\ %replace with your name
+Stat 610 Distribution Theory} %if necessary, replace with your course title
+ 
+\maketitle
+
+\begin{problem}{1}
+  Let $W_1, W_2, \ldots$ be an iid sequence of Weibull(2, 2) random 
+  variables, with pdf $f_W(w) = w e^{-w^2/2}$, $w \geq 0$.
+  \begin{enumerate}
+    \item Use the Strong Law of Large Numbers to determine 
+    $\lim_{n \to \infty} \overline{W}_n$. Be sure to evaluate the limit.
+    \item Similarly, find $\lim_{n \to \infty} \frac{1}{n} \sum_{i=1}^n W_i^2$.
+    \item Based on the above, find $\lim_{n \to \infty} \hat{\sigma}^2_n$, 
+    where $\hat{\sigma}^2_n = \frac{1}{n} \sum_{i=1}^n 
+    (W_i - \overline{W}_n)^2 = \frac{1}{n} \sum_{i=1}^n W_i^2 - \overline{W}_n^2$.
+    Explain what theorem allows you to apply the results from (a) and (b)
+    \item Similarly, does the sample coefficient of variation 
+    $\frac{\hat{\sigma}_n}{\overline{W}_n}$ have a limit? Explain.
+    \item Apply the CLT to approximate $P(1.2 \leq \overline{W}_{50} \leq 1.4)$ 
+    for a random sample of size $n = 50$.
+  \end{enumerate}
+  \begin{enumerate}
+    \item By the Strong Law of Large Numbers, we have
+    \begin{align*}
+      \overline{W}_n \to \E(W_1) &= \beta^{1/\gamma}\Gamma(1+1/\gamma) \\
+      &= (2)^{1/2}\Gamma(1+1/2) \\
+      &= \sqrt{\frac{\pi}{2}}.
+    \end{align*}
+    \item Similarly, by the Strong Law of Large Numbers, we have
+    \begin{align*}
+      \frac{1}{n} \sum_{i=1}^n W_i^2 \to \E(W_1^2) &= \Var(W_1) + (\E(W_1))^2 \\
+      &= \beta^{2/\gamma}\Gamma(1+2/\gamma) \\
+      &= 2^{2/2}\Gamma(1+2/2) \\
+      &= 2.
+    \end{align*}
+    \item By the results from (a) and (b), we have
+    \begin{align*}
+      \hat{\sigma}^2_n &\to \E(W_1^2) - (\E(W_1))^2 \\
+      &= 2 - \left(\sqrt{\frac{\pi}{2}}\right)^2 \\
+      &= 2 - \frac{\pi}{2} = \frac{4 - \pi}{2}.
+    \end{align*}
+    The theorem that allows us to apply the results from (a) and (b) is
+    Theorem 5.13.
+    \item Yes, the sample coefficient of variation has a limit. 
+    By the results from (a) and (c), we have
+    \begin{align*}
+      \frac{\hat{\sigma}_n}{\overline{W}_n} &\to \frac{\sqrt{\Var(W_1)}}{\E(W_1)} \\
+      &= \frac{\sqrt{\frac{4 - \pi}{2}}}{\sqrt{\frac{\pi}{2}}} \\
+      &= \sqrt{\frac{4 - \pi}{\pi}}.
+    \end{align*}
+    \item By the Central Limit Theorem, we have
+    \begin{align*}
+      \frac{\sqrt{n}(\overline{W}_n - \E(W_1))}{\sqrt{\Var(W_1)}} &\xrightarrow{D} Z\\
+      \frac{\sqrt{50}(\overline{W}_{50} - \sqrt{\frac{\pi}{2}})}
+      {\sqrt{\frac{4 - \pi}{2}}} &\xrightarrow{D} Z,
+    \end{align*}
+    The endpoints 1.2 and 1.4 can be standardized as follows:
+    \begin{align*}
+      z_1 &= \frac{\sqrt{50}(1.2 - \sqrt{\frac{\pi}{2}})}{\sqrt{\frac{4 - \pi}{2}}} 
+      \approx -0.575, \\
+      z_2 &= \frac{\sqrt{50}(1.4 - \sqrt{\frac{\pi}{2}})}{\sqrt{\frac{4 - \pi}{2}}} 
+      \approx 1.583.
+    \end{align*}
+    Thus,
+    \begin{align*}
+      P(1.2 \leq \overline{W}_{50} \leq 1.4) &\approx P(z_1 \leq Z \leq z_2) \\
+      &= P(Z \leq z_2) - P(Z \leq z_1) \\
+      &\approx 0.943 - 0.282 = 0.661.
+    \end{align*}
+  \end{enumerate}
+\end{problem}
+
+\pagebreak
+
+\begin{problem}{2}
+  Let $X_1, X_2, \ldots$ be iid Bernoulli($p$) random variables. 
+  Provide consistent estimators for the odds $\frac{p}{1-p}$ and for 
+  the log-odds $\log\left(\frac{p}{1-p}\right)$. Explain your reasoning.
+  \\\\
+  Since $X_i$ are iid Bernoulli($p$) random variables, by the Strong Law of
+  Large Numbers, we have
+  \[
+    \overline{X}_n \to \E(X_1) = p.
+  \]
+  Therefore, a consistent estimator for the odds $\frac{p}{1-p}$ is
+  \[
+    \frac{\overline{X}_n}{1 - \overline{X}_n},
+  \]
+  and a consistent estimator for the log-odds $\log\left(\frac{p}{1-p}\right)$ is
+  \[
+    \log\left(\frac{\overline{X}_n}{1 - \overline{X}_n}\right).
+  \]
+  This is because both functions $\frac{x}{1-x}$ and 
+  $\log\left(\frac{x}{1-x}\right)$ are continuous for $x \in (0,1)$,
+  and we can apply theorem 5.13 to conclude the consistency of the estimators.
+\end{problem}
+
+\begin{problem}{3}
+  Suppose $X_1, X_2, \ldots$ is an iid sequence of gamma(3, $\beta$) 
+  random variables. Note that $\E(X_n) = 3\beta$, so a reasonable 
+  estimator for $\beta$ is $\frac{1}{3} \overline{X}_n$.
+  \begin{enumerate}
+    \item Use the central limit theorem to find the limiting distribution 
+    for $\sqrt{n}\left( \frac{1}{3} \overline{X}_n - \beta \right)$. (Hint:
+    you will need $\Var\left( \frac{1}{3} X_i \right)$.)
+    \item Let $\hat{\mu}'_2 = \frac{1}{n} \sum_{i=1}^n X_i^2$ and show 
+    that $\E(\hat{\mu}'_2) = 12\beta^2$.
+    \item Apply the CLT to $Y_i = \frac{1}{12} X_i^2$ to determine the 
+    limiting distribution for $\sqrt{n}\left( \frac{1}{12} \hat{\mu}'_2 
+    - \beta^2 \right)$.
+    \item Now apply the delta method with $g(x) = \sqrt{x}$ to the result 
+    in part (c) in order to find the limiting distribution for 
+    \[
+      \sqrt{n}\left( \sqrt{\frac{1}{12} \hat{\mu}'_2} - \beta \right).
+    \]
+    Which is smaller, the limiting variance for part (a) or 
+    for part (d)? [Smaller is better for estimation purposes.]
+  \end{enumerate}
+  
+  \begin{enumerate}
+    \item By the Central Limit Theorem, we have
+    \begin{align*}
+      \frac{\sqrt{n}\left( \overline{X}_n - \E(X_1) \right)}{\sqrt{\Var(X_1)}}
+      &\xrightarrow{D} Z \\
+      \frac{\sqrt{n}\left( \overline{X}_n - 3\beta \right)}{\sqrt{3\beta^2}}
+      &\xrightarrow{D} Z.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+      \sqrt{n}\left( \frac{1}{3} \overline{X}_n - \beta \right) 
+      &= \frac{1}{3} \sqrt{n}\left( \overline{X}_n - 3\beta \right) \\
+      &\xrightarrow{D} N\left(0, \frac{\beta^2}{3}\right).
+    \end{align*}
+    \item Note that
+    \begin{align*}
+      \E(X_i^2) &= \Var(X_i) + (\E(X_i))^2 \\
+      &= 3\beta^2 + (3\beta)^2 \\
+      &= 12\beta^2.
+    \end{align*}
+    Thus,
+    \[
+      \E(\hat{\mu}'_2) = \E\left( \frac{1}{n} \sum_{i=1}^n X_i^2 \right)
+      = \frac{1}{n} \sum_{i=1}^n \E(X_i^2) = 12\beta^2.
+    \]
+    \item Since $Y_i = \frac{1}{12} X_i^2$, we have
+    \begin{align*}
+      \E(Y_i) &= \frac{1}{12} \E(X_i^2) = \beta^2, \\
+      \Var(Y_i) &= \frac{1}{144} \Var(X_i^2) \\
+      &= \frac{1}{144} \left( \E(X_i^4) - (\E(X_i^2))^2 \right)
+      = \frac{1}{144} (360\beta^4 - (12\beta^2)^2) \\
+      &= \frac{216\beta^4}{144} = \frac{3\beta^4}{2}.
+    \end{align*}
+    By the Central Limit Theorem, we have
+    \begin{align*}
+      \frac{\sqrt{n}\left( Y_i - \E(Y_i) \right)}{\sqrt{\Var(Y_i)}}
+      &\xrightarrow{D} Z \\
+      \frac{\sqrt{n}\left( \frac{1}{12} \hat{\mu}'_2 - \beta^2 \right)}
+      {\sqrt{\frac{3\beta^4}{2}}} &\xrightarrow{D} Z.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+      \sqrt{n}\left( \frac{1}{12} \hat{\mu}'_2 - \beta^2 \right)
+      &\xrightarrow{D} N\left(0, \frac{3\beta^4}{2}\right).
+    \end{align*}
+    \item Note that $g'(x) = \frac{1}{2\sqrt{x}}$. Thus, by the delta method, 
+    we have
+    \begin{align*}
+      \sqrt{n}\left( \sqrt{\frac{1}{12} \hat{\mu}'_2} - \beta \right)
+      &\xrightarrow{D} N\left(0, \left( g'(\beta^2) \right)^2 
+      \cdot \frac{3\beta^4}{2} \right) \\
+      &= N\left(0, \left( \frac{1}{2\beta} \right)^2 
+      \cdot \frac{3\beta^4}{2} \right) \\
+      &= N\left(0, \frac{3\beta^2}{8} \right).
+    \end{align*}
+    The limiting variance for part (a) is $\frac{\beta^2}{3} \approx 0.333\beta^2$,
+    and the limiting variance for part (d) is $\frac{3\beta^2}{8} = 0.375\beta^2$.
+    Therefore, the limiting variance for part (a) is smaller.
+  \end{enumerate}
+
+\end{problem}
+
+\begin{problem}{4}
+  Let $W_1, \ldots, W_n$ be a simple random sample from the 
+  logistic$(\mu, \beta)$ distribution with pdf
+  \[
+    f(w) = \frac{1}{\beta \left(e^{\frac{w-\mu}{2\beta}} + 
+    e^{-\frac{w-\mu}{2\beta}}\right)^2}.
+  \]
+  Note: the mgf is $M (t) = e^{\mu t}
+  \frac{\pi \beta t}{\sin(\pi \beta t)}$ for $|t| < \frac{1}{\beta}$.
+  \begin{enumerate}
+    \item Use the mgf to determine the mean and variance of this distribution. 
+    (You might want to use L'H\^{o}pital's rule or Taylor's expansions.)
+    \item Is $\overline{W}$ a consistent estimator for $\mu$? In what senses? 
+    Explain which theorems you use.
+    \item Identify the limit distribution of $\sqrt{n}(\overline{W} - \mu)$.
+    \item Is $\hat{\mu}'_2 = \frac{1}{n} \sum_{i=1}^n W_i^2$ consistent 
+    for any quantity (parameter)? Explain.
+    \item Discuss the asymptotic distribution of $\hat{\mu}'_2$ in terms 
+    of the appropriate moments. That is, how can you center and re-scale 
+    the statistic so that it converges to some normal distribution? 
+    You do not need to compute the moments but explain how you could 
+    do so if needed.
+  \end{enumerate}
+
+  \begin{enumerate}
+    \item We have the Taylor expansions of $e^x$ and $\sin x$ as follows:
+    \begin{align*}
+      e^x &= 1 + x + \frac{x^2}{2} + O(x^3), \\
+      \sin x &= x - \frac{x^3}{3!} + O(x^5).
+    \end{align*}
+    Thus,
+    \begin{align*}
+      M(t) &= e^{\mu t} \frac{\pi \beta t}{\sin(\pi \beta t)} \\
+      &= e^{\mu t} \frac{\pi \beta t}{\pi \beta t - 
+      \frac{(\pi \beta t)^3}{3!} + O(t^5)} \\
+      &= e^{\mu t} \left( 1 + 
+      \frac{(\pi \beta t)^2}{6} + O(t^4) \right) \\
+      &= \left( 1 + \mu t + \frac{\mu^2 t^2}{2} + O(t^3) \right)
+      \left( 1 + \frac{\pi^2 \beta^2 t^2}{6} + O(t^4) \right) \\
+      &= 1 + \mu t + \left( \frac{\mu^2}{2} + 
+      \frac{\pi^2 \beta^2}{6} \right) t^2 + O(t^3).
+    \end{align*}
+    Therefore, we have
+    \begin{align*}
+      \E(W) &= M'(0) = \mu, \\
+      \Var(W) &= M''(0) - (M'(0))^2 
+      = \left( \mu^2 + \frac{\pi^2 \beta^2}{3} \right) - \mu^2 
+      = \frac{\pi^2 \beta^2}{3}.
+    \end{align*}
+    \item By the Strong Law of Large Numbers, we have
+    \[
+      \overline{W} \to \E(W_1) = \mu, \quad 
+      \text{with probability 1 as } n \to \infty.
+    \]
+    Therefore, $\overline{W}$ is a consistent estimator for $\mu$
+    with probability 1. We used the Strong Law of Large Numbers theorem.
+    \item By the Central Limit Theorem, we have
+    \begin{align*}
+      \frac{\sqrt{n}(\overline{W} - \E(W_1))}{\sqrt{\Var(W_1)}}
+      &\xrightarrow{D} Z \\
+      \frac{\sqrt{n}(\overline{W} - \mu)}{\sqrt{\frac{\pi^2 \beta^2}{3}}}
+      &\xrightarrow{D} Z.
+    \end{align*}
+    Therefore,
+    \[
+      \sqrt{n}(\overline{W} - \mu) \xrightarrow{D} N\left(0, 
+      \frac{\pi^2 \beta^2}{3}\right).
+    \]
+    \item Note that
+    \begin{align*}
+      \E(W_i^2) &= \Var(W_i) + (\E(W_i))^2 \\
+      &= \frac{\pi^2 \beta^2}{3} + \mu^2.
+    \end{align*}
+    By the Strong Law of Large Numbers, we have
+    \[
+      \hat{\mu}'_2 = \frac{1}{n} \sum_{i=1}^n W_i^2 \to \E(W_1^2) 
+      = \frac{\pi^2 \beta^2}{3} + \mu^2, \quad 
+      \text{with probability 1 as } n \to \infty.
+    \]
+    Therefore, $\hat{\mu}'_2$ is a consistent estimator for
+    $\E(W_1^2) = \frac{\pi^2 \beta^2}{3} + \mu^2$.
+    \item Let $Y_i = W_i^2$. Then, we have
+    \begin{align*}
+      \E(Y_i) &= \E(W_i^2) = \frac{\pi^2 \beta^2}{3} + \mu^2, \\
+      \Var(Y_i) &= \E(W_i^4) - (\E(W_i^2))^2.
+    \end{align*}
+    By the Central Limit Theorem, we have
+    \begin{align*}
+      \frac{\sqrt{n}(\hat{\mu}'_2 - \E(Y_i))}{\sqrt{\Var(Y_i)}}
+      &\xrightarrow{D} Z \\
+      \frac{\sqrt{n}\left( \hat{\mu}'_2 - 
+      \left( \frac{\pi^2 \beta^2}{3} + \mu^2 \right) \right)}
+      {\sqrt{\Var(Y_i)}} &\xrightarrow{D} Z.
+    \end{align*}
+    Therefore,
+    \[
+      \sqrt{n}\left( \hat{\mu}'_2 - 
+      \left( \frac{\pi^2 \beta^2}{3} + \mu^2 \right) \right)
+      \xrightarrow{D} N(0, \Var(Y_i)).
+    \]
+    To compute $\Var(Y_i)$, we can use the mgf with higher order expansions
+    to find $\E(W_i^4)$.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{5}
+  Suppose $Y_1, Y_2, \ldots$ are iid $\sim \text{Poisson}(\lambda)$. 
+  The best estimator for $\lambda$ is known to be the 
+  sample mean $\overline{Y}_n$. Suppose we want to estimate 
+  $g(\lambda) = P(Y_i = 0) = e^{-\lambda}$ using 
+  $g(\overline{Y}_n) = e^{-\overline{Y}_n}$.
+  \begin{enumerate}
+    \item Find $\E(e^{-\overline{Y}_n})$ and compare it to $e^{-\lambda}$. 
+    Hint: think about mgfs.
+    \item Use the delta method to determine a limit distribution 
+    for $\sqrt{n}(e^{-\overline{Y}_n} - e^{-\lambda})$.
+    \item (Rao-Blackwell) Let $T = Y_1 + \cdots + Y_n$, which has 
+    Poisson($n\lambda$) distribution. Use the fact
+    (which you can assume) that the conditional distribution of $Y_1$, 
+    given $T$, is binomial$(T, \frac{1}{n})$
+    to find $h(T) = \E(1_{\{Y_1=0\}}|T) = P(Y_1 = 0|T)$, 
+    which must be a function solely of $T$. 
+    Next, use iterated expectation to confirm that 
+    $\E(\E(1_{\{Y_1=0\}}|T)) = e^{-\lambda}$. [Observe that $h(T)$ is
+    a statistic since it does not depend on $\lambda$. Therefore, 
+    $h(T)$ is an unbiased estimator of $e^{-\lambda}$.]
+  \end{enumerate}
+
+  \begin{enumerate}
+    \item Note that the mgf of $Y_i$ is $M_{Y_i}(t) = e^{\lambda(e^t - 1)}$. 
+    Thus, the mgf of $\overline{Y}_n$ is
+    \[
+      M_{\overline{Y}_n}(t) = 
+      \left( M_{Y_i}\left( \frac{t}{n} \right) \right)^n = 
+      e^{n\lambda\left( e^{\frac{t}{n}} - 1 \right)}.
+    \]
+    Therefore,
+    \[
+      \E(e^{-\overline{Y}_n}) = M_{\overline{Y}_n}(-1) = 
+      e^{n\lambda\left( e^{-\frac{1}{n}} - 1 \right)}.
+    \]
+    Using the Taylor expansion of $e^x$, we have
+    \[
+      e^{-\frac{1}{n}} = 1 - \frac{1}{n} + \frac{1}{2n^2} - 
+      \frac{1}{6n^3} + O\left( \frac{1}{n^4} \right).
+    \]
+    Thus,
+    \begin{align*}
+      \E(e^{-\overline{Y}_n}) &= e^{n\lambda\left( 
+      -\frac{1}{n} + \frac{1}{2n^2} - \frac{1}{6n^3} + O\left( \frac{1}{n^4} \right) 
+      \right)} \\
+      &= e^{-\lambda + \frac{\lambda}{2n} - \frac{\lambda}{6n^2} + O\left( 
+      \frac{1}{n^3} \right)} \\
+      &= e^{-\lambda} e^{\frac{\lambda}{2n} - \frac{\lambda}{6n^2} + O\left( 
+      \frac{1}{n^3} \right)}.
+    \end{align*}
+    Since $e^{\frac{\lambda}{2n} - \frac{\lambda}{6n^2} + O\left( 
+    \frac{1}{n^3} \right)} > 1$ for all $n$, we have
+    \[
+      \E(e^{-\overline{Y}_n}) > e^{-\lambda}.
+    \]
+    As $n \to \infty$, we have
+    \[
+      \E(e^{-\overline{Y}_n}) \to e^{-\lambda}.
+    \]
+    \item By the Central Limit Theorem, we have
+    \begin{align*}
+      \frac{\sqrt{n}(\overline{Y}_n - \lambda)}{\sqrt{\lambda}} 
+      &\xrightarrow{D} Z.
+    \end{align*}
+    Let $g(x) = e^{-x}$, then $g'(\lambda) = -e^{-\lambda}$. 
+    By the delta method, we have
+    \begin{align*}
+      \sqrt{n}(e^{-\overline{Y}_n} - e^{-\lambda}) 
+      &\xrightarrow{D} N\left(0, (g'(\lambda))^2 \cdot \lambda\right) \\
+      &= N\left(0, e^{-2\lambda} \cdot \lambda\right).
+    \end{align*}
+    \item Since the conditional distribution of $Y_1$ given $T$ is 
+    binomial$(T, \frac{1}{n})$, we have
+    \[
+      h(T) = \E(1_{\{Y_1=0\}}|T) = P(Y_1 = 0|T) = \left(1 - \frac{1}{n}\right)^T.
+    \]
+    Using iterated expectation, we have
+    \[
+      \E(h(T)) = \E(\E(1_{\{Y_1=0\}}|T)) = \E(1_{\{Y_1=0\}}) 
+      = P(Y_1 = 0) = e^{-\lambda}.
+    \]
+    Therefore, $h(T)$ is an unbiased estimator of $e^{-\lambda}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{6}
+  Suppose $(X_1, \ldots, X_m)$ are iid $\text{normal}(\mu_X, \sigma^2)$ 
+  and $(Y_1, \ldots, Y_n)$ are iid $\text{normal}(\mu_Y, \sigma^2)$ 
+  with the two samples independent. Note the same variance $\sigma^2$ 
+  for each. Let $\overline{X}$ and $\overline{Y}$ be the respective sample means.
+  \begin{enumerate}
+    \item By first noting the joint distribution of $\overline{X}$ 
+    and $\overline{Y}$, determine the distribution of $\overline{X} - \overline{Y}$ 
+    and of
+    \[
+      Z = \frac{\overline{X} - \overline{Y} - (\mu_X - \mu_Y)}
+      {\sigma \sqrt{\frac{1}{m} + \frac{1}{n}}}.
+    \]
+    \item Let $S_X^2$ and $S_Y^2$ be the conventional sample variances, 
+    respectively. Show that
+    \[
+      U = \frac{(m - 1)S_X^2}{\sigma^2} + \frac{(n - 1)S_Y^2}{\sigma^2}
+    \]
+    has a chi-square distribution. What is the degrees of freedom parameter?
+    \item Observe that $U$ is independent of $\overline{X} - \overline{Y}$ (why?), 
+    and deduce the distribution of
+    \[
+      T = \frac{\sqrt{m + n - 2}Z}{\sqrt{U}}.
+    \]
+  \end{enumerate}
+  \begin{enumerate}
+    \item Since $\overline{X} \sim \text{normal}(\mu_X, \frac{\sigma^2}{m})$
+    and $\overline{Y} \sim \text{normal}(\mu_Y, \frac{\sigma^2}{n})$, we have
+    \[
+      \overline{X} - \overline{Y} \sim \text{normal}\left( 
+      \mu_X - \mu_Y, \sigma^2\left( \frac{1}{m} + \frac{1}{n} \right) \right).
+    \]
+    Therefore,
+    \[
+      Z = \frac{\overline{X} - \overline{Y} - (\mu_X - \mu_Y)}
+      {\sigma \sqrt{\frac{1}{m} + \frac{1}{n}}} \sim \text{normal}(0, 1).
+    \]
+    \item Note that
+    \begin{align*}
+      \frac{(m - 1)S_X^2}{\sigma^2} &= 
+      \frac{1}{\sigma^2} \sum_{i=1}^m (X_i - \overline{X})^2 
+      \sim \chi^2_{m-1}, \\
+      \frac{(n - 1)S_Y^2}{\sigma^2} &= 
+      \frac{1}{\sigma^2} \sum_{i=1}^n (Y_i - \overline{Y})^2 
+      \sim \chi^2_{n-1}.
+    \end{align*}
+    Since the two samples are independent, we have
+    \[
+      U = \frac{(m - 1)S_X^2}{\sigma^2} + \frac{(n - 1)S_Y^2}{\sigma^2} 
+      \sim \chi^2_{m+n-2}.
+    \]
+    So the degrees of freedom parameter is $m+n-2$.
+    \item Since $\overline{X} - \overline{Y}$ is independent of $S_X^2$
+    and $S_Y^2$ because they are based on independent components of the samples,
+    we have $Z$ is independent of $U$. Therefore,
+    \[
+      T = \frac{\sqrt{m + n - 2}Z}{\sqrt{U}}
+      = \frac{Z}{\sqrt{U/(m+n-2)}} \sim t_{m+n-2},
+    \]
+    where $t_{m+n-2}$ is the t-distribution with $m+n-2$ degrees of freedom.
+  \end{enumerate}
+\end{problem}
+
+
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+\end{document}
