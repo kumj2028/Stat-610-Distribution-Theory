@@ -1,0 +1,551 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to writeLaTeX --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you give
+% someone the link to this page, they can edit at the same
+% time. See the help menu above for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+\usepackage{cancel}
+
+\setlist[enumerate,1]{label={(\alph*)}} %this changes enumerate to (a),(b),...
+
+\usepackage{graphicx} %package to manage images
+
+\newcommand{\A}{{\mathcal{A}}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\CC}{{\mathcal{C}}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\Z}{{\mathbb Z}}
+
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\End}{{\rm End}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Ima}{{\rm Im}}
+\newcommand{\Ker}{{\rm Ker}}
+\newcommand{\Mor}{{\rm Mor}}
+\newcommand{\Rad}{{\rm Rad}}
+\newcommand{\Prob}{{\sf P}}
+\newcommand{\E}{{\sf E}}
+\newcommand{\Var}{{\sf Var}}
+\newcommand{\Cov}{{\sf Cov}}
+\newcommand{\Corr}{{\sf Corr}}
+
+\renewcommand\labelitemi{-} %this changes itemize bullet points to dashes (-)
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Homework 11}%replace X with the appropriate number
+\author{Mengxiang Jiang\\ %replace with your name
+Stat 610 Distribution Theory} %if necessary, replace with your course title
+ 
+\maketitle
+
+\begin{problem}{1}
+Suppose $X_i \stackrel{iid}{\sim} 
+\text{exponential}(\beta), i = 1, 2, \ldots$.
+  \begin{enumerate}
+    \item Identify (with all parameters) the asymptotic bivariate normal 
+    distribution of the first two sample moments, $\hat{\mu}'_1$ and 
+    $\hat{\mu}'_2$. Recall Corollary 5.22 in the notes.
+    \item Use the bivariate delta method to get a limit distribution 
+    for $\sqrt{n} \left(\hat{\mu}'_1 - \beta, 
+    \sqrt{\hat{\mu}'_2/2} - \beta \right)$.
+    \item Of the two potential estimators for $\beta$, $\hat{\mu}'_1$ 
+    and $\sqrt{\hat{\mu}'_2/2}$, which has the smaller asymptotic
+    variance? Note: it is not possible to get the exact variance of
+    $\sqrt{\hat{\mu}'_2/2}$. [Such a question
+    is relevant for statisticians wanting to find the most efficient 
+    estimator of $\beta$.]
+  \end{enumerate}
+
+  \begin{enumerate}
+    \item We have $\mu'_1 = \beta$ and $\mu'_2 = 2\beta^2$. The 
+    variance and covariance terms are
+    \[
+      \sigma_{11} = \Var(X) = \beta^2,
+    \]
+    \[
+      \sigma_{22} = \Var(X^2) = \E(X^4) - (\E(X^2))^2 =
+      4! \beta^4 - (2!\beta^2)^2 = 20\beta^4,
+    \]
+    \[
+      \sigma_{12} = \sigma_{21} = \Cov(X, X^2) = \E(X^3) - \E(X)\E(X^2) = 
+      3! \beta^3 - 2!\beta^3 = 4\beta^3.
+    \]
+    Therefore, by Corollary 5.22, we have
+    \[
+      \sqrt{n}
+      \begin{pmatrix}
+        \hat{\mu}'_1 - \beta \\
+        \hat{\mu}'_2 - 2\beta^2
+      \end{pmatrix}
+      \xrightarrow{D} \text{normal}\left(
+      \begin{pmatrix}
+        0 \\
+        0
+      \end{pmatrix},
+      \begin{pmatrix}
+        \beta^2 & 4\beta^3 \\
+        4\beta^3 & 20\beta^4
+      \end{pmatrix}
+      \right).
+    \]
+    \item Let
+    \[
+      g(x, y) = 
+      \begin{pmatrix}
+        x \\
+        \sqrt{y/2}
+      \end{pmatrix}.
+    \]
+    Then we have
+    \begin{align*}
+      g'(x, y) &=
+      \begin{pmatrix}
+        1 & 0 \\
+        0 & \frac{1}{2\sqrt{2}}y^{-1/2}
+      \end{pmatrix} \\
+      g'(\beta, 2\beta^2) &=
+      \begin{pmatrix}
+        1 & 0 \\
+        0 & \frac{1}{2\sqrt{2}}(2\beta^2)^{-1/2}
+      \end{pmatrix} \\
+      &=
+      \begin{pmatrix}
+        1 & 0 \\
+        0 & \frac{1}{4\beta}
+      \end{pmatrix}.
+    \end{align*}
+    By the bivariate delta method, we have
+    the asymptotic covariance matrix
+    \begin{align*}
+      \Sigma^{**}&=
+      \begin{pmatrix}
+        1 & 0 \\
+        0 & \frac{1}{4\beta}
+      \end{pmatrix}
+      \begin{pmatrix}
+        \beta^2 & 4\beta^3 \\
+        4\beta^3 & 20\beta^4
+      \end{pmatrix}
+      \begin{pmatrix}
+        1 & 0 \\
+        0 & \frac{1}{4\beta}
+      \end{pmatrix} \\
+      &=
+      \begin{pmatrix}
+        \beta^2 & \beta^2 \\
+        \beta^2 & \frac{5\beta^2}{4}
+      \end{pmatrix}.
+    \end{align*}
+    Therefore,
+    \[
+      \sqrt{n}
+      \begin{pmatrix}
+        \hat{\mu}'_1 - \beta \\
+        \sqrt{\hat{\mu}'_2/2} - \beta
+      \end{pmatrix}
+      \xrightarrow{D} \text{normal}\left(
+      \begin{pmatrix}
+        0 \\
+        0
+      \end{pmatrix},
+      \begin{pmatrix}
+        \beta^2 & \beta^2 \\
+        \beta^2 & \frac{5\beta^2}{4}
+      \end{pmatrix}
+      \right).
+    \]
+    \item The asymptotic variance of $\hat{\mu}'_1$ is $\beta^2$, 
+    and the asymptotic variance of $\sqrt{\hat{\mu}'_2/2}$ is 
+    $\frac{5\beta^2}{4}$. Since $\beta^2 < 
+    \frac{5\beta^2}{4}$, $\hat{\mu}'_1$ has the smaller asymptotic 
+    variance.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{2}
+  Suppose $T_i \stackrel{iid}{\sim} \text{Poisson}(\lambda), i = 1, 2, \dots$. 
+  Note that $\mu'_3 = \E(T_i^3) = \lambda^3 + 3\lambda^2 + \lambda$ and 
+  $\mu'_4 = \E(T_i^4) = \lambda^4 + 6\lambda^3 + 7\lambda^2 + \lambda$.
+  \begin{enumerate}
+    \item Identify the asymptotic joint distribution of the sample 
+    mean $\overline{T}_n$ and the sample variance
+    $\hat{\sigma}^2_n$. Recall Theorem 5.23 in the notes.
+    \item Both $\overline{T}_n$ and $\hat{\sigma}^2_n$ are unbiased 
+    for $\lambda$, that is, their expectations equal $\lambda$ exactly. Show
+    that a$\overline{T}_n$ + (1 - a)$\hat{\sigma}^2_n$
+    is also unbiased for $\lambda$, for any $a \in [0, 1]$.
+    \item What is $\Var(a\overline{T}_n + (1 - a)\hat{\sigma}^2_n)$, 
+    and what value of $a$ minimizes this variance? [Again, the
+    point here is to identify what is best for estimation purposes.]
+  \end{enumerate}
+
+  \begin{enumerate}
+    \item We have $\mu'_1 = \lambda$, $\mu'_2 = \lambda^2 + \lambda$,
+    $\mu'_3 = \lambda^3 + 3\lambda^2 + \lambda$, and $\mu'_4 = 
+    \lambda^4 + 6\lambda^3 + 7\lambda^2 + \lambda$. The variance and 
+    covariance terms are
+    \[
+      \sigma_{11} = \Var(T_i) = \lambda,
+    \]
+    \begin{align*}
+      \sigma_{22} &= \Var(T_i^2) = \E(T_i^4) - (\E(T_i^2))^2 \\
+      &= (\lambda^4 + 6\lambda^3 + 7\lambda^2 + \lambda) - 
+      (\lambda^2 + \lambda)^2 \\
+      &= 4\lambda^3 + 6\lambda^2 + \lambda,
+    \end{align*}
+    \begin{align*}
+      \sigma_{12} &= \sigma_{21} = \Cov(T_i, T_i^2) = \E(T_i^3) - 
+      \E(T_i)\E(T_i^2) \\
+      &= (\lambda^3 + 3\lambda^2 + \lambda) - \lambda(\lambda^2 + \lambda) \\
+      &= 2\lambda^2 + \lambda.
+    \end{align*}
+    Therefore, by Theorem 5.23, we have
+    \[
+      \sqrt{n}
+      \begin{pmatrix}
+        \overline{T}_n - \lambda \\
+        \hat{\sigma}^2_n - \lambda
+      \end{pmatrix}
+      \xrightarrow{D} \text{normal}\left(
+      \begin{pmatrix}
+        0 \\
+        0
+      \end{pmatrix},
+      \Sigma^*
+      \right),
+    \]
+    where
+    \begin{align*}
+      \Sigma^* &=\begin{pmatrix}
+        \sigma_{11} & -2\mu\sigma_{11}+\sigma_{12} \\
+        -2\mu\sigma_{11}+\sigma_{12} & 4\mu^2\sigma_{11} 
+        - 4\mu\sigma_{12} + \sigma_{22}
+      \end{pmatrix}\\
+      &=\begin{pmatrix}
+        \lambda & -2\lambda^2 + (2\lambda^2 + \lambda) \\
+        -2\lambda^2 + (2\lambda^2 + \lambda) & 4\lambda^3 - 
+        4\lambda(2\lambda^2 + \lambda) + 
+        (4\lambda^3 + 6\lambda^2 + \lambda)
+      \end{pmatrix} \\
+      &=\begin{pmatrix}
+        \lambda & \lambda \\
+        \lambda & 2\lambda^2 + \lambda
+      \end{pmatrix}.
+    \end{align*}
+    \item Since both $\overline{T}_n$ and $\hat{\sigma}^2_n$ are unbiased
+    for $\lambda$, we have
+    \begin{align*}
+      \E(a\overline{T}_n + (1 - a)\hat{\sigma}^2_n) &=
+      a\E(\overline{T}_n) + (1 - a)\E(\hat{\sigma}^2_n) \\
+      &= a\lambda + (1 - a)\lambda \\
+      &= \lambda.
+    \end{align*}
+    \item We have
+    \begin{align*}
+      \Var(a\overline{T}_n + (1 - a)\hat{\sigma}^2_n) &=
+      a^2\Var(\overline{T}_n) + (1 - a)^2\Var(\hat{\sigma}^2_n) \\
+      &\quad + 2a(1 - a)\Cov(\overline{T}_n, \hat{\sigma}^2_n) \\
+      &= a^2\frac{\lambda}{n} + (1 - a)^2\frac{2\lambda^2 + \lambda}{n} 
+      + 2a(1 - a)\frac{\lambda}{n} \\
+      &= \frac{\lambda}{n} \left(a^2 + (1 - a)^2(2\lambda + 1) +
+      2a(1 - a)\right) \\
+      &= \frac{\lambda}{n} \left(a^2 + (1 - a)^2(2\lambda + 1) +
+      2a - 2a^2\right) \\
+      &= \frac{\lambda}{n} \left((1 - a)^2(2\lambda + 1) +
+      2a - a^2\right) \\
+      &= \frac{\lambda}{n} \left((1 - a)^2(2\lambda + 1) - (1-2a+ a^2) + 1\right) \\
+      &= \frac{\lambda}{n} \left((1 - a)^2(2\lambda + 1) - (1-a)^2 + 1\right) \\
+      &= \frac{\lambda}{n} \left((1 - a)^2(2\lambda + 1 - 1) + 1\right) \\
+      &= \frac{\lambda}{n} \left(2\lambda(1 - a)^2 + 1\right).
+    \end{align*}
+    To minimize this variance, we need to minimize $(1 - a)^2$, which
+    occurs at $a = 1$.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{3}
+  Suppose $X_1, X_2, \dots , X_n$ is a random sample from the 
+  Laplace(0, $\beta$) distribution. Argue that
+  \[
+    \sqrt{n}\left(\frac{1}{n}\sum_{i=1}^n X_i, 
+    \frac{1}{n}\sum_{i=1}^n |X_i| - \beta \right)
+    \xrightarrow{D} \text{normal}\left(
+    \begin{pmatrix}
+      0 \\
+      0
+    \end{pmatrix},
+    \Sigma
+    \right),
+  \]
+  and find the matrix $\Sigma$. What is the asymptotic correlation 
+  between $\frac{1}{n}\sum_{i=1}^n X_i$ and $\frac{1}{n}\sum_{i=1}^n |X_i|$?
+  [A more realistic scenario would be a sample from the Laplace($\mu, \beta$) 
+  distribution, with both parameters needing to be estimated. It turns 
+  out that $\sqrt{n}\left(X_n - \mu, 
+  \frac{1}{n}\sum_{i=1}^n |X_i - X_n| - \beta \right)$
+  has the same limit distribution as the above.]
+  \\\\
+  We have $\mu'_1 = \E(X_i) = 0$ and $\mu'_2 = \E(X_i^2) = 2\beta^2$. The
+  variance and covariance terms are
+  \[
+    \sigma_{11} = \Var(X_i) = 2\beta^2,
+  \]
+  \[
+    \sigma_{22} = \Var(|X_i|) = \E(X_i^2) - (\E(|X_i|))^2 =
+    2\beta^2 - \beta^2 = \beta^2,
+  \]
+  \[
+    \sigma_{12} = \sigma_{21} = \Cov(X_i, |X_i|) = 
+    \E(X_i|X_i|) - \E(X_i)\E(|X_i|) = 0 - 0 = 0.
+  \]
+  Therefore, by Theorem 5.23, we have
+  \[
+    \sqrt{n}
+    \begin{pmatrix}
+      \frac{1}{n}\sum_{i=1}^n X_i - 0 \\
+      \frac{1}{n}\sum_{i=1}^n |X_i| - \beta
+    \end{pmatrix}
+    \xrightarrow{D} \text{normal}\left(
+    \begin{pmatrix}
+      0 \\
+      0
+    \end{pmatrix},
+    \begin{pmatrix}
+      2\beta^2 & 0 \\
+      0 & \beta^2
+    \end{pmatrix}
+    \right).
+  \]
+  The asymptotic correlation between $\frac{1}{n}\sum_{i=1}^n X_i$ and
+  $\frac{1}{n}\sum_{i=1}^n |X_i|$ is
+  \[
+    \Corr\left(\frac{1}{n}\sum_{i=1}^n X_i, 
+    \frac{1}{n}\sum_{i=1}^n |X_i|\right) =
+    \frac{\sigma_{12}}{\sqrt{\sigma_{11}\sigma_{22}}} =
+    \frac{0}{\sqrt{2\beta^2 \cdot \beta^2}} = 0.
+  \]
+\end{problem}
+
+\begin{problem}{4}
+  Let $\hat{F}(x)$ be the empirical cdf for a random sample 
+  $(X_1, \dots, X_n)$ from distribution $F(x)$. Fix
+  two values $x_1 < x_2$ in the support of $F$.
+  \begin{enumerate}
+    \item Let $Y_1$ be the number of sample values that are less 
+    than or equal to $x_1$, $Y_2$ be the number
+    that are greater than $x_1$ and less than or equal to $x_2$, 
+    and $Y_3$ be the number that are greater than $x_2$. 
+    Explain why $(Y_1, Y_2, Y_3)$ has 
+    trinomial$(n, F(x_1), F(x_2) - F(x_1), 1 - F(x_2))$ joint distribution. 
+    (Recall Example 4.1 in the notes.)
+
+    \item Observe that $Y_1/n = \hat{F}(x_1)$, 
+    $Y_2/n = \hat{F}(x_2) - \hat{F}(x_1)$, and $Y_3/n = 1 - \hat{F}(x_2)$. 
+    Use the conclusion of Example 4.1 (Slide 257) to deduce 
+    $\Cov( \hat{F}(x_1), \hat{F}(x_2) - \hat{F}(x_1))$ and thus
+    $\Cov(\hat{F}(x_1), \hat{F}(x_2))$.
+  \end{enumerate}
+  \begin{enumerate}
+    \item Each $X_i$ falls into one of the three categories:
+    \begin{itemize}
+      \item $X_i \leq x_1$,
+      \item $x_1 < X_i \leq x_2$,
+      \item $X_i > x_2$.
+    \end{itemize}
+    The probabilities
+    of these three categories are
+    \begin{itemize}
+      \item $P(X_i \leq x_1) = F(x_1)$,
+      \item $P(x_1 < X_i \leq x_2) = F(x_2) - F(x_1)$,
+      \item $P(X_i > x_2) = 1 - F(x_2)$.
+    \end{itemize}
+    Since we have a random sample of size 
+    $n$, the joint distribution of $(Y_1, Y_2, Y_3)$ is 
+    trinomial$(n, F(x_1), F(x_2) - F(x_1), 1 - F(x_2))$.
+    \item By the conclusion of Example 4.1, we have
+    \begin{align*}
+      \Cov(\hat{F}(x_1), \hat{F}(x_2) - \hat{F}(x_1)) &=
+      \Cov\left(\frac{Y_1}{n}, \frac{Y_2}{n}\right) \\
+      &= \frac{1}{n^2}\Cov(Y_1, Y_2) \\
+      &= \frac{1}{n^2}(-n p_1 p_2) \\
+      &= -\frac{1}{n}F(x_1)(F(x_2) - F(x_1)).
+    \end{align*}
+    Therefore,
+    \begin{align*}
+      \Cov(\hat{F}(x_1), \hat{F}(x_2)) &=
+      \Cov(\hat{F}(x_1), \hat{F}(x_2) - \hat{F}(x_1) + \hat{F}(x_1)) \\
+      &= \Cov(\hat{F}(x_1), \hat{F}(x_2) - \hat{F}(x_1)) +
+      \Cov(\hat{F}(x_1), \hat{F}(x_1)) \\
+      &= -\frac{1}{n}F(x_1)(F(x_2) - F(x_1)) +
+      \Var(\hat{F}(x_1)) \\
+      &= -\frac{1}{n}F(x_1)(F(x_2) - F(x_1)) +
+      \frac{1}{n}F(x_1)(1 - F(x_1)) \\
+      &= \frac{1}{n}F(x_1)(1 - F(x_2)).
+    \end{align*}
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{5}
+  Suppose $T_1, \dots , T_{40}$ is a random sample from the 
+  exponential(1) distribution (which has
+  75-th percentile $t_{0.75} = \log(4) = 1.3863$).
+  \begin{enumerate}
+    \item Based on Theorem 5.27 in the notes, find the exact 
+    probability that the sample 75-
+    percentile, $\hat{t}_{0.75}$, exceeds 1.75.
+    \item Find the approximate normal probability of the same event.
+    \item Compare the two probabilities. Is the normal approximation 
+    reasonable in this case?
+  \end{enumerate}
+  \begin{enumerate}
+    \item By Theorem 5.27, we have
+    \begin{align*}
+      \Prob(\hat{x}_p \leq x) &= 1 - B(\lceil np - 1 \rceil; n, F(x))
+    \end{align*}
+    Therefore,
+    \begin{align*}
+      \Prob(\hat{t}_{0.75} > 1.75) &= 1 - \Prob(\hat{t}_{0.75} \leq 1.75) \\
+      &= B(29; 40, 1-e^{-1.75}) \\
+      &= \sum_{k=0}^{29} \binom{40}{k} (1-e^{-1.75})^k (e^{-1.75})^{40-k}\\
+      &\approx 0.0748.
+    \end{align*}
+    \item Using the normal approximation, we have
+    \begin{align*}
+      P(\hat{t}_{0.75} > 1.75) &= 1 - P(\hat{t}_{0.75} \leq 1.75) \\
+      &\approx 1 - \left(1 - \Phi\left(\frac{\sqrt{n}(p-F(x))}
+      {\sqrt{F(x)(1-F(x))}}\right)\right) \\
+      &= \Phi\left(\frac{\sqrt{40}(0.75 - (1-e^{-1.75}))}
+      {\sqrt{(1-e^{-1.75})e^{-1.75}}}\right) \\
+      &= \Phi( -1.272) \\
+      &= 0.102.
+    \end{align*}
+    \item The two probabilities are 0.0748 (exact) and 0.102 (approximate),
+    which are fairly close. Therefore, the normal approximation is
+    reasonable in this case.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}{6}
+  The Frech\'{e}t($\alpha$, $\beta$) cdf is $F(t) = e^{-1/(\beta t^\alpha)}$ 
+  for $t > 0$, with $\alpha > 0$ and $\beta > 0$. (See also Example
+  5.16 in the notes.)
+  \begin{enumerate}
+    \item What is the pdf?
+    \item Prove that this distribution satisfies $\lim_{x \to \infty} 
+    x^\alpha(1 - F(x)) = c > 0$ for some $c$ (and
+    identify $c$).
+    \item Suppose $T \sim \text{Frech\'{e}t}(\alpha, \beta)$. Show that 
+    $W = \frac{1}{T}$ has a Weibull distribution and identify
+    its parameters.
+  \end{enumerate}
+  \begin{enumerate}
+    \item The pdf is
+    \begin{align*}
+      f(t) &= \frac{d}{dt}F(t) \\
+      &= \frac{d}{dt}e^{-1/(\beta t^\alpha)} \\
+      &= e^{-1/(\beta t^\alpha)} \cdot \frac{\alpha}{\beta t^{\alpha + 1}} \\
+      &= \frac{\alpha}{\beta t^{\alpha + 1}} e^{-1/(\beta t^\alpha)}.
+    \end{align*}
+    \item We have
+    \begin{align*}
+      \lim_{x \to \infty} x^\alpha(1 - F(x)) &= 
+      \lim_{x \to \infty} x^\alpha \left(1 - e^{-1/(\beta x^\alpha)}\right) \\
+      &= \infty - \infty \quad \text{(indeterminate form)} \\
+      &= \lim_{x \to \infty} \frac{1 - e^{-1/(\beta x^\alpha)}}{1/x^\alpha} \\
+      &= \lim_{x \to \infty} x^\alpha \cdot \frac{1}{\beta x^\alpha} \quad
+      \text{(by L'Hospital's Rule)} \\
+      &= \frac{1}{\beta}.
+    \end{align*}
+    Therefore, $c = \frac{1}{\beta} > 0$.
+    \item We have
+    \begin{align*}
+      F_W(w) &= P(W \leq w) \\
+      &= P\left(\frac{1}{T} \leq w\right) \\
+      &= P\left(T \geq \frac{1}{w}\right) \\
+      &= 1 - P\left(T < \frac{1}{w}\right) \\
+      &= 1 - F_T\left(\frac{1}{w}\right) \\
+      &= 1 - e^{-1/(\beta (1/w)^\alpha)} \\
+      &= 1 - e^{-(w^\alpha/\beta)}.
+    \end{align*}
+    Therefore, $W$ has a Weibull distribution with parameters
+    $\alpha$ and $\beta$.
+  \end{enumerate}
+\end{problem}
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+\end{document}
