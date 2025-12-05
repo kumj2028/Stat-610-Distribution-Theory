@@ -1,0 +1,499 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to writeLaTeX --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you give
+% someone the link to this page, they can edit at the same
+% time. See the help menu above for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+\usepackage{cancel}
+
+\setlist[enumerate,1]{label={(\alph*)}} %this changes enumerate to (a),(b),...
+
+\usepackage{graphicx} %package to manage images
+
+\newcommand{\A}{{\mathcal{A}}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\CC}{{\mathcal{C}}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\Z}{{\mathbb Z}}
+
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\End}{{\rm End}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Ima}{{\rm Im}}
+\newcommand{\Ker}{{\rm Ker}}
+\newcommand{\Mor}{{\rm Mor}}
+\newcommand{\Rad}{{\rm Rad}}
+\newcommand{\Prob}{{\sf P}}
+\newcommand{\E}{{\sf E}}
+\newcommand{\Var}{{\sf Var}}
+\newcommand{\Cov}{{\sf Cov}}
+\newcommand{\Corr}{{\sf Corr}}
+
+\renewcommand\labelitemi{-} %this changes itemize bullet points to dashes (-)
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Homework 12}%replace X with the appropriate number
+\author{Mengxiang Jiang\\ %replace with your name
+Stat 610 Distribution Theory} %if necessary, replace with your course title
+ 
+\maketitle
+
+\begin{problem}{1}
+Suppose $X_1, \dots , X_n$ is a simple random sample from the 
+exponential(1/$\lambda$) distribution with pdf 
+$f (x) = \lambda e^{-\lambda x}$ for $x > 0$.
+\begin{enumerate}
+    \item Find the joint cdf for the smallest and 
+    next-to-smallest order statistics ($X_{(1)}$ and $X_{(2)}$,
+    resp.). Hint: start by showing that
+    \[
+        \Prob(x_1 < X_{(1)} \leq x_2 < X_{(2)}) =
+        \sum_{i=1}^n
+        \left(
+            \Prob(x_1 < X_i \leq x_2) \prod_{\substack{j=1 \\ j \neq i}}^n
+            \Prob(X_j > x_2)
+        \right)
+    \]
+    and then simplify. Derive the joint cdf from this 
+    (for $x_1 < x_2$, noting the support).
+    \item Obtain the joint pdf for ($X_{(1)}$, $X_{(2)}$). 
+    Be careful; it does simplify.
+\end{enumerate}
+
+\begin{enumerate}
+    \item We have
+    \begin{align*}
+        \Prob(x_1 < X_{(1)} \leq x_2 < X_{(2)}) 
+        &= \Prob\left(\bigcup_{i=1}^n \{x_1 < X_i \leq x_2,
+        X_j > x_2 \text{ for } j \neq i\}\right) \\
+        &= \sum_{i=1}^n
+        \Prob(x_1 < X_i \leq x_2, X_j > x_2 \text{ for } j \neq i) \\
+        &= \sum_{i=1}^n
+        \left(
+            \Prob(x_1 < X_i \leq x_2) \prod_{\substack{j=1 \\ j \neq i}}^n
+            \Prob(X_j > x_2)
+        \right) \\
+        &= n \left(
+            (e^{-\lambda x_1} - e^{-\lambda x_2}) (e^{-\lambda x_2})^{n-1}
+        \right) \\
+        &= n (e^{-\lambda x_1} - e^{-\lambda x_2}) e^{-\lambda (n-1) x_2}
+    \end{align*}
+    for $0 < x_1 < x_2$. Therefore, the joint cdf is
+    \begin{align*}
+        F_{X_{(1)}, X_{(2)}}(x_1, x_2)
+        &= \Prob(X_{(1)} \leq x_1, X_{(2)} \leq x_2) \\
+        &= \Prob(X_{(1)} \leq x_1) - \Prob(x_1 < X_{(1)} \leq x_2 < X_{(2)}) \\
+        &= 1 - e^{-\lambda n x_1} - n (e^{-\lambda x_1} - 
+        e^{-\lambda x_2}) e^{-\lambda (n-1) x_2}
+    \end{align*}
+    for $0 < x_1 < x_2$.
+    \item The joint pdf is
+    \begin{align*}
+        f_{X_{(1)}, X_{(2)}}(x_1, x_2)
+        &= \frac{\partial^2}{\partial x_1 \partial x_2}
+        F_{X_{(1)}, X_{(2)}}(x_1, x_2) \\
+        &= \frac{\partial}{\partial x_2}
+        \left(
+            \lambda n e^{-\lambda n x_1} + n \lambda e^{-\lambda x_1}
+            e^{-\lambda (n-1) x_2}
+            - n \lambda n e^{-\lambda n x_2} + n \lambda e^{-\lambda x_2}
+            e^{-\lambda (n-1) x_2}
+        \right) \\
+        &= n (n-1) \lambda^2 e^{-\lambda x_1} e^{-\lambda (n-1) x_2}
+    \end{align*}
+    for $0 < x_1 < x_2$.
+\end{enumerate}
+
+\end{problem}
+
+\begin{problem}{2}
+Suppose $T_1, T_2, \dots$ is an iid sequence from the Lomax distribution 
+with cdf $F (t) = 1 - (1 + t/\beta)^{-\alpha}$ where both $\alpha$ 
+and $\beta$ are positive. Use Theorem 5.35 in the notes to obtain an
+asymptotic distribution for $M_n = \max(T_1, \dots, T_n)$.
+
+\begin{theorem}{5.35}
+    If $F (x)$ satisfies $\lim_{x \to \infty} x^\alpha(1 - F (x)) = c > 0$, 
+    with $\alpha > 0$, then
+    \[
+        \lim_{n \to \infty} \Prob(M_n \leq n^{1/\alpha} x) = e^{-cx^{-\alpha}},
+    \]
+    which is the Fr\'{e}chet$(\alpha, 1/c)$ cdf.
+\end{theorem}
+We have
+\begin{align*}
+    \lim_{t \to \infty} t^\alpha (1 - F (t))
+    &= \lim_{t \to \infty} t^\alpha (1 + t/\beta)^{-\alpha} \\
+    &= \lim_{t \to \infty} \left(\frac{t}{1 + t/\beta}\right)^\alpha \\
+    &= \lim_{t \to \infty} \left(\frac{1}{1/t + 1/\beta}\right)^\alpha \\
+    &= \beta^\alpha
+\end{align*}
+Therefore, by Theorem 5.35, we have
+\[
+    \lim_{n \to \infty} \Prob(M_n \leq n^{1/\alpha} x) = e^{-\beta^\alpha x^{-\alpha}},
+\]
+which is the Fr\'{e}chet$(\alpha, 1/\beta^\alpha)$ cdf.
+\end{problem}
+
+\pagebreak
+
+\begin{problem}{3}
+Suppose $V_1, \dots , V_n \stackrel{iid}{\sim}$ beta($a$, 1), 
+with cdf $F_V (v) = v^a$ for $0 \leq v \leq 1$.
+\begin{enumerate}
+    \item Find the marginal pdf for each $i$-th order statistic, $V_{(i)}$.
+    \item Let $M_n = V_{(n)} = \max(_1, \dots, V_n)$. Find $\E(M_n)$.
+    \item Determine a sequence $a_n$ so that $\frac{1 - M_n}{a_n}$ 
+    converges in distribution and identify the limit. 
+    Hint: Theorem 5.36 in the notes.
+    \item Let $W_i = 1 - V_i$, which has beta(1, $a$) distribution. 
+    (What is the cdf?) Determine a sequence $a'_n$ so that 
+    $\frac{1 - W_{(n)}}{a'_n}$ converges in distribution and identify 
+    the limit. Note that this also determines the asymptotic behavior 
+    for $V_{(1)} = \min(_1, \dots, V_n) = 1 - W_{(n)}$.
+\end{enumerate}
+\begin{enumerate}
+    \item The marginal pdf for $V_{(i)}$ is
+    \begin{align*}
+        f_{V_{(i)}}(v)
+        &= \frac{n!}{(i-1)!(n-i)!} (F_V (v))^{i-1} (1 - F_V (v))^{n-i}
+        f_V (v) \\
+        &= \frac{n!}{(i-1)!(n-i)!} (v^a)^{i-1} (1 - v^a)^{n-i} a v^{a-1} \\
+        &= \frac{n! a}{(i-1)!(n-i)!} v^{a i - 1} (1 - v^a)^{n-i}
+    \end{align*}
+    \item We have
+    \begin{align*}
+        \E(M_n)
+        &= \int_0^1 v f_{V_{(n)}}(v) dv \\
+        &= \int_0^1 v \frac{n! a}{(n-1)!} v^{a n - 1} (1 - v^a)^{0} dv \\
+        &= n a \int_0^1 v^{a n} dv \\
+        &= n a \frac{1}{a n + 1} \\
+        &= \frac{n a}{a n + 1}
+    \end{align*}
+    \item \begin{theorem}{5.36}
+        If $F (x)$ satisfies 
+        $\lim_{x \to 0} x^{-\gamma}(1 - F (b - x)) = c > 0$, 
+        with $\gamma > 0$, then
+        \[
+            \lim_{n \to \infty} \Prob(b - M_n \leq n^{-1/\gamma} x) = 
+            1 - e^{-cx^\gamma},
+        \]
+        which is the Weibull($\gamma$, $1/c$) distribution.
+    \end{theorem}
+    We want $a_n$ such that $\frac{1 - M_n}{a_n}$ converges in distribution.
+    We have
+    \begin{align*}
+        \Prob(1 - M_n \leq a_n x)
+        &= \Prob\left(M_n \geq 1 - a_n x\right) \\
+        &= 1 - \Prob\left(M_n < 1 - a_n x\right) \\
+        &= 1 - (F_V (1 - a_n x))^n \\
+        &= 1 - (1 - (a_n x)^a)^n
+    \end{align*}
+    We want
+    \[
+        \lim_{n \to \infty} \Prob(1 - M_n \leq a_n x)
+        = 1 - e^{-c x^\gamma}
+    \]
+    for some $c > 0$ and $\gamma > 0$. This requires
+    \[
+        \lim_{n \to \infty} n (a_n x)^a = c x^\gamma
+    \]
+    which implies $\gamma = a$ and $a_n = (c/n)^{1/a}$. Therefore,
+    \[
+        \frac{1 - M_n}{(c/n)^{1/a}} \xrightarrow{d} \text{Weibull}(a, 1/c).
+    \]
+    \item The cdf for $W_i$ is
+    \[
+        F_W (w) = 1 - (1 - w)^a
+    \]
+    for $0 \leq w \leq 1$. We want $a'_n$ such that 
+    $\frac{1 - W_{(n)}}{a'_n}$ converges in distribution.
+    We have
+    \begin{align*}
+        \Prob(1 - W_{(n)} \leq a'_n x)
+        &= \Prob\left(W_{(n)} \geq 1 - a'_n x\right) \\
+        &= 1 - \Prob\left(W_{(n)} < 1 - a'_n x\right) \\
+        &= 1 - (F_W (1 - a'_n x))^n \\
+        &= 1 - (1- (a'_n x)^a)^n
+    \end{align*}
+    We want
+    \[
+        \lim_{n \to \infty} \Prob(1 - W_{(n)} \leq a'_n x)
+        = 1 - e^{-c x^\gamma}
+    \]
+    for some $c > 0$ and $\gamma > 0$. This requires
+    \[
+        \lim_{n \to \infty} n (a'_n x)^a = c x^\gamma
+    \]
+    which implies $\gamma = a$ and $a'_n = (c/n)^{1/a}$. Therefore,
+    \[
+        \frac{1 - W_{(n)}}{(c/n)^{1/a}} \xrightarrow{d} \text{Weibull}(a, 1/c).
+    \]
+    This also implies the asymptotic behavior for 
+    $V_{(1)} = \min(_1, \dots, V_n) = 1 - W_{(n)}$ is
+    \[
+        \frac{V_{(1)}}{(c/n)^{1/a}} \xrightarrow{d} \text{Weibull}(a, 1/c).
+    \]
+\end{enumerate}
+\end{problem}
+
+\pagebreak
+
+\begin{problem}{4}
+Assume $X_1, X_2, \dots \stackrel{iid}{\sim} \text{exponential}(\beta)$ and 
+$M_n = \max(_1, \dots, X_n)$.
+\begin{enumerate}
+    \item  Write down the cdf for $M_n$ and use it to obtain the cdf 
+    for $Y_n = M_n - \beta \log(n)$.
+    \item Show that $- \log(\Pr(Y_n > y)) \to h(y)$ for 
+    some increasing function $h(y)$ and use this fact
+    to deduce the limit distribution for $Y_n = M_n - \beta \log(n)$.
+\end{enumerate}
+\begin{enumerate}
+    \item The cdf for $M_n$ is
+    \begin{align*}
+        F_{M_n}(x)
+        &= \Prob(M_n \leq x) \\
+        &= (F_X (x))^n \\
+        &= (1 - e^{-x/\beta})^n
+    \end{align*}
+    for $x > 0$. Therefore, the cdf for $Y_n$ is
+    \begin{align*}
+        F_{Y_n}(y)
+        &= \Prob(Y_n \leq y) \\
+        &= \Prob(M_n - \beta \log(n) \leq y) \\
+        &= \Prob(M_n \leq y + \beta \log(n)) \\
+        &= (1 - e^{-(y + \beta \log(n))/\beta})^n \\
+        &= (1 - e^{-y/\beta} e^{-\log(n)})^n \\
+        &= (1 - e^{-y/\beta}/n)^n
+    \end{align*}
+    for $y > -\beta \log(n)$.
+    \item We have
+    \begin{align*}
+        \Prob(Y_n > y)
+        &= 1 - F_{Y_n}(y) \\
+        &= 1 - (1 - e^{-y/\beta}/n)^n.
+    \end{align*}
+    The limit cdf is
+    \begin{align*}
+        \lim_{n \to \infty} F_{Y_n}(y)
+        &= \lim_{n \to \infty} (1 - e^{-y/\beta}/n)^n \\
+        &= e^{-e^{-y/\beta}}
+    \end{align*}
+    for $y \in \R$. Therefore,
+    \[
+        - \log(\Pr(Y_n > y)) \to e^{-y/\beta} = h(y).
+    \]
+    This implies that the limit distribution for 
+    $Y_n = M_n - \beta \log(n)$ is the Gumbel distribution with cdf
+    \[
+        F_Y (y) = e^{-e^{-y/\beta}}.
+    \]
+\end{enumerate}
+\end{problem}
+
+\pagebreak
+
+\begin{problem}{5}
+Recall the definition of a compound Poisson distribution 
+(Slide 398 in the notes) where $N \sim$
+Poisson($\lambda$), independent of $Y_1, Y_2, \dots$, 
+and $T = \sum_{i \leq N} Y_i$ (with $T = 0$ if $N = 0$).
+\begin{enumerate}
+    \item Use iterated expectations or variance partition, 
+    conditioning on $N$, to find $\E(T)$ and
+    $\Var(T)$ (e.g., $\E(T) = \E(\E(T | N))$), 
+    in terms of $\lambda$ and the moments of $T$.
+    \item Use the mgf from Corollary 5.38 to do the same.
+    \item Apply the above to the case that each 
+    $Y_i \sim \text{exponential}(\beta)$, and compare with Example
+    4.18 in the notes.
+\end{enumerate}
+\begin{enumerate}
+    \item We have
+    \begin{align*}
+        \E(T)
+        &= \E(\E(T | N)) \\
+        &= \E\left(\E\left(\sum_{i=1}^N Y_i \Big| N\right)\right) \\
+        &= \E\left(N \E(Y_1)\right) \\
+        &= \E(N) \E(Y_1) \\
+        &= \lambda \E(Y_1)
+    \end{align*}
+    and
+    \begin{align*}
+        \Var(T)
+        &= \E(\Var(T | N)) + \Var(\E(T | N)) \\
+        &= \E\left(\Var\left(\sum_{i=1}^N Y_i \Big| N\right)\right)
+        + \Var\left(\E\left(\sum_{i=1}^N Y_i \Big| N\right)\right) \\
+        &= \E\left(N \Var(Y_1)\right) + \Var\left(N \E(Y_1)\right) \\
+        &= \E(N) \Var(Y_1) + (\E(Y_1))^2 \Var(N) \\
+        &= \lambda \Var(Y_1) + (\E(Y_1))^2 \lambda \\
+        &= \lambda (\Var(Y_1) + (\E(Y_1))^2)
+    \end{align*}
+    \item From corollary 5.38, the mgf is
+    \[
+        M_T (t) = e^{\lambda (M_Y (t) - 1)}.
+    \]
+    where $M_Y (t)$ is the mgf of $Y_i$. Therefore,
+    \begin{align*}
+        \E(T)
+        &= M_T'(0) \\
+        &= \lambda M_Y'(0) \\
+        &= \lambda \E(Y_1)
+    \end{align*}
+    and
+    \begin{align*}
+        \Var(T)
+        &= M_T''(0) - (M_T'(0))^2 \\
+        &= \lambda M_Y''(0) + \lambda^2 (M_Y'(0))^2 - (\lambda M_Y'(0))^2 \\
+        &= \lambda M_Y''(0) \\
+        &= \lambda (\Var(Y_1) + (\E(Y_1))^2)
+    \end{align*}
+    \item For $Y_i \sim \text{exponential}(\beta)$, we have
+    \[
+        \E(Y_1) = \beta, \quad \Var(Y_1) = \beta^2.
+    \] Therefore,
+    \[
+        \E(T) = \lambda \beta, \quad \Var(T) = 
+        \lambda (\beta^2 + \beta^2) = 2 \lambda \beta^2,
+    \]
+    which is consistent with Example 4.18 in the notes.
+\end{enumerate}
+
+\end{problem}
+
+\begin{problem}{6}
+Consider the interval [0, 1] divided into $n$ intervals of 
+length $1/n$ each:\\
+\[
+    [0, \frac{1}{n}), [\frac{1}{n}, \frac{2}{n}), \ldots, 
+    [1 - \frac{1}{n} , 1].
+\] 
+Let $X_{n,i}$ be the indicator of the event a point occurs 
+in the $i$-th interval, and suppose 
+\[
+    p_{n,i} = \Prob(X_{n,i} = 1) = \frac{g(i/n)}{n}
+\]
+for some continuous positive function $g(x)$. Assume also
+that $X_{n,1}, \ldots, X_{n,n}$ are independent.\\
+Define $S_n = \sum_{i=1}^n X_{n,i}$ to be the number of 
+intervals with points, for a fixed $n$, and use the
+Law of Rare Events (Theorem 5.37 in the notes) to show 
+that $S_n \xrightarrow{D}$
+Poisson($\lambda$), where
+\[
+    \lambda = \int_0^1 g(x) \, dx.
+\]
+Hint: you also need the definition of Riemann integral. 
+Aside from that, this is just a couple lines of argument.
+\begin{theorem}{5.37}
+    (Law of Rare Events) Assume $X_{n,1}, \ldots, X_{n,n}$ are 
+    independent Bernoulli random variables with 
+    $\Prob(X_{n,i} = 1) = p_{n,i}$, $S_n = \sum_{i=1}^n X_{n,i}$,
+    and $\lambda_n = \E(S_n) = \sum_{i=1}^n p_{n,i}$.
+    If $\lambda_n \to \lambda \in (0, \infty)$, and 
+    $\delta_n = \max_{i\leq n} p_{n,i} \to 0$ as $n \to \infty$, then
+    \[
+        S_n \xrightarrow{D} \text{Poisson}(\lambda).
+    \]
+\end{theorem}
+We have
+\[
+    \lambda_n = \E(S_n) = \sum_{i=1}^n p_{n,i} 
+    = \sum_{i=1}^n \frac{g(i/n)}{n}.
+\]
+By the definition of Riemann integral, we have
+\[
+    \lim_{n \to \infty} \lambda_n
+    = \lim_{n \to \infty} \sum_{i=1}^n \frac{g(i/n)}{n}
+    = \int_0^1 g(x) \, dx = \lambda.
+\]
+Also, we have
+\[
+    \delta_n = \max_{i\leq n} p_{n,i}
+    = \max_{i\leq n} \frac{g(i/n)}{n}
+    \leq \frac{\max_{x \in [0,1]} g(x)}{n} \to 0
+\]
+as $n \to \infty$. Therefore, by Theorem 5.37, we have
+\[
+    S_n \xrightarrow{D} \text{Poisson}(\lambda).
+\]
+\end{problem}
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+\end{document}
