@@ -1,0 +1,356 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to writeLaTeX --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you give
+% someone the link to this page, they can edit at the same
+% time. See the help menu above for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+\usepackage{cancel}
+
+\setlist[enumerate,1]{label={(\alph*)}} %this changes enumerate to (a),(b),...
+
+\usepackage{graphicx} %package to manage images
+
+\newcommand{\A}{{\mathcal{A}}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\CC}{{\mathcal{C}}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\Z}{{\mathbb Z}}
+
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\End}{{\rm End}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Ima}{{\rm Im}}
+\newcommand{\Ker}{{\rm Ker}}
+\newcommand{\Mor}{{\rm Mor}}
+\newcommand{\Rad}{{\rm Rad}}
+\newcommand{\Prob}{{\sf P}}
+\newcommand{\E}{{\sf E}}
+\newcommand{\Var}{{\sf Var}}
+\newcommand{\Cov}{{\sf Cov}}
+
+\renewcommand\labelitemi{-} %this changes itemize bullet points to dashes (-)
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Final Exam 2023}%replace X with the appropriate number
+\author{Mengxiang Jiang\\ %replace with your name
+Stat 610 Distribution Theory} %if necessary, replace with your course title
+ 
+\maketitle
+ 
+\begin{problem}{1} %You can use theorem, exercise, problem, or question here.
+Suppose $X_1, \ldots, X_n$ are iid with pdf 
+$f_X (x) = \frac{2x^3}{\beta^4} e^{-(x/\beta)^2}$
+for $x > 0$. This has moments
+\[
+  \E(X) = \frac{3\sqrt{\pi}}{4} \beta, \quad \E(X^2) = 2\beta^2, 
+  \quad \E(X^3) = \frac{15\sqrt{\pi}}{8} \beta^3, \quad \E(X^4) = 6\beta^4.
+\]
+\begin{enumerate}
+  \item Determine $C$ and $V$ such that 
+  \[
+    \sqrt{n} \left( \frac{1}{2n} \sum_{i=1}^n X_i^2 - C \right) 
+    \xrightarrow{D} \text{normal}(0, V)
+  \] 
+  as $n \to \infty$, with explanation.
+  \item Find the pdf for $Y = (X/\beta)^2$ and identify the distribution.
+\end{enumerate}
+\begin{enumerate}
+  \item By the Weak Law of Large Numbers (WLLN), we have
+  \[
+    \frac{1}{n} \sum_{i=1}^n X_i^2 \xrightarrow{P} \E(X^2) = 2\beta^2.
+  \]
+  Thus, we can choose $C = \beta^2$.
+  By the Central Limit Theorem (CLT), we have
+  \[
+    \sqrt{n} \left( \frac{1}{n} \sum_{i=1}^n X_i^2 - \E(X^2) \right) 
+    \xrightarrow{D} \text{normal}(0, \Var(X^2)).
+  \]
+  Therefore,
+  \begin{align*}
+    \sqrt{n} \left( \frac{1}{2n} \sum_{i=1}^n X_i^2 - C \right) 
+    &= \frac{1}{2} \sqrt{n} \left( \frac{1}{n} \sum_{i=1}^n X_i^2 - \E(X^2) \right) \\
+    &\xrightarrow{D} \text{normal}\left( 0, \frac{1}{4} \Var(X^2) \right).
+  \end{align*}
+  Next, we calculate $\Var(X^2)$:
+  \begin{align*}
+    \Var(X^2) &= \E(X^4) - (\E(X^2))^2 \\
+    &= 6\beta^4 - (2\beta^2)^2 \\
+    &= 2\beta^4.
+  \end{align*}
+  Thus, we can choose $V = \frac{1}{4} \Var(X^2) = \frac{1}{4} \cdot 2\beta^4 = \frac{1}{2} \beta^4$.
+  \item To find the pdf of $Y = (X/\beta)^2$, we use the transformation method.
+  The inverse transformation is $X = \beta \sqrt{Y}$. The Jacobian is
+  \[
+    J = \left| \frac{dX}{dY} \right| = \left| \frac{\beta}{2\sqrt{Y}} \right| = \frac{\beta}{2\sqrt{Y}}.
+  \]
+  The pdf of $Y$ is given by
+  \begin{align*}
+    f_Y (y) &= f_X (\beta \sqrt{y}) \cdot J \\
+    &= \frac{2(\beta \sqrt{y})^3}{\beta^4} e^{-(\beta \sqrt{y}/\beta)^2} \cdot \frac{\beta}{2\sqrt{y}} \\
+    &= \frac{2\beta^3 y^{3/2}}{\beta^4} e^{-y} \cdot \frac{\beta}{2\sqrt{y}} \\
+    &= y e^{-y}, \quad y > 0.
+  \end{align*}
+  This is the pdf of a Gamma distribution with shape parameter $k = 2$ and scale parameter $\theta = 1$.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}{2}
+Assume $Y_1, \ldots, Y_n$ are iid with cdf $F_Y (y) = 1 - (1 + y)e^{-y}$.
+\begin{enumerate}
+  \item Define $C_1 = \sum_{i=1}^n 1_{[0,1]}(Y_i)$, 
+  $C_2 = \sum_{i=1}^n 1_{(1,3]}(Y_i)$ and 
+  $C_3 = \sum_{i=1}^n 1_{(3,\infty)}(Y_i)$, so that
+  $(C_1, C_2, C_3)$ has trinomial distribution. 
+  What is the mean and variance of each $C_i$?
+  \item Find the cdf and pdf for the minimum order statistic 
+  $Y_{(1)} = \min_{i \leq n} Y_i$. Hint: $Y_{(1)} > y$
+  iff every $Y_i > y$
+\end{enumerate}
+\begin{enumerate}
+  \item We have
+  \[
+    p_1 = \Prob(Y_i \in [0,1]) = F_Y(1) - F_Y(0) = \left(1 - 2e^{-1}\right) - 0 = 1 - 2e^{-1},
+  \]
+  \[
+    p_2 = \Prob(Y_i \in (1,3]) = F_Y(3) - F_Y(1) = \left(1 - 4e^{-3}\right) - \left(1 - 2e^{-1}\right) = 2e^{-1} - 4e^{-3},
+  \]
+  \[
+    p_3 = \Prob(Y_i \in (3,\infty)) = 1 - F_Y(3) = 4e^{-3}.
+  \]
+  The mean and variance of each $C_i$ are given by
+  \[
+    \E(C_i) = n p_i, \quad \Var(C_i) = n p_i (1 - p_i).
+  \]
+  \item To find the cdf and pdf of the minimum order statistic $Y_{(1)}$, we use the fact that
+  \[
+    \Prob(Y_{(1)} > y) = \Prob(Y_1 > y, \ldots, Y_n > y) = \left(1 - F_Y(y)\right)^n.
+  \]
+  Therefore, the cdf of $Y_{(1)}$ is
+  \[
+    F_{Y_{(1)}}(y) = 1 - \left(1 - F_Y(y)\right)^n,
+  \]
+  and the pdf is
+  \[
+    f_{Y_{(1)}}(y) = \frac{d}{dy} F_{Y_{(1)}}(y) = n \left(1 - F_Y(y)\right)^{n-1} f_Y(y).
+  \]
+\end{enumerate}
+\end{problem}
+
+\begin{problem}{3}
+  The conditional distribution of $T$ , given $U = u$, has pdf 
+  \[
+    f_{T|U} (t|u) = \frac{1}{\sqrt{\pi}}u^{1/2} e^{- u t^2}
+  \]
+for all real $t$, and $U \sim \text{gamma}(3, 1/2)$.
+Find the conditional pdf for $U$, given $T = t$, and 
+identify the marginal pdf for $T$.
+\[
+  f_U(u) = \frac{1}{\Gamma(3) (1/2)^3} u^{3-1} e^{-u/(1/2)}
+  = \frac{8}{\Gamma(3)} u^{2} e^{-2u} 
+  = \frac{8}{2} u^{2} e^{-2u} = 4 u^{2} e^{-2u}
+\]
+The joint pdf of $(T,U)$ is
+\begin{align*}
+  f_{T,U}(t,u) &= f_{T|U}(t|u) f_U(u) \\
+  &= \frac{1}{\sqrt{\pi}} u^{1/2} e^{-u t^2} \cdot 4 u^{2} e^{-2u} \\
+  &= \frac{4}{\sqrt{\pi}} u^{5/2} e^{-u (t^2 + 2)}.
+\end{align*}
+Thus the conditional pdf of $U$ given $T = t$ is
+a gamma distribution with shape parameter $7/2$ and scale parameter $1/(t^2 + 2)$:
+\[
+  f_{U|T}(u|t) = \frac{(t^2 + 2)^{7/2}}{\Gamma(7/2)} u^{5/2} e^{-u (t^2 + 2)}.
+\]
+To find the marginal pdf of $T$, we integrate out $U$:
+\begin{align*}
+  f_T(t) &= \int_0^\infty f_{T,U}(t,u) \, du \\
+  &= \int_0^\infty \frac{4}{\sqrt{\pi}} u^{5/2} e^{-u (t^2 + 2)} \, du \\
+  &= \frac{4}{\sqrt{\pi}} \cdot \frac{\Gamma(7/2)}{(t^2 + 2)^{7/2}} \\
+  &= \frac{4}{\sqrt{\pi}} \cdot \frac{15\sqrt{\pi}/8}{(t^2 + 2)^{7/2}} \\
+  &= \frac{15/2}{(t^2 + 2)^{7/2}}.
+\end{align*}
+This is the pdf of a Student's t-distribution.
+\end{problem}
+
+\pagebreak
+
+\begin{problem}{4}
+Let $T_1, T_2, \dots$ be iid geometric($p$) random variables, 
+and set $\overline{T}_n = \frac{1}{n} \sum_{i=1}^n T_i$.
+\begin{enumerate}
+  \item Does $- \log(\overline{T}_n)$ converge with probability 1, 
+  and, if so, then to what? Explain fully.
+  \item Use the delta method to show that $\frac{1}{\overline{T}_n}$
+  is asymptotically normal, giving particulars.
+\end{enumerate}
+\begin{enumerate}
+  \item By the Strong Law of Large Numbers (SLLN), we have
+  \[
+    \overline{T}_n \xrightarrow{w.p. 1} \E(T_1) = \frac{1}{p}.
+  \]
+  Since the function $g(x) = -\log(x)$ is continuous, by the Continuous Mapping Theorem, we have
+  \[
+    -\log(\overline{T}_n) \xrightarrow{w.p.1} -\log\left(\frac{1}{p}\right) = \log(p).
+  \]
+  \item By the Central Limit Theorem (CLT), we have
+  \[
+    \sqrt{n} \left( \overline{T}_n - \E(T_1) \right) 
+    \xrightarrow{D} \text{normal}\left( 0, \Var(T_1) \right).
+  \]
+  The mean and variance of a geometric($p$) random variable are
+  \[
+    \E(T_1) = \frac{1}{p}, \quad \Var(T_1) = \frac{1-p}{p^2}.
+  \]
+  Thus,
+  \[
+    \sqrt{n} \left( \overline{T}_n - \frac{1}{p} \right) 
+    \xrightarrow{D} \text{normal}\left( 0, \frac{1-p}{p^2} \right).
+  \]
+  Now, we apply the delta method with $g(x) = \frac{1}{x}$, which has derivative
+  \[
+    g'(x) = -\frac{1}{x^2}.
+  \]
+  Evaluating at $x = \E(T_1) = \frac{1}{p}$, we have
+  \[
+    g'\left(\frac{1}{p}\right) = -p^2.
+  \]
+  Therefore, by the delta method,
+  \[
+    \sqrt{n} \left( \frac{1}{\overline{T}_n} - p \right) 
+    \xrightarrow{D} \text{normal}\left( 0, \left(-p^2\right)^2 \cdot \frac{1-p}{p^2} \right) 
+    = \text{normal}\left( 0, p^2 (1-p) \right).
+  \]
+\end{enumerate}
+
+\end{problem}
+
+\pagebreak
+
+\begin{problem}{5}
+Assume $(X, Y)$ is bivariate normal with $\E(X) = \E(Y) = 0$, 
+$\Var(X) = \Var(Y) = 1$ and $\text{Corr}(X, Y) = \rho$.
+Determine the joint distribution of $(2X + Y, X - 2Y)$ by 
+name and parameter values. (There is no need to use pdfs.)
+\\\\
+Let $Z = (2X + Y, X - 2Y)^T$. Since $(X, Y)$ is bivariate normal,
+any linear combination of $X$ and $Y$ is also normally distributed.
+Thus, $Z$ is bivariate normal.
+Next, we calculate the mean vector and covariance matrix of $Z$.
+The mean vector is
+\[
+  \E(Z) = \begin{pmatrix}
+    \E(2X + Y) \\
+    \E(X - 2Y)
+  \end{pmatrix} = \begin{pmatrix}
+    0 \\
+    0
+  \end{pmatrix}.
+\]
+The covariance matrix is
+\[
+  \text{Cov}(Z) = \begin{pmatrix}
+    \Var(2X + Y) & \text{Cov}(2X + Y, X - 2Y) \\
+    \text{Cov}(X - 2Y, 2X + Y) & \Var(X - 2Y)
+  \end{pmatrix}.
+\]
+Calculating each element, we have
+\begin{align*}
+  \Var(2X + Y) &= 4\Var(X) + \Var(Y) + 4\text{Cov}(X, Y) = 
+  4 + 1 + 4\rho = 5 + 4\rho, \\
+  \Var(X - 2Y) &= \Var(X) + 4\Var(Y) - 4\text{Cov}(X, Y) = 
+  1 + 4 - 4\rho = 5 - 4\rho, \\
+  \text{Cov}(2X + Y, X - 2Y) &= 
+  2\Var(X) - 4\text{Cov}(X, Y) + \text{Cov}(Y, X) - 2\Var(Y) \\
+  &= 2 - 4\rho + \rho - 2 = -3\rho.
+\end{align*}
+Thus, the covariance matrix is
+\[
+  \text{Cov}(Z) = \begin{pmatrix}
+    5 + 4\rho & -3\rho \\
+    -3\rho & 5 - 4\rho
+  \end{pmatrix}.
+\]
+Therefore, the joint distribution of $(2X + Y, X - 2Y)$ is
+bivariate normal with mean vector $\begin{pmatrix} 0 \\ 0 \end{pmatrix}$
+and covariance matrix $
+\begin{pmatrix} 5 + 4\rho & -3\rho \\ 
+  -3\rho & 5 - 4\rho \end{pmatrix}$.
+
+\end{problem}
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+\end{document}

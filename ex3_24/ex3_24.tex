@@ -1,0 +1,253 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to writeLaTeX --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you give
+% someone the link to this page, they can edit at the same
+% time. See the help menu above for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumitem}
+\usepackage{cancel}
+
+\setlist[enumerate,1]{label={(\alph*)}} %this changes enumerate to (a),(b),...
+
+\usepackage{graphicx} %package to manage images
+
+\newcommand{\A}{{\mathcal{A}}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\CC}{{\mathcal{C}}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\Q}{{\mathbb Q}}
+\newcommand{\Z}{{\mathbb Z}}
+
+\newcommand{\Aut}{{\rm Aut}}
+\newcommand{\End}{{\rm End}}
+\newcommand{\Hom}{{\rm Hom}}
+\newcommand{\id}{{\rm id}}
+\newcommand{\Ima}{{\rm Im}}
+\newcommand{\Ker}{{\rm Ker}}
+\newcommand{\Mor}{{\rm Mor}}
+\newcommand{\Rad}{{\rm Rad}}
+\newcommand{\Prob}{{\sf P}}
+\newcommand{\E}{{\sf E}}
+\newcommand{\Var}{{\sf Var}}
+\newcommand{\Cov}{{\sf Cov}}
+
+\renewcommand\labelitemi{-} %this changes itemize bullet points to dashes (-)
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}
+{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Final Exam 2024}%replace X with the appropriate number
+\author{Mengxiang Jiang\\ %replace with your name
+Stat 610 Distribution Theory} %if necessary, replace with your course title
+ 
+\maketitle
+ 
+\begin{problem}{1} %You can use theorem, exercise, problem, or question here.
+Assume $X \sim \text{gamma}(6, 1)$ and the conditional distribution of $Y$, 
+given $X$, is $\text{Poisson}(X)$.
+Find the conditional distribution of $X$, given $Y$, and $\E(X|Y)$. 
+Hint: factor out the part that depends
+on $x$ and see if you can recognize what it is proportional to.
+\\\\
+The joint distribution of $X$ and $Y$ is
+\begin{align*}
+f_{X,Y}(x,y) &= f_{Y|X}(y|x) f_X(x) \\
+&= \frac{e^{-x} x^y}{y!} \cdot \frac{1}{\Gamma(6)} x^{6-1} e^{-x} \\
+&= \frac{1}{y! \Gamma(6)} x^{y+5} e^{-2x}.
+\end{align*}
+Thus, the conditional distribution of $X$ given $Y=y$ is
+\begin{align*}
+f_{X|Y}(x|y) &= \frac{f_{X,Y}(x,y)}{f_Y(y)} \\
+&\propto x^{y+5} e^{-2x}.
+\end{align*}
+Recognizing this as the kernel of a gamma distribution, we have
+\[X|Y=y \sim \text{gamma}(y+6, 1/2).\]
+Therefore,
+\[\E(X|Y=y) = \frac{y+6}{2}.\]
+\end{problem}
+
+\begin{problem}{2}
+Suppose $T_1, T_2, \dots$ are iid Laplace($\mu, \beta$) 
+(see the formula sheet), and let $\overline{T}_n = \frac{1}{n} \sum_{i=1}^n T_i$.
+\begin{enumerate}
+  \item Identify values of $a$ and $b$ such that 
+  $\sqrt{n}b(\overline{T}_n - a)$ converges in distribution as $n \to \infty$.
+  What is the limit distribution? Explain what theory you are using.
+  \item Assume $\mu \neq 0$. Use the delta method to show that 
+  $\sqrt{n}(\overline{T}_n^2 - \mu^2) \xrightarrow{D} \text{normal}(0, \gamma)$
+  for some $\gamma > 0$. What is $\gamma$?
+\end{enumerate}
+\begin{enumerate}
+  \item We have $\E(T_i) = \mu$ and $\Var(T_i) = 2\beta^2$. By the Central Limit Theorem,
+  \[\sqrt{n}(\overline{T}_n - \mu) \xrightarrow{D} \text{normal}(0, 2\beta^2).\]
+  Thus, we can take $a = \mu$ and $b = 1$. The limit distribution is normal$(0, 2\beta^2)$.
+  \item Let $g(x) = x^2$. Then, $g'(\mu) = 2\mu$. By the delta method,
+  \[\sqrt{n}(\overline{T}_n^2 - \mu^2) \xrightarrow{D} \text{normal}(0, (g'(\mu))^2 \Var(T_i)) = \text{normal}(0, 4\mu^2 \cdot 2\beta^2) = \text{normal}(0, 8\mu^2 \beta^2).\]
+  Thus, $\gamma = 8\mu^2 \beta^2$.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}{3}
+$\tilde{\theta}$ is an estimator of a parameter $\theta$ such that 
+$\E(\tilde{\theta}) = \theta$ and $\Var(\tilde{\theta}) = \frac{\theta^2}{n}$. 
+$T$ is another statistic that has mean 0 and variance $\frac{\theta^2}{2n}$. 
+Also, $\Cov(T, \tilde{\theta}) = - \frac{\theta^2}{2n}$. 
+What are the mean and variance of $\tilde{\theta}^* = \tilde{\theta} + T$?
+\\\\
+We have
+\[
+  \E(\tilde{\theta}^*) = \E(\tilde{\theta} + T) = 
+  \E(\tilde{\theta}) + \E(T) = \theta + 0 = \theta,
+\]
+and
+\[
+  \Var(\tilde{\theta}^*) = \Var(\tilde{\theta} + T) = 
+  \Var(\tilde{\theta}) + \Var(T) + 2\Cov(\tilde{\theta}, T) = 
+  \frac{\theta^2}{n} + \frac{\theta^2}{2n} + 2 \left(- \frac{\theta^2}{2n}\right) = 
+  \frac{\theta^2}{n} + \frac{\theta^2}{2n} - \frac{\theta^2}{n} = 
+  \frac{\theta^2}{2n}.
+\]
+\end{problem}
+
+\begin{problem}{4}
+$X_1, \ldots, X_n$ are iid normal$(\mu_X, \sigma_X^2)$ and, 
+independent of those, $Y_1, \ldots, Y_n$ are iid normal$(\mu_Y, \sigma_Y^2)$.
+What is the sampling distribution of $\overline{X} - \overline{Y}$? Explain.
+\\\\
+Since $\overline{X} \sim \text{normal}(\mu_X, \frac{\sigma_X^2}{n})$ and
+$\overline{Y} \sim \text{normal}(\mu_Y, \frac{\sigma_Y^2}{n})$, and $\overline{X}$ and $\overline{Y}$ are independent,
+we have
+\[
+  \overline{X} - \overline{Y} \sim \text{normal}\left(\mu_X - \mu_Y, \frac{\sigma_X^2}{n} + \frac{\sigma_Y^2}{n}\right) = 
+  \text{normal}\left(\mu_X - \mu_Y, \frac{\sigma_X^2 + \sigma_Y^2}{n}\right).
+\]
+\end{problem}
+
+\begin{problem}{5}
+Suppose $V_1, _2, \ldots, V_n$ are iid with cdf $F_V(v) = e^{-1/v}$ for $v > 0$.
+\begin{enumerate}
+\item Let $V(n) = \max(V_1, \ldots , V_n)$. Prove that $W = \frac{V(n)}{n}$ has the same distribution as $V_i$.
+\item We know that $\frac{1}{n} \sum_{i=1}^n \sqrt{V_i} \to E(\sqrt{V})$, as $n \to \infty$, with probability 1. What is the
+value of $E(\sqrt{V})$? Hint: use an appropriate change of variables to convert the expectation to
+something recognizable.
+\end{enumerate}
+\begin{enumerate}
+  \item We have
+  \begin{align*}
+    F_W(w) &= P\left(W \leq w\right) = P\left(\frac{V(n)}{n} \leq w\right) = 
+    P\left(V(n) \leq nw\right) \\
+    &= P\left(V_1 \leq nw, V_2 \leq nw, \ldots, V_n \leq nw\right) \\
+    &= \prod_{i=1}^n P\left(V_i \leq nw\right) = \left(F_V(nw)\right)^n = 
+    \left(e^{-1/(nw)}\right)^n = e^{-1/w} = F_V(w).
+  \end{align*}
+  Thus, $W$ has the same distribution as $V_i$.
+  \item We have
+  \begin{align*}
+    E(\sqrt{V}) &= \int_0^\infty \sqrt{v} f_V(v) dv = 
+    \int_0^\infty \sqrt{v} \frac{d}{dv} \left(e^{-1/v}\right) dv \\
+    &= \int_0^\infty \sqrt{v} \cdot \frac{1}{v^2} e^{-1/v} dv = 
+    \int_0^\infty v^{-3/2} e^{-1/v} dv.
+  \end{align*}
+  Let $u = 1/v$, then $du = -1/v^2 dv$ and $dv = -v^2 du = -\frac{1}{u^2} du$. 
+  When $v \to 0$, $u \to \infty$, and when $v \to \infty$, $u \to 0$. Thus,
+  \begin{align*}
+    E(\sqrt{V}) &= 
+    \int_\infty^0 (1/u)^{-3/2} e^{-u} \left(-\frac{1}{u^2}\right) du = 
+    \int_0^\infty u^{3/2} e^{-u} \cdot \frac{1}{u^2} du \\
+    &= \int_0^\infty u^{-1/2} e^{-u} du = 
+    \Gamma\left(\frac{1}{2}\right) = \sqrt{\pi}.
+  \end{align*}
+\end{enumerate}
+\end{problem}
+
+\begin{problem}{6}
+$Z$ has quantile function $Q_Z (p) = 1 - (1 - p)^{1/3}$, which takes values in (0, 1). What are
+the cdf and pdf for $Z$?
+\\\\
+We have
+\[F_Z(z) = P(Z \leq z) = p \text{ such that } Q_Z(p) = z.\]
+Solving for $p$, we have
+\begin{align*}
+z &= 1 - (1 - p)^{1/3} \\
+(1 - p)^{1/3} &= 1 - z \\
+1 - p &= (1 - z)^3 \\
+p &= 1 - (1 - z)^3.
+\end{align*}
+Thus,
+\[F_Z(z) = 1 - (1 - z)^3, \text{ for } 0 < z < 1.\]
+Taking the derivative, we have
+\[f_Z(z) = F_Z'(z) = 3(1 - z)^2, \text{ for } 0 < z < 1.\]
+\end{problem}
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+\end{document}
